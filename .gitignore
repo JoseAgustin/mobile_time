@@ -1,3 +1,7 @@
 *.mod
+*.exe
+*.o
 *.log
-a.out
+Makefile
+autom4te.cache
+config.status
