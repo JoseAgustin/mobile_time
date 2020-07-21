@@ -1,7 +1,7 @@
-!     program movil_temp.F90
+!     program movile_time_grid.F90
 !>  @brief Variables for the identification of temporal profiles in a grid
 !>
-!>   |  grid_id | Time period |
+!>   |  ID_time_period | Time period |
 !>   |:---:|:---   |
 !>   |  1 | Working Day |
 !>   |  2 | Saturday |
