@@ -27,7 +27,14 @@ integer,parameter :: n_grid=952
 integer,parameter :: n_rows=75889
 !> Number of viality segments
 integer,parameter :: nint=11848
-integer idcell(nint),igeo(nint),idsrc(nint),isrc(nint)
+!> GRID ID from the used mesh from intersection
+integer :: idcell(nint)
+!> GEOmetry ID for viality from intersection
+integer :: igeo(nint)
+!> GEOmetry ID for viality from intersection
+integer :: idsrc(nint)
+!> GEOmetry ID for viality from intersection
+integer :: isrc(nint)
 !> GRID ID from the used mesh
 integer :: grid_id(n_grid)
 !> ID of period time
@@ -36,23 +43,33 @@ integer :: ID_time_period(n_rows)
 integer :: itype(n_rows)
 !> Viality  ID from src_td
 integer :: isource(n_rows)
-!>     autn     Number of cars in a specifil viality and hour         c
-real,dimension(24,n_rows) ::autn
+!>  Number of cars in a specifil viality and hour
+real,dimension(24,n_rows) :: autn
+!> total number of vehicles per hour in each grid
+real,dimension(24,n_grid) :: activity
 !> longitud coordinate for the mesh
 real :: long(n_grid)
 !> latitude coordinate for the mesh
 real :: lat(n_grid)
-real cutla(nint),cw(nint)
+!> fraction
+real :: cutla(nint)
+!> fraction
+real :: cw(nint)
 common /intersec/ cutla,cw,idcell,idsrc,igeo,isrc
 common /cellattr/ grid_id,long,lat
 common /srctd/ autn, isource, ID_time_period,itype
 
 contains
 !> @brief Program to convert UTM coordinates to lat lon.
+!>
+!>https://www.epa.gov/scram/air-quality-dispersion-modeling-related-model-support-programs#concor
 !> @author SCRAM EPA
 !> @date 1990
-!>https://www.epa.gov/scram/air-quality-dispersion-modeling-related-model-support-programs#concor
-!
+!> @param  utmy Coordinate in axis _y_ in km
+!> @param  utmx Coordinate in axis _x_ in km
+!> @param  utmz Zone
+!> @param  lat Coordinate latitude in decimal degrees
+!> @param  long Coordinate longitude in decimal degrees
   subroutine  utm_2_ll(utmx,utmy,utmz,lat,long)
   implicit none
   integer,intent (IN):: utmZ
@@ -64,7 +81,7 @@ contains
 !     THIS SUBROUTINE CONVERTS from UTM coordinates
 !
   DATA DEGRAD/0.017453/
-      
+
   latx = utmy / 111.
   dlongx = (utmx - 500.) / ((111.226 + 0.0053 * latx) * &
    (COS (DEGRAD * latx)))
@@ -74,7 +91,7 @@ contains
       dlongp = (utmx - 500.) / ((111.226 + 0.0053 * lat) * &
     (COS (DEGRAD * lat)))
       long = -(180 - (6 * utmZ) + 3 - dlongp )
-      
+
   end subroutine utm_2_ll
 !>  @brief Reads file grid cell attributes IDgrid, utmx, utmy
 !>
@@ -88,7 +105,7 @@ subroutine lee_atributos
   integer:: iunit      !  Unit ID for the cell_attr.txt file
   integer :: i,idum
   real :: utmx,utmy
-  open(newunit=iunit,file="cell_attr.txt",ACTION="READ")
+  open(newunit=iunit,file="data/cell_attr.txt",ACTION="READ")
   do i=1,n_grid
    read (iunit,*)idum,grid_id(i),utmx,utmy
     call utm_2_ll(utmx,utmy,14,lat(i),long(i))
@@ -109,7 +126,7 @@ subroutine lee_actividades
   implicit none
   integer:: iunit      !  Unit ID for thesrc_td.txt file
   integer :: idum,i,j
-  open(newunit=iunit,file="src_td.txt",ACTION="READ")
+  open(newunit=iunit,file="data/src_td.txt",ACTION="READ")
   do j=1,n_rows
   read (iunit,*)idum,idum,idum,isource(j),&
         ID_time_period(j),itype(j), &
@@ -117,7 +134,7 @@ subroutine lee_actividades
   end do
   close(iunit)
   write(6,*) "Finish reading src_td.txt"
-  open(newunit=iunit,file="intersection.txt",ACTION="READ")
+  open(newunit=iunit,file="data/intersection.txt",ACTION="READ")
   do  j=1,nint
    read(iunit,*)idum,idcell(j),isrc(j),igeo(j),idsrc(j), &
              cutla(j),cw(j)
