@@ -168,17 +168,17 @@ subroutine lee_factor_emision
 implicit none
 integer:: iunit      !  Unit ID for file reading
 integer :: i,j
-character*25  title
+character(len=25)::  header
 open(newunit=iunit,file="data/factepa.txt",ACTION="READ")
 
 !..
 !    -----------  Reading    factepa.txt      unit  15    ----------
 !..
   do  j=1,nef
-    read(iunit,'(a25)')title
-    read(iunit,'(a2)')title
-    read(iunit,'(a2)')title
-    read(iunit,'(a2)')title
+    read(iunit,'(a25)')header
+    read(iunit,'(a2)')header
+    read(iunit,'(a2)')header
+    read(iunit,'(a2)')header
     do  i =1,nfe
       read(iunit,*)vele(j,i),ehc(j,i),eco(j,i),eno(j,i) !,eso(j,i)
     end do
@@ -191,10 +191,10 @@ open(newunit=iunit,file="data/factepa.txt",ACTION="READ")
 open(newunit=iunit,file="data/factsec.txt",ACTION="READ")
 
   do  j=1,5
-    read(iunit,'(a25)')title
-    read(iunit,'(a2)')title
-    read(iunit,'(a2)')title
-    read(iunit,'(a2)')title
+    read(iunit,'(a25)')header
+    read(iunit,'(a2)')header
+    read(iunit,'(a2)')header
+    read(iunit,'(a2)')header
     do  i =1,7
       read(iunit,*)vele2(j,i),ehc2(j,i),eco2(j,i),eno2(j,i)
     end do
@@ -205,7 +205,7 @@ open(newunit=iunit,file="data/factsec.txt",ACTION="READ")
 !..
 open(newunit=iunit,file="data/factvar.dat",ACTION="READ")
 
-  read(iunit,'(a25)')title
+  read(iunit,'(a25)')header
   do  i=1,nhr
     read(iunit,*)fcor(i)
   end do
@@ -214,7 +214,7 @@ open(newunit=iunit,file="data/factvar.dat",ACTION="READ")
 !    -----------  Reading    fraarran.dat      unit  18   ----------
 !..
 open(newunit=iunit,file="data/fraarran.dat",ACTION="READ")
-  read(iunit,'(a25)') title
+  read(iunit,'(a25)') header
   do  i=1,nhr
     read(iunit,*) start(i)
   end do
@@ -309,7 +309,7 @@ integer :: iunit
         end do   !  i specie
       end do      !  l
     end do
-180 format(7X,'      Wrinting in output file')
+180 format(7X,'      Wrinting output file for GrADS')
 end subroutine guarda_malla
 !>  @brief Localization of the viality and depending of his type it
 !>  assings  the value of start or fcorr, and longitud
