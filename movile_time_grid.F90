@@ -238,6 +238,62 @@ end subroutine genera_malla
 subroutine guarda_malla
 
 end subroutine guarda_malla
+!>  @brief Localization of the viality and depending of his type it
+!>  assings  the value of start or fcorr, and longitud
+!>  @author Jose Agustin Garcia Reynoso
+!>  @date 07/21/2020
+!>  @version  1.0
+!>  @copyright Universidad Nacional Autonoma de Mexico
+  Subroutine viality(ig,id,ig2,isrc,kstype,slen &
+                    ,fcor,start,nh,fcorr,ffr,sl)
+  integer,intent(in):: ig,id,isrc(:),kstype(:)
+  integer,intent(in):: ig2(:),nh
+  real,intent(in) :: fcor(:),start(:)
+  real,intent(in) :: slen(:,:)
+  real,intent(out):: fcorr,ffr, sl
+  integer:: i,flag
+!..
+  flag=0
+  do i = size(isrc),1,-1
+    if(id .eq.isrc(i) .and. ig.eq.ig2(i)) then
+      sl = slen(i,ig)
+      if(kstype(i).gt.10) then
+        flag = 1
+        fcorr = fcor(nh)
+        ffr   = start(nh)
+        if(kstype(i).gt.20) then
+          ffr= start(nh)
+          fcorr =1.0
+          exit
+        end if
+        exit
+      else
+        flag=1
+        fcorr = 1.0
+        ffr   = 0.0
+        exit
+      end if
+    end if
+  end do
+!..
+  if (flag .eq. 0 )  then
+    write(6,200) id
+    stop
+  end if
+  if(sl.eq.0) then
+    write(6,201) sl,ig,slen(i,1),slen(i,2),i
+    stop
+  end if
+!      for area sources is 10% of their cutleng.
+  if(ig.eq.2) sl =sl*0.10
+ 200      format('Invalid Cell',I6)
+ 201      format('Invalid Longitud',f4.0,'At igeo ',I3,&
+                'len(1)=',f6.4,'Len(2)=',f6.4,I4)
+  return
+!*********************************************************************
+!*********             END OF SUBROUTINE VIALITY             *********
+!*********************************************************************
+  end
 
 end module grid_temp_mod
 !>  @brief Program to obtain the temporal distribution over CDMX
