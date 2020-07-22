@@ -22,7 +22,7 @@
 !>
 module grid_temp_mod
 !> Number of grids in the mesh
-integer,parameter :: nef = 5, nef2 =5,ntypd= 3, nhr=24
+integer,parameter :: nef = 5, nef2 =5,ntypd= 3, nhr=24, nspc = 5
 integer,parameter :: nfe = 7  ! EPA
 integer,parameter :: nic=952 ;!> Number of rows in results data
 integer,parameter :: ntd=75889; !> Number of viality segments
@@ -36,7 +36,7 @@ integer :: grid_id(nic) ;!> ID of period time
 integer :: ID_time_period(ntd);!> Source type
 integer :: itype(ntd)   ;!> Viality  ID from src_td
 integer :: isource(ntd)
-integer ::idsrc2(natt),igeo2(natt),kstype(natt),vel(nhr,ntd)
+integer ::idsrc2(natt),igeo2(natt),kstype(natt)
 !>  Number of cars in a specifil viality and hour
 real,dimension(nhr,ntd) :: autn;!> total number of vehicles per hour in each grid
 real :: long(nic)    ;!> latitude coordinate for the mesh
@@ -47,16 +47,22 @@ real :: slen(natt,2) ;!> number of vehicles
 real :: scar(nic,8,1:2)
 real :: vele(nef,nfe),ehc(nef,nfe),eco(nef,nfe),eno(nef,nfe)
 real :: vele2(nef2,7),ehc2(nef2,7),eco2(nef2,7),eno2(nef2,7)
-real :: fcor(nhr),start(nhr)
+real :: fcor(nhr),start(nhr); !Emission factor at speed vel
+real :: efact(nspc) ; !Emission factor cold start at speed vel
+real :: efac2(nspc)  ;!> Street velocity from src_td
+real :: vel(nhr,ntd) ;!> Total emission per day
+real :: eday(nic,nspc,ntypd,8,1:2) !> Emissions per cell
+real :: emision(nic,nhr,nspc,ntypd)
 
 common /intersec/ cutla,cw,idcell,idsrc,igeo,isrc
 common /cellattr/ grid_id,long,lat
 common /srctd/    autn, isource, ID_time_period,itype
 common /facttuv/  vele,ehc,eco,eno!,eso
 common /factsec/  vele2,ehc2,eco2,eno2
-common /miscell/  scar,fcor,start!,vv,et,fcorr,ffr,emision
+common /miscell/  scar,fcor,start,emision!,vv,et,fcorr,ffr
 common /srcattr/  slen,kstype,igeo2,idsrc2
-
+common /computs/ efact,efact2,eday
+ 
 contains
 !> @brief Program to convert UTM coordinates to lat lon.
 !>
@@ -221,14 +227,65 @@ open(newunit=iunit,file="data/fraarran.dat",ACTION="READ")
 160 format(9X,'******  END READING factvar.dat',10X,'******')
 
 end subroutine lee_factor_emision
-!>  @brief Make a single grid code with vehicular activity
+!>  @brief Make a single array with emissions
 !>  @author Jose Agustin Garcia Reynoso
 !>  @date 07/20/2020
 !>  @version  1.0
 !>  @copyright Universidad Nacional Autonoma de Mexico
 subroutine genera_malla
   implicit none
-
+  integer:: l,i,n,m
+  integer:: indx
+  real :: sl,fcorr,ffr
+  real :: temp
+  do n = ntd ,1,-1                   !Main LOOP initialization
+    do m = 1,nint
+      if(isource(n).eq.idsrc(m).and.isrc(m).lt.2 .and.igeo(m).lt.2) then
+      indx = idcell(m)
+      do l=1,nhr
+      ! for EPA
+      efact(1)= emisfac2(itype(n),vel(l,n),vele ,ehc )
+      efact(2)= emisfac2(itype(n),vel(l,n),vele ,eco )
+      efact(3)= emisfac2(itype(n),vel(l,n),vele ,eno )
+      ! Emissions factor for cold start
+      efac2(1)= emisfac2(itype(n),vel(l,n),vele2,ehc2)
+      efac2(2)= emisfac2(itype(n),vel(l,n),vele2,eco2)
+      efac2(3)= emisfac2(itype(n),vel(l,n),vele2,eno2)
+      if (itype(n).ge. 14 ) then
+        efact(4) =efact(1)
+        efac2(4) =efac2(1)
+        efact(1) = 0.0
+        efac2(1) = 0.0
+      else
+        efact(4) = 0.0
+        efac2(4) = 0.0
+      end if
+!..
+!     ----------   Localization of the viality lenght     ----------
+!..
+       call viality(igeo(m),idsrc(m),igeo2,idsrc2,kstype,slen &
+                ,fcor,start,l,fcorr,ffr,sl)
+       sl = sl*cw(m)
+!     ----------   Computation of the emissions for each specie
+        do i = 1,nspc ! 1 HC(gasoline), 2 CO, 3 NOx, 4 HC(Diesel),5 SO2
+!..
+          temp =(autn(l,n)*sl*efact(i)*(1.0-ffr)+ &
+                     autn(l,n)*sl*efac2(i)*ffr)*fcorr
+!..        Xing  is 7.5% of the emission of segment viality
+         if (isrc(m).eq.2) temp=temp*0.075
+!..
+            emision(indx,l,i,ID_time_period(n))= temp/3600.0 &
+                              + emision(indx,l,i,ID_time_period(n))
+!..
+!    ----------  Computation of dayly emissions  EDAY     ----------
+!
+            eday(indx,i,ID_time_period(n),itype(n)-10,2)= temp/1000 &
+                      + eday(indx,i,ID_time_period(n),itype(n)-10,2)
+        end do    ! i nspc
+      end do      ! m nint
+    end if
+    end do        ! ntd
+  end do
 end subroutine genera_malla
 !>  @brief Stores the mesh in a file
 !>  @author Jose Agustin Garcia Reynoso
@@ -236,7 +293,23 @@ end subroutine genera_malla
 !>  @version  1.0
 !>  @copyright Universidad Nacional Autonoma de Mexico
 subroutine guarda_malla
-
+implicit none
+integer :: i,j,l,iday,irec
+integer :: iunit
+  write(6,180)
+    open (newunit=iunit,file='data/movil.dat', &
+    status='unknown',access='direct',form='unformatted' &
+    ,recl=nic*4)
+    irec = 0
+    do iday=1,ntypd
+      do l = 1,nhr
+        do i = 1,nspc
+          irec = irec +1
+          write(iunit,rec=irec)(emision(j,l,i,iday),j=1,nic)
+        end do   !  i specie
+      end do      !  l
+    end do
+180 format(7X,'      Wrinting in output file')
 end subroutine guarda_malla
 !>  @brief Localization of the viality and depending of his type it
 !>  assings  the value of start or fcorr, and longitud
@@ -292,6 +365,61 @@ end subroutine guarda_malla
   return
 !*********************************************************************
 !*********             END OF SUBROUTINE VIALITY             *********
+!*********************************************************************
+  end
+!>  @brief Emission factor computation for velociity and EF array
+!>  @author Jose Agustin Garcia Reynoso
+!>  @date 07/22/2020
+!>  @version  1.0
+!>  @copyright Universidad Nacional Autonoma de Mexico
+  real function emisfac2(ncartype,velocity,vem,comp)
+  integer :: ncartype
+  integer :: icar, i
+  real:: velocity,vem(:,:),comp(:,:)
+!    ncartype  Type of vehicle   icar    Type of vehicle
+!      11       Automoviles       1      Vehiculos ligeros a Gas
+!      12       Ligeros           2      Camionetas ligeras a Gaso
+!      13       Microbuses        2      Camionetas ligeras a Gaso
+!      13       Microbuses        5      Camiones Pesados a Gasoli
+!      14       Ruta 100          3      Camiones ligeros a diesel
+!      15       Otros camiones    3      Camiones ligeros a diesel
+!      16       Medianos          3      Camiones ligeros a diesel
+!      17       Pesados           4      Vehiculos pesados a diesel
+!      18       Camiones mpales.  3      Camiones ligeros a diesel
+!
+  icar = 0
+  if( ncartype .eq. 11) icar =1
+  if( ncartype .eq. 12) icar =2
+  if( ncartype .eq. 13) icar =5
+  if( ncartype .eq. 14) icar =3
+  if( ncartype .eq. 15) icar =3
+  if( ncartype .eq. 16) icar =3
+  if( ncartype .eq. 17) icar =4
+  if( ncartype .eq. 18) icar =3
+  if (icar .eq. 0) then
+    write(6,*)'Invalid car type',ncartype
+    stop
+  end if
+  !..
+  i=0
+  if(velocity.le.vem(icar,2)) i=1
+  if(velocity.gt.vem(icar,2).and.velocity.le.vem(icar,3)) i=2
+  if(velocity.gt.vem(icar,3).and.velocity.le.vem(icar,4)) i=3
+  if(velocity.gt.vem(icar,4).and.velocity.le.vem(icar,5)) i=4
+  if(velocity.gt.vem(icar,5).and.velocity.le.vem(icar,6)) i=5
+  if(velocity.gt.vem(icar,6)) i=5
+  if (i.eq. 0) then
+    write(6,200)velocity
+    stop
+  end if
+!..
+    emisfac2= comp(icar,i) +(velocity-vem(icar,i)) * &
+        (comp(icar,i+1)-comp(icar,i))/(vem(icar,i+1)-vem(icar,i))
+!..
+200  format('Invalid velocity',E10.1)
+  return
+!*********************************************************************
+!*********             END OF FUNCTION EMISFAC2              *********
 !*********************************************************************
   end
 
