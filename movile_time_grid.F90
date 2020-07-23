@@ -64,6 +64,12 @@ common /srcattr/  slen,kstype,igeo2,idsrc2
 common /computs/ efact,efact2,eday
  
 contains
+!        _                 ____      _ _
+!  _   _| |_ _ __ ___     |___ \    | | |
+! | | | | __| '_ ` _ \      __) |   | | |
+! | |_| | |_| | | | | |    / __/    | | |
+!  \__,_|\__|_| |_| |_|___|_____|___|_|_|
+!                    |_____|   |_____|
 !> @brief Program to convert UTM coordinates to lat lon.
 !>
 !>https://www.epa.gov/scram/air-quality-dispersion-modeling-related-model-support-programs#concor
@@ -97,6 +103,17 @@ contains
       long = -(180 - (6 * utmZ) + 3 - dlongp )
 
   end subroutine utm_2_ll
+!   _
+!  | | ___  ___
+!  | |/ _ \/ _ \
+!  | |  __/  __/
+!  |_|\___|\___|
+!       _        _ _           _
+!  __ _| |_ _ __(_) |__  _   _| |_ ___  ___
+! / _` | __| '__| | '_ \| | | | __/ _ \/ __|
+!| (_| | |_| |  | | |_) | |_| | || (_) \__ \
+! \__,_|\__|_|  |_|_.__/ \__,_|\__\___/|___/
+!
 !>  @brief Reads file grid cell attributes IDgrid, utmx, utmy
 !>
 !> Converts the UMTx and UTMy to longitude, latitude coordinates.
@@ -132,6 +149,16 @@ subroutine lee_atributos
 150 format(9X,'******  END READING cell_attr.txt',8X,'******')
 
 end subroutine lee_atributos
+!  _
+! | | ___  ___
+! | |/ _ \/ _ \
+! | |  __/  __/
+! |_|\___|\___|
+!             _   _       _     _           _
+!   __ _  ___| |_(_)_   _(_) __| | __ _  __| | ___  ___
+!  / _` |/ __| __| \ \ / / |/ _` |/ _` |/ _` |/ _ \/ __|
+! | (_| | (__| |_| |\ V /| | (_| | (_| | (_| |  __/\__ \
+!  \__,_|\___|\__|_| \_/ |_|\__,_|\__,_|\__,_|\___||___/
 !>  @brief Reads for each grid the numbero fo vehicles per category by hour
 !>  @author Jose Agustin Garcia Reynoso
 !>  @date 07/20/2020
@@ -159,6 +186,17 @@ subroutine lee_actividades
 150 format(9X,'******  END READING intersection.txt',5X,'******')
 160 format(9X,'******  END READING src_td.csv',11X,'******')
 end subroutine lee_actividades
+!  _
+! | | ___  ___
+! | |/ _ \/ _ \
+! | |  __/  __/
+! |_|\___|\___|
+!  __            _                            _     _
+! / _| __ _  ___| |_ ___  _ __  ___ _ __ ___ (_)___(_) ___  _ __
+!| |_ / _` |/ __| __/ _ \| '__|/ _ \ '_ ` _ \| / __| |/ _ \| '_ \
+!|  _| (_| | (__| || (_) | |  |  __/ | | | | | \__ \ | (_) | | | |
+!|_|  \__,_|\___|\__\___/|_|___\___|_| |_| |_|_|___/_|\___/|_| |_|
+!                         |_____|
 !>  @brief Reads emissions factor from EPA, and for cool start
 !>  @author Jose Agustin Garcia Reynoso
 !>  @date 07/20/2020
@@ -227,6 +265,12 @@ open(newunit=iunit,file="data/fraarran.dat",ACTION="READ")
 160 format(9X,'******  END READING factvar.dat',10X,'******')
 
 end subroutine lee_factor_emision
+!                                                     _ _
+!   __ _  ___ _ __   ___ _ __ __ _     _ __ ___   __ _| | | __ _
+!  / _` |/ _ \ '_ \ / _ \ '__/ _` |   | '_ ` _ \ / _` | | |/ _` |
+! | (_| |  __/ | | |  __/ | | (_| |   | | | | | | (_| | | | (_| |
+!  \__, |\___|_| |_|\___|_|  \__,_|___|_| |_| |_|\__,_|_|_|\__,_|
+!  |___/                         |_____|
 !>  @brief Make a single array with emissions
 !>  @author Jose Agustin Garcia Reynoso
 !>  @date 07/20/2020
@@ -287,6 +331,12 @@ subroutine genera_malla
     end do        ! ntd
   end do
 end subroutine genera_malla
+!                            _                           _ _
+!   __ _ _   _  __ _ _ __ __| | __ _     _ __ ___   __ _| | | __ _
+!  / _` | | | |/ _` | '__/ _` |/ _` |   | '_ ` _ \ / _` | | |/ _` |
+! | (_| | |_| | (_| | | | (_| | (_| |   | | | | | | (_| | | | (_| |
+!  \__, |\__,_|\__,_|_|  \__,_|\__,_|___|_| |_| |_|\__,_|_|_|\__,_|
+!  |___/                           |_____|
 !>  @brief Stores the mesh in a file
 !>  @author Jose Agustin Garcia Reynoso
 !>  @date 07/20/2020
@@ -311,6 +361,153 @@ integer :: iunit
     end do
 180 format(7X,'      Wrinting output file for GrADS')
 end subroutine guarda_malla
+!                            _
+!   __ _ _   _  __ _ _ __ __| | __ _
+!  / _` | | | |/ _` | '__/ _` |/ _` |
+! | (_| | |_| | (_| | | | (_| | (_| |
+!  \__, |\__,_|\__,_|_|  \__,_|\__,_|
+!  |___/          _ _
+! _ __ ___   __ _| | | __ _     _ __   ___
+!| '_ ` _ \ / _` | | |/ _` |   | '_ \ / __|
+!| | | | | | (_| | | | (_| |   | | | | (__
+!|_| |_| |_|\__,_|_|_|\__,_|___|_| |_|\___|
+!                         |_____|
+!>  @brief Stores the mesh in a netcdf file
+!>  @author Jose Agustin Garcia Reynoso
+!>  @date 07/20/2020
+!>  @version  1.0
+!>  @copyright Universidad Nacional Autonoma de Mexico
+subroutine guarda_malla_nc
+use netcdf
+implicit none
+integer, parameter :: NDIMS=6,nx=28,ny=34, zlev=1
+integer :: i,j,k,l,iday,ispc,ncid,it
+integer :: iit
+integer :: dimids2(2),dimids3(3),dimids4(4)
+integer :: id_unlimit ;!>latitude ID in netcdf file
+integer ::id_varlat ;!>longitude ID in netcdf file
+integer ::id_varlong ;!>pollutant emission ID in netcdf file
+integer :: id_var(nspc)
+integer,dimension(NDIMS):: dim,id_dim ;!> longitude coordinates
+real,dimension(nx,ny)::xlong ;!> latitude coordinates
+real,dimension(nx,ny)::xlat  ;!> emissions values
+real,dimension(nx,ny,1,1)::emis
+character (len=19),dimension(NDIMS) ::sdim
+character(len=19) :: current_date
+character(len= 8) :: date
+character(len=10) :: time
+character(len=24) :: hoy
+character(len=20) :: FILE_NAME
+character(len=19),dimension(1,1)::Times
+character(len=11),dimension(5)::ename ;!> Emissions long name
+character(len=26),dimension(5):: cname
+data sdim /"Time               ","DateStrLen         ","west_east          ",&
+&          "south_north        ","bottom_top         ","emissions_zdim_stag"/
+ename=(/'E_VOC       ','E_CO        ','E_NOx       ',&
+        'E_VOC_diesel','E_SO2       '/)
+cname=(/'VOC from gasoline vehicles','Carbon Monoxide emissions ', &
+        'Nitrogen oxides emissions ','VOC from diesel vehicles  ', &
+        'Sulfur dioxide emissions  '/)
+  write(6,180)
+  FILE_NAME="emission_CDMX1990.nc"
+  call check( nf90_create(path =FILE_NAME,cmode = NF90_CLASSIC_MODEL,ncid = ncid) )
+  !     Define dimensiones
+  xlong=reshape(long,(/nx,ny/))
+  xlat=reshape(lat,(/nx,ny/))
+  call date_and_time(date,time)
+  hoy=date(7:8)//'-'//mes(date(5:6))//'-'//date(1:4)//' '//time(1:2)//':'//time(3:4)//':'//time(5:10)
+  print *,hoy
+
+  dim=(/1,19,nx,ny,1,zlev/)
+  current_date="1990-01-12_00:00:00"
+  call check( nf90_def_dim(ncid,sdim(1), NF90_UNLIMITED, id_dim(1)) )
+  do i=2,NDIMS
+      call check( nf90_def_dim(ncid, sdim(i), dim(i), id_dim(i)) )
+  end do
+  dimids2 = (/id_dim(2),id_dim(1)/)
+  dimids3 = (/id_dim(3),id_dim(2),id_dim(1) /)
+  dimids4 = (/id_dim(3),id_dim(4),id_dim(6),id_dim(1)/)
+
+  write(6,181)
+  call check( nf90_put_att(ncid, NF90_GLOBAL, "TITLE","Emissions from TUV study 1990"))
+  call check( nf90_put_att(ncid, NF90_GLOBAL, "START_DATE",current_date))
+  call check( nf90_put_att(ncid, NF90_GLOBAL, "WEST-EAST_GRID_DIMENSION",nx))
+  call check( nf90_put_att(ncid, NF90_GLOBAL, "SOUTH-NORTH_GRID_DIMENSION",ny))
+  call check( nf90_put_att(ncid, NF90_GLOBAL, "BOTTOM-TOP_GRID_DIMENSION",1))
+  call check( nf90_put_att(ncid, NF90_GLOBAL, "DX",2*1000))
+  call check( nf90_put_att(ncid, NF90_GLOBAL, "DY",2*1000))
+  call check( nf90_put_att(ncid, NF90_GLOBAL, "CEN_LAT",xlat(nx/2,ny/2)))
+  call check( nf90_put_att(ncid, NF90_GLOBAL, "CEN_LON",xlong(nx/2,ny/2)))
+  call check( nf90_put_att(ncid, NF90_GLOBAL, "TRUELAT1",17.5))
+  call check( nf90_put_att(ncid, NF90_GLOBAL, "TRUELAT2",29.5))
+  call check( nf90_put_att(ncid, NF90_GLOBAL, "MOAD_CEN_LAT",xlat(nx/2,ny/2)))
+  call check( nf90_put_att(ncid, NF90_GLOBAL, "STAND_LON",xlong(nx/2,ny/2)))
+  call check( nf90_put_att(ncid, NF90_GLOBAL, "POLE_LAT",90.))
+  call check( nf90_put_att(ncid, NF90_GLOBAL, "POLE_LON",0.))
+  call check( nf90_put_att(ncid, NF90_GLOBAL, "GRIDTYPE","C"))
+  call check( nf90_put_att(ncid, NF90_GLOBAL, "GMT",12.))
+  call check( nf90_put_att(ncid, NF90_GLOBAL, "JULYR",1990))
+  call check( nf90_put_att(ncid, NF90_GLOBAL, "JULDAY",1))
+  call check( nf90_put_att(ncid, NF90_GLOBAL, "MAP_PROJ",1))
+  call check( nf90_put_att(ncid, NF90_GLOBAL, "MMINLU","USGS"))
+  call check( nf90_put_att(ncid, NF90_GLOBAL, "MECHANISM","None"))
+  call check( nf90_put_att(ncid, NF90_GLOBAL, "CREATION_DATE",hoy))
+!  Define las variables
+  call check( nf90_def_var(ncid, "Times", NF90_CHAR, dimids2,id_unlimit ) )
+  call check( nf90_def_var(ncid, "XLONG", NF90_REAL,(/id_dim(3),id_dim(4),id_dim(1)/),id_varlong) )
+  call check( nf90_def_var(ncid, "XLAT", NF90_REAL,(/id_dim(3),id_dim(4),id_dim(1)/),id_varlat ) )
+
+! Assign  attributes
+  call check( nf90_put_att(ncid, id_varlong, "FieldType", 104 ) )
+  call check( nf90_put_att(ncid, id_varlong, "MemoryOrder", "XYZ") )
+  call check( nf90_put_att(ncid, id_varlong, "description", "LONGITUDE, WEST IS NEGATIVE") )
+  call check( nf90_put_att(ncid, id_varlong, "units", "degree_east"))
+  call check( nf90_put_att(ncid, id_varlong, "axis", "X") )
+  call check( nf90_put_att(ncid, id_varlat, "FieldType", 104 ) )
+  call check( nf90_put_att(ncid, id_varlat, "MemoryOrder", "XYZ") )
+  call check( nf90_put_att(ncid, id_varlat, "description", "LATITUDE, SOUTH IS NEGATIVE") )
+  call check( nf90_put_att(ncid, id_varlat, "units", "degree_north"))
+  call check( nf90_put_att(ncid, id_varlat, "axis", "X") )
+!  Attributos para cada variable
+  do i=1,nspc
+   call crea_attr(ncid,4,dimids4,ename(i),cname(i),"g km^-2 s^-1",id_var(i))
+  end do
+!   Terminan definiciones
+  call check( nf90_enddef(ncid) )
+  do iday=1,ntypd
+  write(6,182) iday
+  write(current_date(09:10),'(I2.2)') iday+4
+  tiempo: do it=1,nhr
+    iit=it+24*(iday-1)
+    write(current_date(12:13),'(I2.2)') it-1
+    Times(1,1)=current_date(1:19)
+    write(6,'(A,x,I2.2)')'TIEMPO: ', iit
+    call check( nf90_put_var(ncid, id_unlimit,Times,start=(/1,iit/)) )
+    call check( nf90_put_var(ncid, id_varlong,xlong,start=(/1,1,iit/)) )
+    call check( nf90_put_var(ncid, id_varlat,xlat,start=(/1,1,iit/)) )
+   
+    do ispc=1,nspc
+      do i=1,nx
+        do j=1,ny
+          k=i+28*(j-1)
+          emis(i,j,1,1)=emision(k,it,ispc,iday)
+        end do
+      end do
+      call check( nf90_put_var(ncid, id_var(ispc),emis,start=(/1,1,1,iit/)))
+    end do
+   end do TIEMPO
+  end do
+  call check( nf90_close(ncid) )
+180 format(7X,'      Wrinting in output file for netcdf')
+181 format(7X,'      Atributos Globales NF90_GLOBAL')
+182 format(7X,'      Guarda variables dia: ',I2.2)
+end subroutine guarda_malla_nc
+!        _       _ _ _
+! __   _(_) __ _| (_) |_ _   _
+! \ \ / / |/ _` | | | __| | | |
+!  \ V /| | (_| | | | |_| |_| |
+!   \_/ |_|\__,_|_|_|\__|\__, |
+!                        |___/
 !>  @brief Localization of the viality and depending of his type it
 !>  assings  the value of start or fcorr, and longitud
 !>  @author Jose Agustin Garcia Reynoso
@@ -367,6 +564,12 @@ end subroutine guarda_malla
 !*********             END OF SUBROUTINE VIALITY             *********
 !*********************************************************************
   end
+!                 _      __            ____
+!   ___ _ __ ___ (_)___ / _| __ _  ___|___ \
+!  / _ \ '_ ` _ \| / __| |_ / _` |/ __| __) |
+! |  __/ | | | | | \__ \  _| (_| | (__ / __/
+!  \___|_| |_| |_|_|___/_|  \__,_|\___|_____|
+!
 !>  @brief Emission factor computation for velociity and EF array
 !>  @author Jose Agustin Garcia Reynoso
 !>  @date 07/22/2020
@@ -422,8 +625,105 @@ end subroutine guarda_malla
 !*********             END OF FUNCTION EMISFAC2              *********
 !*********************************************************************
   end
+!       _               _
+!   ___| |__   ___  ___| | __
+!  / __| '_ \ / _ \/ __| |/ /
+! | (__| | | |  __/ (__|   <
+!  \___|_| |_|\___|\___|_|\_\
+!>  @brief Verifies no error in netcdf function call
+!>  @param status NetCDF functions return a non-zero status codes on error.
+subroutine check(status)
+use netcdf
+    integer, intent ( in) :: status
+    if(status /= nf90_noerr) then
+        print *, trim(nf90_strerror(status))
+        stop 2
+    end if
+end subroutine check
+!  _ __ ___   ___  ___
+! | '_ ` _ \ / _ \/ __|
+! | | | | | |  __/\__ \
+! |_| |_| |_|\___||___/
+!
+!>  @brief Returns the month in characters from month number
+!>   @author  Jose Agustin Garcia Reynoso
+!>   @date  07/13/2020
+!>   @version  2.2
+!>   @copyright Universidad Nacional Autonoma de Mexico 2020
+!>   @param  num number of the month
+character(len=3)function mes(num)
+    character*2 num
+    select case (num)
+    case('01');mes='Jan'
+    case('02');mes='Feb'
+    case('03');mes='Mar'
+    case('04');mes='Apr'
+    case('05');mes='May'
+    case('06');mes='Jun'
+    case('07');mes='Jul'
+    case('08');mes='Aug'
+    case('09');mes='Sep'
+    case('10');mes='Oct'
+    case('11');mes='Nov'
+    case('12');mes='Dec'
+    case default
+        print *,"   **************************"
+        print *,"Month:",num," does not exists!!"
+        print *,"   **************************"
+        stop  "End program, review namelist_emiss.nml"
+    end select
+    return
+end function
+!   ___ _ __ ___  __ _     __ _| |_| |_ _ __
+!  / __| '__/ _ \/ _` |   / _` | __| __| '__|
+! | (__| | |  __/ (_| |  | (_| | |_| |_| |
+!  \___|_|  \___|\__,_|___\__,_|\__|\__|_|
+!                    |_____|
+!>  @brief Creates attributes for each variable in the netcdf file
+!>   @author  Jose Agustin Garcia Reynoso
+!>   @date  07/13/2020
+!>   @version  2.2
+!>   @copyright Universidad Nacional Autonoma de Mexico 2020
+!>   @param ncid netcdf file ID
+!>   @param idm number of items in dimids array
+!>   @param dimids ID dimensons array
+!>   @param svar variable name
+!>   @param cname description variable name
+!>   @param cunits units of the variable
+!>   @param id_var variable ID
+subroutine crea_attr(ncid,idm,dimids,svar,cname,cunits,id_var)
+use netcdf
+    implicit none
+    integer , INTENT(IN) ::ncid,idm
+    integer, INTENT(out) :: id_var
+    integer, INTENT(IN),dimension(idm):: dimids
+    character(len=*), INTENT(IN)::svar,cname,cunits
+    character(len=50) :: cvar
+    cvar="Emissions rate of "//trim(cname)
 
+    call check( nf90_def_var(ncid, svar, NF90_REAL, dimids,id_var ) )
+    ! Assign  attributes
+    call check( nf90_put_att(ncid, id_var, "FieldType", 104 ) )
+    call check( nf90_put_att(ncid, id_var, "MemoryOrder", "XYZ") )
+    call check( nf90_put_att(ncid, id_var, "description", Cvar) )
+    call check( nf90_put_att(ncid, id_var, "units", cunits))
+    call check( nf90_put_att(ncid, id_var, "stagger", "Z") )
+    call check( nf90_put_att(ncid, id_var, "coordinates", "XLONG XLAT") )
+    ! print *,"Entro a Attributos de variable",dimids,id,jd
+    return
+end subroutine crea_attr
 end module grid_temp_mod
+!             _     _
+!   __ _ _ __(_) __| |
+!  / _` | '__| |/ _` |
+! | (_| | |  | | (_| |
+!  \__, |_|  |_|\__,_|
+!  |___/                _ _    _
+!  _ __ ___   _____   _(_) |  | |_ ___ _ __ ___  _ __
+! | '_ ` _ \ / _ \ \ / / | |  | __/ _ \ '_ ` _ \| '_ \
+! | | | | | | (_) \ V /| | |  | ||  __/ | | | | | |_) |
+! |_| |_| |_|\___/ \_/ |_|_|___\__\___|_| |_| |_| .__/
+!                         |_____|               |_|
 !>  @brief Program to obtain the temporal distribution over CDMX
 !>  @author Jose Agustin Garcia Reynoso
 !>  @date 07/20/2020
@@ -441,4 +741,7 @@ use grid_temp_mod
   call genera_malla
 
   call guarda_malla
+
+  call guarda_malla_nc
+
 end program
