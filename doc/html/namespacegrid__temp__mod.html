@@ -86,7 +86,7 @@ Functions/Subroutines</h2></td></tr>
 <tr class="memdesc:afa7a8c03e37419efbd68210dc52afd8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads for each grid the numbero fo vehicles per category by hour.  <a href="namespacegrid__temp__mod.html#afa7a8c03e37419efbd68210dc52afd8f">More...</a><br /></td></tr>
 <tr class="separator:afa7a8c03e37419efbd68210dc52afd8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34b692b2fd944917fbf3c0b9d82b95b5"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a34b692b2fd944917fbf3c0b9d82b95b5">lee_factor_emision</a></td></tr>
-<tr class="memdesc:a34b692b2fd944917fbf3c0b9d82b95b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads emissions factor from EPA, and for cool start.  <a href="namespacegrid__temp__mod.html#a34b692b2fd944917fbf3c0b9d82b95b5">More...</a><br /></td></tr>
+<tr class="memdesc:a34b692b2fd944917fbf3c0b9d82b95b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads emissions factor from EPA, and for cold engine car start.  <a href="namespacegrid__temp__mod.html#a34b692b2fd944917fbf3c0b9d82b95b5">More...</a><br /></td></tr>
 <tr class="separator:a34b692b2fd944917fbf3c0b9d82b95b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8376d5fa8d301a411ef5ddfc7c0bd47c"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a8376d5fa8d301a411ef5ddfc7c0bd47c">genera_malla</a></td></tr>
 <tr class="memdesc:a8376d5fa8d301a411ef5ddfc7c0bd47c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make a single array with emissions.  <a href="namespacegrid__temp__mod.html#a8376d5fa8d301a411ef5ddfc7c0bd47c">More...</a><br /></td></tr>
@@ -97,9 +97,9 @@ Functions/Subroutines</h2></td></tr>
 <tr class="memitem:aa4886cc9c5b98c31b47b5f2b304a75cd"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#aa4886cc9c5b98c31b47b5f2b304a75cd">guarda_malla_nc</a></td></tr>
 <tr class="memdesc:aa4886cc9c5b98c31b47b5f2b304a75cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stores the mesh in a netcdf file.  <a href="namespacegrid__temp__mod.html#aa4886cc9c5b98c31b47b5f2b304a75cd">More...</a><br /></td></tr>
 <tr class="separator:aa4886cc9c5b98c31b47b5f2b304a75cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1e856df621db36ed7942434448b9f01"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#ab1e856df621db36ed7942434448b9f01">viality</a> (ig, id, ig2, <a class="el" href="namespacegrid__temp__mod.html#a938354ffb8ddf9cf2836f8ddf01aeac9">isrc</a>, <a class="el" href="namespacegrid__temp__mod.html#a0069e18fa673a230f1d7c34c4cc9ec01">kstype</a>, <a class="el" href="namespacegrid__temp__mod.html#a99c96e01ffe66239cd9fec95118e9024">slen</a>, <a class="el" href="namespacegrid__temp__mod.html#aff9cea242ed72c56db67655baf3b0db5">fcor</a>, <a class="el" href="namespacegrid__temp__mod.html#a5523188ebc28299274ba575fe0b9333c">start</a>, nh, fcorr, ffr, sl)</td></tr>
-<tr class="memdesc:ab1e856df621db36ed7942434448b9f01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localization of the viality and depending of his type it assings the value of start or fcorr, and longitud.  <a href="namespacegrid__temp__mod.html#ab1e856df621db36ed7942434448b9f01">More...</a><br /></td></tr>
-<tr class="separator:ab1e856df621db36ed7942434448b9f01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72ee45184ecc1423fb6a020535f9977a"><td class="memItemLeft" align="right" valign="top">subroutine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a72ee45184ecc1423fb6a020535f9977a">viality</a> (ig, id, ig2, isrc, kstype, slen, <a class="el" href="namespacegrid__temp__mod.html#aff9cea242ed72c56db67655baf3b0db5">fcor</a>, <a class="el" href="namespacegrid__temp__mod.html#a494eb5835e05fbbe2acfce958e427bb2">f_cold_engine_car</a>, nh, fcorr, ffr, sl)</td></tr>
+<tr class="memdesc:a72ee45184ecc1423fb6a020535f9977a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Localization of the viality and depending of his type it assings the value of cold start fraction (ffr), fcorr, and longitud.  <a href="namespacegrid__temp__mod.html#a72ee45184ecc1423fb6a020535f9977a">More...</a><br /></td></tr>
+<tr class="separator:a72ee45184ecc1423fb6a020535f9977a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2e27c09c6dc8e4f92f3fdcff13d27c2d"><td class="memItemLeft" align="right" valign="top">real function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a2e27c09c6dc8e4f92f3fdcff13d27c2d">emisfac2</a> (ncartype, velocity, vem, comp)</td></tr>
 <tr class="memdesc:a2e27c09c6dc8e4f92f3fdcff13d27c2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emission factor computation for velociity and EF array.  <a href="namespacegrid__temp__mod.html#a2e27c09c6dc8e4f92f3fdcff13d27c2d">More...</a><br /></td></tr>
 <tr class="separator:a2e27c09c6dc8e4f92f3fdcff13d27c2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -145,42 +145,42 @@ Variables</h2></td></tr>
 <tr class="memitem:a5472ad8a7fe057fbf1e6470e603cae4e"><td class="memItemLeft" align="right" valign="top">integer, parameter&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a5472ad8a7fe057fbf1e6470e603cae4e">natt</a> =5554</td></tr>
 <tr class="memdesc:a5472ad8a7fe057fbf1e6470e603cae4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of viality lengths.  <a href="namespacegrid__temp__mod.html#a5472ad8a7fe057fbf1e6470e603cae4e">More...</a><br /></td></tr>
 <tr class="separator:a5472ad8a7fe057fbf1e6470e603cae4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a85aacfe4ef40a8a631570fb07b84ce56"><td class="memItemLeft" align="right" valign="top">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#aaeba93359f7343eef758e03917ad01fc">nint</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a85aacfe4ef40a8a631570fb07b84ce56">idcell</a></td></tr>
-<tr class="memdesc:a85aacfe4ef40a8a631570fb07b84ce56"><td class="mdescLeft">&#160;</td><td class="mdescRight">cell ID from the used mesh from intersection  <a href="namespacegrid__temp__mod.html#a85aacfe4ef40a8a631570fb07b84ce56">More...</a><br /></td></tr>
-<tr class="separator:a85aacfe4ef40a8a631570fb07b84ce56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9763488a29bfbd0b4320f774d1ac2212"><td class="memItemLeft" align="right" valign="top">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#aaeba93359f7343eef758e03917ad01fc">nint</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a9763488a29bfbd0b4320f774d1ac2212">igeo</a></td></tr>
-<tr class="memdesc:a9763488a29bfbd0b4320f774d1ac2212"><td class="mdescLeft">&#160;</td><td class="mdescRight">Source Type (1 line 2 Area) from intersection.  <a href="namespacegrid__temp__mod.html#a9763488a29bfbd0b4320f774d1ac2212">More...</a><br /></td></tr>
-<tr class="separator:a9763488a29bfbd0b4320f774d1ac2212"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6ae270eb1c509902f7f7a3356d0b46d"><td class="memItemLeft" align="right" valign="top">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#aaeba93359f7343eef758e03917ad01fc">nint</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#aa6ae270eb1c509902f7f7a3356d0b46d">idsrc</a></td></tr>
-<tr class="memdesc:aa6ae270eb1c509902f7f7a3356d0b46d"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID for viality segment from intersection.  <a href="namespacegrid__temp__mod.html#aa6ae270eb1c509902f7f7a3356d0b46d">More...</a><br /></td></tr>
-<tr class="separator:aa6ae270eb1c509902f7f7a3356d0b46d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a938354ffb8ddf9cf2836f8ddf01aeac9"><td class="memItemLeft" align="right" valign="top">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#aaeba93359f7343eef758e03917ad01fc">nint</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a938354ffb8ddf9cf2836f8ddf01aeac9">isrc</a></td></tr>
-<tr class="memdesc:a938354ffb8ddf9cf2836f8ddf01aeac9"><td class="mdescLeft">&#160;</td><td class="mdescRight">GEOmetry ID for viality from intersection.  <a href="namespacegrid__temp__mod.html#a938354ffb8ddf9cf2836f8ddf01aeac9">More...</a><br /></td></tr>
-<tr class="separator:a938354ffb8ddf9cf2836f8ddf01aeac9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6a1046f5597788d01e8cd2c76b95af3"><td class="memItemLeft" align="right" valign="top">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#af3811c7b385527a18842e363878a34a3">nic</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#ad6a1046f5597788d01e8cd2c76b95af3">grid_id</a></td></tr>
-<tr class="memdesc:ad6a1046f5597788d01e8cd2c76b95af3"><td class="mdescLeft">&#160;</td><td class="mdescRight">GRID ID from the used mesh.  <a href="namespacegrid__temp__mod.html#ad6a1046f5597788d01e8cd2c76b95af3">More...</a><br /></td></tr>
-<tr class="separator:ad6a1046f5597788d01e8cd2c76b95af3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27685ac7d9fc233a27b3b37c73224dba"><td class="memItemLeft" align="right" valign="top">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#aaeba93359f7343eef758e03917ad01fc">nint</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a27685ac7d9fc233a27b3b37c73224dba">id_grid_int</a></td></tr>
+<tr class="memdesc:a27685ac7d9fc233a27b3b37c73224dba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Grid ID from the used mesh from intersection.  <a href="namespacegrid__temp__mod.html#a27685ac7d9fc233a27b3b37c73224dba">More...</a><br /></td></tr>
+<tr class="separator:a27685ac7d9fc233a27b3b37c73224dba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc329b0f78f686e4147ff93087452fa9"><td class="memItemLeft" align="right" valign="top">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#aaeba93359f7343eef758e03917ad01fc">nint</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#acc329b0f78f686e4147ff93087452fa9">geometry_type</a></td></tr>
+<tr class="memdesc:acc329b0f78f686e4147ff93087452fa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Geometry source type (1 line 2 Area) from intersection.  <a href="namespacegrid__temp__mod.html#acc329b0f78f686e4147ff93087452fa9">More...</a><br /></td></tr>
+<tr class="separator:acc329b0f78f686e4147ff93087452fa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac75a19ff0dbc05bab2f8a7ef412bddc0"><td class="memItemLeft" align="right" valign="top">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#aaeba93359f7343eef758e03917ad01fc">nint</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#ac75a19ff0dbc05bab2f8a7ef412bddc0">id_source_int</a></td></tr>
+<tr class="memdesc:ac75a19ff0dbc05bab2f8a7ef412bddc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Viality segment ID from intersection.  <a href="namespacegrid__temp__mod.html#ac75a19ff0dbc05bab2f8a7ef412bddc0">More...</a><br /></td></tr>
+<tr class="separator:ac75a19ff0dbc05bab2f8a7ef412bddc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa91213edccfedcf219564e53dbe55ab1"><td class="memItemLeft" align="right" valign="top">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#aaeba93359f7343eef758e03917ad01fc">nint</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#aa91213edccfedcf219564e53dbe55ab1">geo_type_int</a></td></tr>
+<tr class="memdesc:aa91213edccfedcf219564e53dbe55ab1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Geometry source type from intersection 2nd viality or area.  <a href="namespacegrid__temp__mod.html#aa91213edccfedcf219564e53dbe55ab1">More...</a><br /></td></tr>
+<tr class="separator:aa91213edccfedcf219564e53dbe55ab1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fbda85fbc5ac3ccb3372379fcd6967c"><td class="memItemLeft" align="right" valign="top">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#af3811c7b385527a18842e363878a34a3">nic</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a3fbda85fbc5ac3ccb3372379fcd6967c">id_grid</a></td></tr>
+<tr class="memdesc:a3fbda85fbc5ac3ccb3372379fcd6967c"><td class="mdescLeft">&#160;</td><td class="mdescRight">GRID ID for each cell in the emissions mesh.  <a href="namespacegrid__temp__mod.html#a3fbda85fbc5ac3ccb3372379fcd6967c">More...</a><br /></td></tr>
+<tr class="separator:a3fbda85fbc5ac3ccb3372379fcd6967c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a28ed3d02c9f1a4a027404bfcb93d2430"><td class="memItemLeft" align="right" valign="top">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#a2a33fe55ba7cd2babcda4e0b9271a11f">ntd</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a28ed3d02c9f1a4a027404bfcb93d2430">id_time_period</a></td></tr>
-<tr class="memdesc:a28ed3d02c9f1a4a027404bfcb93d2430"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID of period time.  <a href="namespacegrid__temp__mod.html#a28ed3d02c9f1a4a027404bfcb93d2430">More...</a><br /></td></tr>
+<tr class="memdesc:a28ed3d02c9f1a4a027404bfcb93d2430"><td class="mdescLeft">&#160;</td><td class="mdescRight">Period time ID 1-weekday 2-saturday 3-Sunday.  <a href="namespacegrid__temp__mod.html#a28ed3d02c9f1a4a027404bfcb93d2430">More...</a><br /></td></tr>
 <tr class="separator:a28ed3d02c9f1a4a027404bfcb93d2430"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e2b92292dd8572f8d15e14eaf386638"><td class="memItemLeft" align="right" valign="top">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#a2a33fe55ba7cd2babcda4e0b9271a11f">ntd</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a6e2b92292dd8572f8d15e14eaf386638">itype</a></td></tr>
-<tr class="memdesc:a6e2b92292dd8572f8d15e14eaf386638"><td class="mdescLeft">&#160;</td><td class="mdescRight">Source type.  <a href="namespacegrid__temp__mod.html#a6e2b92292dd8572f8d15e14eaf386638">More...</a><br /></td></tr>
-<tr class="separator:a6e2b92292dd8572f8d15e14eaf386638"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a943bc4fe2e98fe5c1f416475133daa24"><td class="memItemLeft" align="right" valign="top">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#a2a33fe55ba7cd2babcda4e0b9271a11f">ntd</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a943bc4fe2e98fe5c1f416475133daa24">isource</a></td></tr>
-<tr class="memdesc:a943bc4fe2e98fe5c1f416475133daa24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Viality ID from src_td.  <a href="namespacegrid__temp__mod.html#a943bc4fe2e98fe5c1f416475133daa24">More...</a><br /></td></tr>
-<tr class="separator:a943bc4fe2e98fe5c1f416475133daa24"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a230cf9fd2205247b8a531b107430479b"><td class="memItemLeft" align="right" valign="top">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#a5472ad8a7fe057fbf1e6470e603cae4e">natt</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a230cf9fd2205247b8a531b107430479b">idsrc2</a></td></tr>
-<tr class="memdesc:a230cf9fd2205247b8a531b107430479b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Source identification from file src_attr.txt.  <a href="namespacegrid__temp__mod.html#a230cf9fd2205247b8a531b107430479b">More...</a><br /></td></tr>
-<tr class="separator:a230cf9fd2205247b8a531b107430479b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a473d7917fa2fb4c2b86e8f642e50c0f4"><td class="memItemLeft" align="right" valign="top">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#a5472ad8a7fe057fbf1e6470e603cae4e">natt</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a473d7917fa2fb4c2b86e8f642e50c0f4">igeo2</a></td></tr>
-<tr class="memdesc:a473d7917fa2fb4c2b86e8f642e50c0f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of source (1 Line 2 Area) from file src_attr.txt.  <a href="namespacegrid__temp__mod.html#a473d7917fa2fb4c2b86e8f642e50c0f4">More...</a><br /></td></tr>
-<tr class="separator:a473d7917fa2fb4c2b86e8f642e50c0f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0069e18fa673a230f1d7c34c4cc9ec01"><td class="memItemLeft" align="right" valign="top">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#a5472ad8a7fe057fbf1e6470e603cae4e">natt</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a0069e18fa673a230f1d7c34c4cc9ec01">kstype</a></td></tr>
-<tr class="memdesc:a0069e18fa673a230f1d7c34c4cc9ec01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Source classification.  <a href="namespacegrid__temp__mod.html#a0069e18fa673a230f1d7c34c4cc9ec01">More...</a><br /></td></tr>
-<tr class="separator:a0069e18fa673a230f1d7c34c4cc9ec01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4eb5085321c46d6d415426a682173dd0"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a72b4fa4edc2e871d0645f489e4d02e74">nhr</a>, <a class="el" href="namespacegrid__temp__mod.html#a2a33fe55ba7cd2babcda4e0b9271a11f">ntd</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a4eb5085321c46d6d415426a682173dd0">autn</a></td></tr>
-<tr class="memdesc:a4eb5085321c46d6d415426a682173dd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of cars in a specifil viality and hour.  <a href="namespacegrid__temp__mod.html#a4eb5085321c46d6d415426a682173dd0">More...</a><br /></td></tr>
-<tr class="separator:a4eb5085321c46d6d415426a682173dd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09b90a7a147b6fa7183875c896a83cad"><td class="memItemLeft" align="right" valign="top">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#a2a33fe55ba7cd2babcda4e0b9271a11f">ntd</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a09b90a7a147b6fa7183875c896a83cad">veh_type</a></td></tr>
+<tr class="memdesc:a09b90a7a147b6fa7183875c896a83cad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vehicular source type ID= 11 to 18.  <a href="namespacegrid__temp__mod.html#a09b90a7a147b6fa7183875c896a83cad">More...</a><br /></td></tr>
+<tr class="separator:a09b90a7a147b6fa7183875c896a83cad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b1ec1959eeea5978a7ca85068591c14"><td class="memItemLeft" align="right" valign="top">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#a2a33fe55ba7cd2babcda4e0b9271a11f">ntd</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a5b1ec1959eeea5978a7ca85068591c14">id_source_td</a></td></tr>
+<tr class="memdesc:a5b1ec1959eeea5978a7ca85068591c14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Viality segment ID from src_td.  <a href="namespacegrid__temp__mod.html#a5b1ec1959eeea5978a7ca85068591c14">More...</a><br /></td></tr>
+<tr class="separator:a5b1ec1959eeea5978a7ca85068591c14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbf5cdcc881315d117baee9d1d596110"><td class="memItemLeft" align="right" valign="top">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#a5472ad8a7fe057fbf1e6470e603cae4e">natt</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#abbf5cdcc881315d117baee9d1d596110">id_source_att</a></td></tr>
+<tr class="memdesc:abbf5cdcc881315d117baee9d1d596110"><td class="mdescLeft">&#160;</td><td class="mdescRight">Source identification from file src_attr.txt.  <a href="namespacegrid__temp__mod.html#abbf5cdcc881315d117baee9d1d596110">More...</a><br /></td></tr>
+<tr class="separator:abbf5cdcc881315d117baee9d1d596110"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2a8e641ef4671e2ead43204607d8d51"><td class="memItemLeft" align="right" valign="top">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#a5472ad8a7fe057fbf1e6470e603cae4e">natt</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#aa2a8e641ef4671e2ead43204607d8d51">geometry_type2</a></td></tr>
+<tr class="memdesc:aa2a8e641ef4671e2ead43204607d8d51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Geometry source type (1 Line 2 Area) from file src_attr.txt.  <a href="namespacegrid__temp__mod.html#aa2a8e641ef4671e2ead43204607d8d51">More...</a><br /></td></tr>
+<tr class="separator:aa2a8e641ef4671e2ead43204607d8d51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac88a06bc0f09f0cdacf1b790b39118a6"><td class="memItemLeft" align="right" valign="top">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#a5472ad8a7fe057fbf1e6470e603cae4e">natt</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#ac88a06bc0f09f0cdacf1b790b39118a6">source_type</a></td></tr>
+<tr class="memdesc:ac88a06bc0f09f0cdacf1b790b39118a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Source classification ID viality 1,5,6.  <a href="namespacegrid__temp__mod.html#ac88a06bc0f09f0cdacf1b790b39118a6">More...</a><br /></td></tr>
+<tr class="separator:ac88a06bc0f09f0cdacf1b790b39118a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ce62cbbd7fbec96f79c9c10207b77db"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a72b4fa4edc2e871d0645f489e4d02e74">nhr</a>, <a class="el" href="namespacegrid__temp__mod.html#a2a33fe55ba7cd2babcda4e0b9271a11f">ntd</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a6ce62cbbd7fbec96f79c9c10207b77db">number_cars</a></td></tr>
+<tr class="memdesc:a6ce62cbbd7fbec96f79c9c10207b77db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of cars in a specific viality and hour.  <a href="namespacegrid__temp__mod.html#a6ce62cbbd7fbec96f79c9c10207b77db">More...</a><br /></td></tr>
+<tr class="separator:a6ce62cbbd7fbec96f79c9c10207b77db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2d67aa450740f735eb567e1827a022d"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#af3811c7b385527a18842e363878a34a3">nic</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#af2d67aa450740f735eb567e1827a022d">long</a></td></tr>
 <tr class="memdesc:af2d67aa450740f735eb567e1827a022d"><td class="mdescLeft">&#160;</td><td class="mdescRight">total number of vehicles per hour in each grid  <a href="namespacegrid__temp__mod.html#af2d67aa450740f735eb567e1827a022d">More...</a><br /></td></tr>
 <tr class="separator:af2d67aa450740f735eb567e1827a022d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -188,56 +188,53 @@ Variables</h2></td></tr>
 <tr class="memdesc:afe5963d556f0446b42dd0a742c681e35"><td class="mdescLeft">&#160;</td><td class="mdescRight">latitude coordinate for the mesh  <a href="namespacegrid__temp__mod.html#afe5963d556f0446b42dd0a742c681e35">More...</a><br /></td></tr>
 <tr class="separator:afe5963d556f0446b42dd0a742c681e35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f3e2048bf362cb7debc704365bd38e9"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aaeba93359f7343eef758e03917ad01fc">nint</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a8f3e2048bf362cb7debc704365bd38e9">cutla</a></td></tr>
-<tr class="memdesc:a8f3e2048bf362cb7debc704365bd38e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cut-leng or cut-area of source segment.  <a href="namespacegrid__temp__mod.html#a8f3e2048bf362cb7debc704365bd38e9">More...</a><br /></td></tr>
+<tr class="memdesc:a8f3e2048bf362cb7debc704365bd38e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cut-lenght or cut-area of source segment.  <a href="namespacegrid__temp__mod.html#a8f3e2048bf362cb7debc704365bd38e9">More...</a><br /></td></tr>
 <tr class="separator:a8f3e2048bf362cb7debc704365bd38e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af37ddb943137368e3ce3dc09f470714b"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aaeba93359f7343eef758e03917ad01fc">nint</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#af37ddb943137368e3ce3dc09f470714b">cw</a></td></tr>
-<tr class="memdesc:af37ddb943137368e3ce3dc09f470714b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Relative weight of the viality in the grid.  <a href="namespacegrid__temp__mod.html#af37ddb943137368e3ce3dc09f470714b">More...</a><br /></td></tr>
-<tr class="separator:af37ddb943137368e3ce3dc09f470714b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99c96e01ffe66239cd9fec95118e9024"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a5472ad8a7fe057fbf1e6470e603cae4e">natt</a>, 2)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a99c96e01ffe66239cd9fec95118e9024">slen</a></td></tr>
-<tr class="memdesc:a99c96e01ffe66239cd9fec95118e9024"><td class="mdescLeft">&#160;</td><td class="mdescRight">Linear source lenght km.  <a href="namespacegrid__temp__mod.html#a99c96e01ffe66239cd9fec95118e9024">More...</a><br /></td></tr>
-<tr class="separator:a99c96e01ffe66239cd9fec95118e9024"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41fc85ee0a467ca55ca62f3e53b1dafa"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#af3811c7b385527a18842e363878a34a3">nic</a>, 8, 1:2)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a41fc85ee0a467ca55ca62f3e53b1dafa">scar</a></td></tr>
-<tr class="memdesc:a41fc85ee0a467ca55ca62f3e53b1dafa"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of vehicles  <a href="namespacegrid__temp__mod.html#a41fc85ee0a467ca55ca62f3e53b1dafa">More...</a><br /></td></tr>
-<tr class="separator:a41fc85ee0a467ca55ca62f3e53b1dafa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5624b7f3b9b25e48f59b423197fbd373"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aef97b9f0866d6f2abd635557268b7de3">nef</a>, <a class="el" href="namespacegrid__temp__mod.html#ac30a4777172a9784497b0fafd1571978">nfe</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a5624b7f3b9b25e48f59b423197fbd373">vele</a></td></tr>
-<tr class="memdesc:a5624b7f3b9b25e48f59b423197fbd373"><td class="mdescLeft">&#160;</td><td class="mdescRight">velocity in emissions factos  <a href="namespacegrid__temp__mod.html#a5624b7f3b9b25e48f59b423197fbd373">More...</a><br /></td></tr>
-<tr class="separator:a5624b7f3b9b25e48f59b423197fbd373"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a81e7f672adf2ad3ddcd0d216d5e1c7c2"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aef97b9f0866d6f2abd635557268b7de3">nef</a>, <a class="el" href="namespacegrid__temp__mod.html#ac30a4777172a9784497b0fafd1571978">nfe</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a81e7f672adf2ad3ddcd0d216d5e1c7c2">ehc</a></td></tr>
-<tr class="memdesc:a81e7f672adf2ad3ddcd0d216d5e1c7c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">VOC emission factor.  <a href="namespacegrid__temp__mod.html#a81e7f672adf2ad3ddcd0d216d5e1c7c2">More...</a><br /></td></tr>
-<tr class="separator:a81e7f672adf2ad3ddcd0d216d5e1c7c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f474b3f7584b1111c33f0e2c2bd515a"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aef97b9f0866d6f2abd635557268b7de3">nef</a>, <a class="el" href="namespacegrid__temp__mod.html#ac30a4777172a9784497b0fafd1571978">nfe</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a3f474b3f7584b1111c33f0e2c2bd515a">eco</a></td></tr>
-<tr class="memdesc:a3f474b3f7584b1111c33f0e2c2bd515a"><td class="mdescLeft">&#160;</td><td class="mdescRight">CO emission factor.  <a href="namespacegrid__temp__mod.html#a3f474b3f7584b1111c33f0e2c2bd515a">More...</a><br /></td></tr>
-<tr class="separator:a3f474b3f7584b1111c33f0e2c2bd515a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3d0b00ebc477e88091789ef478b80157"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aef97b9f0866d6f2abd635557268b7de3">nef</a>, <a class="el" href="namespacegrid__temp__mod.html#ac30a4777172a9784497b0fafd1571978">nfe</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a3d0b00ebc477e88091789ef478b80157">eno</a></td></tr>
-<tr class="memdesc:a3d0b00ebc477e88091789ef478b80157"><td class="mdescLeft">&#160;</td><td class="mdescRight">NO emission factor.  <a href="namespacegrid__temp__mod.html#a3d0b00ebc477e88091789ef478b80157">More...</a><br /></td></tr>
-<tr class="separator:a3d0b00ebc477e88091789ef478b80157"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7153684d66880a13fcffd6711d1c818f"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aa8ee7ca2b37965a08c997201b3622e2b">nef2</a>, 7)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a7153684d66880a13fcffd6711d1c818f">vele2</a></td></tr>
-<tr class="memdesc:a7153684d66880a13fcffd6711d1c818f"><td class="mdescLeft">&#160;</td><td class="mdescRight">velocity in emissions factos cold start  <a href="namespacegrid__temp__mod.html#a7153684d66880a13fcffd6711d1c818f">More...</a><br /></td></tr>
-<tr class="separator:a7153684d66880a13fcffd6711d1c818f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c386656fb8c0b5dbdbe263ed3dc01ec"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aa8ee7ca2b37965a08c997201b3622e2b">nef2</a>, 7)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a4c386656fb8c0b5dbdbe263ed3dc01ec">ehc2</a></td></tr>
-<tr class="memdesc:a4c386656fb8c0b5dbdbe263ed3dc01ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">VOC emission factor cold start.  <a href="namespacegrid__temp__mod.html#a4c386656fb8c0b5dbdbe263ed3dc01ec">More...</a><br /></td></tr>
-<tr class="separator:a4c386656fb8c0b5dbdbe263ed3dc01ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb10a028493c6bbae779dfe5242c8fff"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aa8ee7ca2b37965a08c997201b3622e2b">nef2</a>, 7)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#abb10a028493c6bbae779dfe5242c8fff">eco2</a></td></tr>
-<tr class="memdesc:abb10a028493c6bbae779dfe5242c8fff"><td class="mdescLeft">&#160;</td><td class="mdescRight">CO emission factor cold start.  <a href="namespacegrid__temp__mod.html#abb10a028493c6bbae779dfe5242c8fff">More...</a><br /></td></tr>
-<tr class="separator:abb10a028493c6bbae779dfe5242c8fff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35d87d322b6dce1dbbc48868c0fdee96"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aa8ee7ca2b37965a08c997201b3622e2b">nef2</a>, 7)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a35d87d322b6dce1dbbc48868c0fdee96">eno2</a></td></tr>
-<tr class="memdesc:a35d87d322b6dce1dbbc48868c0fdee96"><td class="mdescLeft">&#160;</td><td class="mdescRight">NO emission factor cold start.  <a href="namespacegrid__temp__mod.html#a35d87d322b6dce1dbbc48868c0fdee96">More...</a><br /></td></tr>
-<tr class="separator:a35d87d322b6dce1dbbc48868c0fdee96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48ecc9fe33621877b24dbf1642e4c7d4"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aaeba93359f7343eef758e03917ad01fc">nint</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a48ecc9fe33621877b24dbf1642e4c7d4">r_weight</a></td></tr>
+<tr class="memdesc:a48ecc9fe33621877b24dbf1642e4c7d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Relative weight of the viality in the grid.  <a href="namespacegrid__temp__mod.html#a48ecc9fe33621877b24dbf1642e4c7d4">More...</a><br /></td></tr>
+<tr class="separator:a48ecc9fe33621877b24dbf1642e4c7d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05486039350a5bd35bc5fb8465b1fd2d"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a5472ad8a7fe057fbf1e6470e603cae4e">natt</a>, 2)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a05486039350a5bd35bc5fb8465b1fd2d">source_size</a></td></tr>
+<tr class="memdesc:a05486039350a5bd35bc5fb8465b1fd2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Linear source lenght km or surface area km2 size.  <a href="namespacegrid__temp__mod.html#a05486039350a5bd35bc5fb8465b1fd2d">More...</a><br /></td></tr>
+<tr class="separator:a05486039350a5bd35bc5fb8465b1fd2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9d85f0c381295956dc7645be90014cc"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aef97b9f0866d6f2abd635557268b7de3">nef</a>, <a class="el" href="namespacegrid__temp__mod.html#ac30a4777172a9784497b0fafd1571978">nfe</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#aa9d85f0c381295956dc7645be90014cc">ef_speed</a></td></tr>
+<tr class="memdesc:aa9d85f0c381295956dc7645be90014cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">speed in emissions factos  <a href="namespacegrid__temp__mod.html#aa9d85f0c381295956dc7645be90014cc">More...</a><br /></td></tr>
+<tr class="separator:aa9d85f0c381295956dc7645be90014cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9092b028056ee9c06824a17fd53e9d9d"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aef97b9f0866d6f2abd635557268b7de3">nef</a>, <a class="el" href="namespacegrid__temp__mod.html#ac30a4777172a9784497b0fafd1571978">nfe</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a9092b028056ee9c06824a17fd53e9d9d">ef_hc</a></td></tr>
+<tr class="memdesc:a9092b028056ee9c06824a17fd53e9d9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">VOC emission factor.  <a href="namespacegrid__temp__mod.html#a9092b028056ee9c06824a17fd53e9d9d">More...</a><br /></td></tr>
+<tr class="separator:a9092b028056ee9c06824a17fd53e9d9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c520ac02794ed6b83e59a0e9543b737"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aef97b9f0866d6f2abd635557268b7de3">nef</a>, <a class="el" href="namespacegrid__temp__mod.html#ac30a4777172a9784497b0fafd1571978">nfe</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a6c520ac02794ed6b83e59a0e9543b737">ef_co</a></td></tr>
+<tr class="memdesc:a6c520ac02794ed6b83e59a0e9543b737"><td class="mdescLeft">&#160;</td><td class="mdescRight">CO emission factor.  <a href="namespacegrid__temp__mod.html#a6c520ac02794ed6b83e59a0e9543b737">More...</a><br /></td></tr>
+<tr class="separator:a6c520ac02794ed6b83e59a0e9543b737"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8187707173c97fc14225372f0b59dc4c"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aef97b9f0866d6f2abd635557268b7de3">nef</a>, <a class="el" href="namespacegrid__temp__mod.html#ac30a4777172a9784497b0fafd1571978">nfe</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a8187707173c97fc14225372f0b59dc4c">ef_no</a></td></tr>
+<tr class="memdesc:a8187707173c97fc14225372f0b59dc4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">NO emission factor.  <a href="namespacegrid__temp__mod.html#a8187707173c97fc14225372f0b59dc4c">More...</a><br /></td></tr>
+<tr class="separator:a8187707173c97fc14225372f0b59dc4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac62e37e2b38ba530a990ebec851e44d9"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aa8ee7ca2b37965a08c997201b3622e2b">nef2</a>, 7)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#ac62e37e2b38ba530a990ebec851e44d9">ef_speed_cold</a></td></tr>
+<tr class="memdesc:ac62e37e2b38ba530a990ebec851e44d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">speed in emissions factos cold start engine  <a href="namespacegrid__temp__mod.html#ac62e37e2b38ba530a990ebec851e44d9">More...</a><br /></td></tr>
+<tr class="separator:ac62e37e2b38ba530a990ebec851e44d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63ee3778c27abe753f04ebde2282fa4b"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aa8ee7ca2b37965a08c997201b3622e2b">nef2</a>, 7)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a63ee3778c27abe753f04ebde2282fa4b">ef_hc_cold</a></td></tr>
+<tr class="memdesc:a63ee3778c27abe753f04ebde2282fa4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">VOC emission factor cold start engine.  <a href="namespacegrid__temp__mod.html#a63ee3778c27abe753f04ebde2282fa4b">More...</a><br /></td></tr>
+<tr class="separator:a63ee3778c27abe753f04ebde2282fa4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15089791a3072e3226d743783e9dbac2"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aa8ee7ca2b37965a08c997201b3622e2b">nef2</a>, 7)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a15089791a3072e3226d743783e9dbac2">ef_co_cold</a></td></tr>
+<tr class="memdesc:a15089791a3072e3226d743783e9dbac2"><td class="mdescLeft">&#160;</td><td class="mdescRight">CO emission factor cold start engine.  <a href="namespacegrid__temp__mod.html#a15089791a3072e3226d743783e9dbac2">More...</a><br /></td></tr>
+<tr class="separator:a15089791a3072e3226d743783e9dbac2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae24b7eae701a1c8248aed100450a9975"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aa8ee7ca2b37965a08c997201b3622e2b">nef2</a>, 7)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#ae24b7eae701a1c8248aed100450a9975">ef_no_cold</a></td></tr>
+<tr class="memdesc:ae24b7eae701a1c8248aed100450a9975"><td class="mdescLeft">&#160;</td><td class="mdescRight">NO emission factor cold start engine.  <a href="namespacegrid__temp__mod.html#ae24b7eae701a1c8248aed100450a9975">More...</a><br /></td></tr>
+<tr class="separator:ae24b7eae701a1c8248aed100450a9975"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff9cea242ed72c56db67655baf3b0db5"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a72b4fa4edc2e871d0645f489e4d02e74">nhr</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#aff9cea242ed72c56db67655baf3b0db5">fcor</a></td></tr>
-<tr class="memdesc:aff9cea242ed72c56db67655baf3b0db5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Correction factor for start mode.  <a href="namespacegrid__temp__mod.html#aff9cea242ed72c56db67655baf3b0db5">More...</a><br /></td></tr>
+<tr class="memdesc:aff9cea242ed72c56db67655baf3b0db5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Correction factor for start engine mode.  <a href="namespacegrid__temp__mod.html#aff9cea242ed72c56db67655baf3b0db5">More...</a><br /></td></tr>
 <tr class="separator:aff9cea242ed72c56db67655baf3b0db5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5523188ebc28299274ba575fe0b9333c"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a72b4fa4edc2e871d0645f489e4d02e74">nhr</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a5523188ebc28299274ba575fe0b9333c">start</a></td></tr>
-<tr class="memdesc:a5523188ebc28299274ba575fe0b9333c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fraction of cars that starts cold.  <a href="namespacegrid__temp__mod.html#a5523188ebc28299274ba575fe0b9333c">More...</a><br /></td></tr>
-<tr class="separator:a5523188ebc28299274ba575fe0b9333c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94930c2f1f203c108ddd97e608f1d3b0"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a2c5cb6bbffe4f9b8caeb69d21b3c9255">nspc</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a94930c2f1f203c108ddd97e608f1d3b0">efact</a></td></tr>
-<tr class="memdesc:a94930c2f1f203c108ddd97e608f1d3b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emission factor at speed vel.  <a href="namespacegrid__temp__mod.html#a94930c2f1f203c108ddd97e608f1d3b0">More...</a><br /></td></tr>
-<tr class="separator:a94930c2f1f203c108ddd97e608f1d3b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ace6cf973a433c3b9f41c1a1a153035"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a2c5cb6bbffe4f9b8caeb69d21b3c9255">nspc</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a7ace6cf973a433c3b9f41c1a1a153035">efac2</a></td></tr>
-<tr class="memdesc:a7ace6cf973a433c3b9f41c1a1a153035"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emission factor cold start at speed vel.  <a href="namespacegrid__temp__mod.html#a7ace6cf973a433c3b9f41c1a1a153035">More...</a><br /></td></tr>
-<tr class="separator:a7ace6cf973a433c3b9f41c1a1a153035"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac5adb1f1a0e76fa062dfc34793977895"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a72b4fa4edc2e871d0645f489e4d02e74">nhr</a>, <a class="el" href="namespacegrid__temp__mod.html#a2a33fe55ba7cd2babcda4e0b9271a11f">ntd</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#ac5adb1f1a0e76fa062dfc34793977895">vel</a></td></tr>
-<tr class="memdesc:ac5adb1f1a0e76fa062dfc34793977895"><td class="mdescLeft">&#160;</td><td class="mdescRight">Street velocity from src_td.  <a href="namespacegrid__temp__mod.html#ac5adb1f1a0e76fa062dfc34793977895">More...</a><br /></td></tr>
-<tr class="separator:ac5adb1f1a0e76fa062dfc34793977895"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a494eb5835e05fbbe2acfce958e427bb2"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a72b4fa4edc2e871d0645f489e4d02e74">nhr</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a494eb5835e05fbbe2acfce958e427bb2">f_cold_engine_car</a></td></tr>
+<tr class="memdesc:a494eb5835e05fbbe2acfce958e427bb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fraction of cold engine cars.  <a href="namespacegrid__temp__mod.html#a494eb5835e05fbbe2acfce958e427bb2">More...</a><br /></td></tr>
+<tr class="separator:a494eb5835e05fbbe2acfce958e427bb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3c1b212b456e8d2acd6cb0fab7774a7"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a2c5cb6bbffe4f9b8caeb69d21b3c9255">nspc</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#ad3c1b212b456e8d2acd6cb0fab7774a7">emiss_factor</a></td></tr>
+<tr class="memdesc:ad3c1b212b456e8d2acd6cb0fab7774a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emission factor for specific specie.  <a href="namespacegrid__temp__mod.html#ad3c1b212b456e8d2acd6cb0fab7774a7">More...</a><br /></td></tr>
+<tr class="separator:ad3c1b212b456e8d2acd6cb0fab7774a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e97e1f1dffd06d7eccb220120380c70"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a2c5cb6bbffe4f9b8caeb69d21b3c9255">nspc</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#a3e97e1f1dffd06d7eccb220120380c70">emis_fact_cold</a></td></tr>
+<tr class="memdesc:a3e97e1f1dffd06d7eccb220120380c70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emission factor cold start for specific specie.  <a href="namespacegrid__temp__mod.html#a3e97e1f1dffd06d7eccb220120380c70">More...</a><br /></td></tr>
+<tr class="separator:a3e97e1f1dffd06d7eccb220120380c70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afba401689b2836d5e25e7f421b71ec2c"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a72b4fa4edc2e871d0645f489e4d02e74">nhr</a>, <a class="el" href="namespacegrid__temp__mod.html#a2a33fe55ba7cd2babcda4e0b9271a11f">ntd</a>)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#afba401689b2836d5e25e7f421b71ec2c">cars_speed</a></td></tr>
+<tr class="memdesc:afba401689b2836d5e25e7f421b71ec2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">cars speed in each viality from src_td  <a href="namespacegrid__temp__mod.html#afba401689b2836d5e25e7f421b71ec2c">More...</a><br /></td></tr>
+<tr class="separator:afba401689b2836d5e25e7f421b71ec2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3570ff515a2496fc7db7abf399f77b2"><td class="memItemLeft" align="right" valign="top">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#af3811c7b385527a18842e363878a34a3">nic</a>, <a class="el" href="namespacegrid__temp__mod.html#a2c5cb6bbffe4f9b8caeb69d21b3c9255">nspc</a>, <a class="el" href="namespacegrid__temp__mod.html#aec38730b4bc8f92020be426557e22d49">ntypd</a>, 8, 1:2)&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegrid__temp__mod.html#af3570ff515a2496fc7db7abf399f77b2">eday</a></td></tr>
 <tr class="memdesc:af3570ff515a2496fc7db7abf399f77b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total emission per day.  <a href="namespacegrid__temp__mod.html#af3570ff515a2496fc7db7abf399f77b2">More...</a><br /></td></tr>
 <tr class="separator:af3570ff515a2496fc7db7abf399f77b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -279,7 +276,7 @@ Variables</h2></td></tr>
 </table>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadCenter">itype </th><th class="markdownTableHeadLeft">Description </th><th class="markdownTableHeadCenter">itype </th><th class="markdownTableHeadLeft">Description  </th></tr>
+<th class="markdownTableHeadCenter">veh_type </th><th class="markdownTableHeadLeft">Description </th><th class="markdownTableHeadCenter">veh_type </th><th class="markdownTableHeadLeft">Description  </th></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyCenter">11 </td><td class="markdownTableBodyLeft">Automoviles </td><td class="markdownTableBodyCenter">15 </td><td class="markdownTableBodyLeft">Otros buses  </td></tr>
 <tr class="markdownTableRowEven">
@@ -317,8 +314,6 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00674">674</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
 
 </div>
 </div>
@@ -396,8 +391,6 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00733">733</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
 </div>
 </div>
 <a id="a2e27c09c6dc8e4f92f3fdcff13d27c2d"></a>
@@ -446,14 +439,12 @@ Variables</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ncartype</td><td>Type of vehicle </td></tr>
-    <tr><td class="paramname">velocity</td><td>speed in viality </td></tr>
-    <tr><td class="paramname">vem</td><td>velocity array from emission factors file </td></tr>
-    <tr><td class="paramname">comp</td><td>Emission factor for vel and specie </td></tr>
+    <tr><td class="paramname">velocity</td><td>vehicle speed in viality </td></tr>
+    <tr><td class="paramname">vem</td><td>Velocity array from emission factors file </td></tr>
+    <tr><td class="paramname">comp</td><td>Emission factor for vel and specie from emission factors file </td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00617">617</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
 
 </div>
 </div>
@@ -475,8 +466,6 @@ Variables</h2></td></tr>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Universidad Nacional Autonoma de Mexico </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00302">302</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
 </div>
 </div>
 <a id="a936197e0bd97c3ff6ba5a612738d45cb"></a>
@@ -497,8 +486,6 @@ Variables</h2></td></tr>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Universidad Nacional Autonoma de Mexico </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00368">368</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
 </div>
 </div>
 <a id="aa4886cc9c5b98c31b47b5f2b304a75cd"></a>
@@ -518,15 +505,13 @@ Variables</h2></td></tr>
 <dl class="section date"><dt>Date</dt><dd>07/20/2020 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Universidad Nacional Autonoma de Mexico </dd></dl>
-<p>latitude ID in netcdf file</p>
-<p>longitude ID in netcdf file</p>
-<p>pollutant emission ID in netcdf file</p>
-<p>longitude coordinates</p>
-<p>latitude coordinates</p>
-<p>emissions values</p>
+<p>id_varlat latitude ID in netcdf file</p>
+<p>id_varlong longitude ID in netcdf file</p>
+<p>id_var pollutant emission ID in netcdf file</p>
+<p>xlong longitude coordinates</p>
+<p>xlat latitude coordinates</p>
+<p>emis emissions values</p>
 <p>Emissions long name</p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00403">403</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
 
 </div>
 </div>
@@ -548,8 +533,6 @@ Variables</h2></td></tr>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Universidad Nacional Autonoma de Mexico </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00190">190</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
 </div>
 </div>
 <a id="a3033953d9ff67722c79705842971c457"></a>
@@ -570,8 +553,6 @@ Variables</h2></td></tr>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Universidad Nacional Autonoma de Mexico </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00147">147</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
 </div>
 </div>
 <a id="a34b692b2fd944917fbf3c0b9d82b95b5"></a>
@@ -586,13 +567,11 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reads emissions factor from EPA, and for cool start. </p>
+<p>Reads emissions factor from EPA, and for cold engine car start. </p>
 <dl class="section author"><dt>Author</dt><dd>Jose Agustin Garcia Reynoso </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>07/20/2020 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Universidad Nacional Autonoma de Mexico </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00228">228</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
 
 </div>
 </div>
@@ -623,8 +602,6 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00693">693</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
 
 </div>
 </div>
@@ -686,12 +663,10 @@ Variables</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00106">106</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
 </div>
 </div>
-<a id="ab1e856df621db36ed7942434448b9f01"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab1e856df621db36ed7942434448b9f01">&#9670;&nbsp;</a></span>viality()</h2>
+<a id="a72ee45184ecc1423fb6a020535f9977a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72ee45184ecc1423fb6a020535f9977a">&#9670;&nbsp;</a></span>viality()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -742,7 +717,7 @@ Variables</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">real, dimension(:), intent(in)&#160;</td>
-          <td class="paramname"><em>start</em>, </td>
+          <td class="paramname"><em>f_cold_engine_car</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -776,7 +751,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Localization of the viality and depending of his type it assings the value of start or fcorr, and longitud. </p>
+<p>Localization of the viality and depending of his type it assings the value of cold start fraction (ffr), fcorr, and longitud. </p>
 <dl class="section author"><dt>Author</dt><dd>Jose Agustin Garcia Reynoso </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>07/21/2020 </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
@@ -788,37 +763,33 @@ Variables</h2></td></tr>
     <tr><td class="paramname">ig2</td><td>Source Type (1 line 2 Area) from intersections </td></tr>
     <tr><td class="paramname">isrc</td><td>viality source identification from intersections </td></tr>
     <tr><td class="paramname">kstype</td><td>Source classification </td></tr>
-    <tr><td class="paramname">slen</td><td>Viality length in km </td></tr>
+    <tr><td class="paramname">slen</td><td>source size in km or km^2, for 1-line, 2-Area </td></tr>
     <tr><td class="paramname">fcor</td><td>correction factor for start mode </td></tr>
-    <tr><td class="paramname">start</td><td>car fraction staring cool </td></tr>
+    <tr><td class="paramname">f_cold_engine_car</td><td>car fraction staring cool </td></tr>
     <tr><td class="paramname">nh</td><td>time hour for set the EF </td></tr>
-    <tr><td class="paramname">fcorr</td><td>correction factor (out) </td></tr>
-    <tr><td class="paramname">ffr</td><td>correction factor (out) </td></tr>
+    <tr><td class="paramname">fcorr</td><td>correction factor of ffr (out) </td></tr>
+    <tr><td class="paramname">ffr</td><td>car fraction staring factor (out) </td></tr>
     <tr><td class="paramname">sl</td><td>Viality length in km (out) </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00552">552</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a id="a4eb5085321c46d6d415426a682173dd0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4eb5085321c46d6d415426a682173dd0">&#9670;&nbsp;</a></span>autn</h2>
+<a id="afba401689b2836d5e25e7f421b71ec2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afba401689b2836d5e25e7f421b71ec2c">&#9670;&nbsp;</a></span>cars_speed</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a72b4fa4edc2e871d0645f489e4d02e74">nhr</a>,<a class="el" href="namespacegrid__temp__mod.html#a2a33fe55ba7cd2babcda4e0b9271a11f">ntd</a>) grid_temp_mod::autn</td>
+          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a72b4fa4edc2e871d0645f489e4d02e74">nhr</a>,<a class="el" href="namespacegrid__temp__mod.html#a2a33fe55ba7cd2babcda4e0b9271a11f">ntd</a>) grid_temp_mod::cars_speed</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Number of cars in a specifil viality and hour. </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00057">57</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
+<p>cars speed in each viality from src_td </p>
 
 </div>
 </div>
@@ -834,63 +805,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Cut-leng or cut-area of source segment. </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00060">60</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
-</div>
-</div>
-<a id="af37ddb943137368e3ce3dc09f470714b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af37ddb943137368e3ce3dc09f470714b">&#9670;&nbsp;</a></span>cw</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aaeba93359f7343eef758e03917ad01fc">nint</a>) grid_temp_mod::cw</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Relative weight of the viality in the grid. </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00061">61</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
-</div>
-</div>
-<a id="a3f474b3f7584b1111c33f0e2c2bd515a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3f474b3f7584b1111c33f0e2c2bd515a">&#9670;&nbsp;</a></span>eco</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aef97b9f0866d6f2abd635557268b7de3">nef</a>,<a class="el" href="namespacegrid__temp__mod.html#ac30a4777172a9784497b0fafd1571978">nfe</a>) grid_temp_mod::eco</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>CO emission factor. </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00066">66</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
-</div>
-</div>
-<a id="abb10a028493c6bbae779dfe5242c8fff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abb10a028493c6bbae779dfe5242c8fff">&#9670;&nbsp;</a></span>eco2</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aa8ee7ca2b37965a08c997201b3622e2b">nef2</a>,7) grid_temp_mod::eco2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>CO emission factor cold start. </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00070">70</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
+<p>Cut-lenght or cut-area of source segment. </p>
 
 </div>
 </div>
@@ -908,79 +823,149 @@ Variables</h2></td></tr>
 
 <p>Total emission per day. </p>
 
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00077">77</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
 </div>
 </div>
-<a id="a7ace6cf973a433c3b9f41c1a1a153035"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ace6cf973a433c3b9f41c1a1a153035">&#9670;&nbsp;</a></span>efac2</h2>
+<a id="a6c520ac02794ed6b83e59a0e9543b737"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c520ac02794ed6b83e59a0e9543b737">&#9670;&nbsp;</a></span>ef_co</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a2c5cb6bbffe4f9b8caeb69d21b3c9255">nspc</a>) grid_temp_mod::efac2</td>
+          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aef97b9f0866d6f2abd635557268b7de3">nef</a>,<a class="el" href="namespacegrid__temp__mod.html#ac30a4777172a9784497b0fafd1571978">nfe</a>) grid_temp_mod::ef_co</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Emission factor cold start at speed vel. </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00075">75</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
+<p>CO emission factor. </p>
 
 </div>
 </div>
-<a id="a94930c2f1f203c108ddd97e608f1d3b0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a94930c2f1f203c108ddd97e608f1d3b0">&#9670;&nbsp;</a></span>efact</h2>
+<a id="a15089791a3072e3226d743783e9dbac2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15089791a3072e3226d743783e9dbac2">&#9670;&nbsp;</a></span>ef_co_cold</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a2c5cb6bbffe4f9b8caeb69d21b3c9255">nspc</a>) grid_temp_mod::efact</td>
+          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aa8ee7ca2b37965a08c997201b3622e2b">nef2</a>,7) grid_temp_mod::ef_co_cold</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Emission factor at speed vel. </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00074">74</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
+<p>CO emission factor cold start engine. </p>
 
 </div>
 </div>
-<a id="a81e7f672adf2ad3ddcd0d216d5e1c7c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a81e7f672adf2ad3ddcd0d216d5e1c7c2">&#9670;&nbsp;</a></span>ehc</h2>
+<a id="a9092b028056ee9c06824a17fd53e9d9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9092b028056ee9c06824a17fd53e9d9d">&#9670;&nbsp;</a></span>ef_hc</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aef97b9f0866d6f2abd635557268b7de3">nef</a>,<a class="el" href="namespacegrid__temp__mod.html#ac30a4777172a9784497b0fafd1571978">nfe</a>) grid_temp_mod::ehc</td>
+          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aef97b9f0866d6f2abd635557268b7de3">nef</a>,<a class="el" href="namespacegrid__temp__mod.html#ac30a4777172a9784497b0fafd1571978">nfe</a>) grid_temp_mod::ef_hc</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>VOC emission factor. </p>
 
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00065">65</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
 </div>
 </div>
-<a id="a4c386656fb8c0b5dbdbe263ed3dc01ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4c386656fb8c0b5dbdbe263ed3dc01ec">&#9670;&nbsp;</a></span>ehc2</h2>
+<a id="a63ee3778c27abe753f04ebde2282fa4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63ee3778c27abe753f04ebde2282fa4b">&#9670;&nbsp;</a></span>ef_hc_cold</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aa8ee7ca2b37965a08c997201b3622e2b">nef2</a>,7) grid_temp_mod::ehc2</td>
+          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aa8ee7ca2b37965a08c997201b3622e2b">nef2</a>,7) grid_temp_mod::ef_hc_cold</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>VOC emission factor cold start. </p>
+<p>VOC emission factor cold start engine. </p>
 
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00069">69</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
+</div>
+</div>
+<a id="a8187707173c97fc14225372f0b59dc4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8187707173c97fc14225372f0b59dc4c">&#9670;&nbsp;</a></span>ef_no</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aef97b9f0866d6f2abd635557268b7de3">nef</a>,<a class="el" href="namespacegrid__temp__mod.html#ac30a4777172a9784497b0fafd1571978">nfe</a>) grid_temp_mod::ef_no</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>NO emission factor. </p>
+
+</div>
+</div>
+<a id="ae24b7eae701a1c8248aed100450a9975"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae24b7eae701a1c8248aed100450a9975">&#9670;&nbsp;</a></span>ef_no_cold</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aa8ee7ca2b37965a08c997201b3622e2b">nef2</a>,7) grid_temp_mod::ef_no_cold</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>NO emission factor cold start engine. </p>
+
+</div>
+</div>
+<a id="aa9d85f0c381295956dc7645be90014cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9d85f0c381295956dc7645be90014cc">&#9670;&nbsp;</a></span>ef_speed</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aef97b9f0866d6f2abd635557268b7de3">nef</a>,<a class="el" href="namespacegrid__temp__mod.html#ac30a4777172a9784497b0fafd1571978">nfe</a>) grid_temp_mod::ef_speed</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>speed in emissions factos </p>
+
+</div>
+</div>
+<a id="ac62e37e2b38ba530a990ebec851e44d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac62e37e2b38ba530a990ebec851e44d9">&#9670;&nbsp;</a></span>ef_speed_cold</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aa8ee7ca2b37965a08c997201b3622e2b">nef2</a>,7) grid_temp_mod::ef_speed_cold</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>speed in emissions factos cold start engine </p>
+
+</div>
+</div>
+<a id="a3e97e1f1dffd06d7eccb220120380c70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e97e1f1dffd06d7eccb220120380c70">&#9670;&nbsp;</a></span>emis_fact_cold</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a2c5cb6bbffe4f9b8caeb69d21b3c9255">nspc</a>) grid_temp_mod::emis_fact_cold</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Emission factor cold start for specific specie. </p>
 
 </div>
 </div>
@@ -998,43 +983,37 @@ Variables</h2></td></tr>
 
 <p>Movil emision per cell,hour,specie,day type. </p>
 
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00078">78</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
 </div>
 </div>
-<a id="a3d0b00ebc477e88091789ef478b80157"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3d0b00ebc477e88091789ef478b80157">&#9670;&nbsp;</a></span>eno</h2>
+<a id="ad3c1b212b456e8d2acd6cb0fab7774a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3c1b212b456e8d2acd6cb0fab7774a7">&#9670;&nbsp;</a></span>emiss_factor</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aef97b9f0866d6f2abd635557268b7de3">nef</a>,<a class="el" href="namespacegrid__temp__mod.html#ac30a4777172a9784497b0fafd1571978">nfe</a>) grid_temp_mod::eno</td>
+          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a2c5cb6bbffe4f9b8caeb69d21b3c9255">nspc</a>) grid_temp_mod::emiss_factor</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>NO emission factor. </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00067">67</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
+<p>Emission factor for specific specie. </p>
 
 </div>
 </div>
-<a id="a35d87d322b6dce1dbbc48868c0fdee96"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35d87d322b6dce1dbbc48868c0fdee96">&#9670;&nbsp;</a></span>eno2</h2>
+<a id="a494eb5835e05fbbe2acfce958e427bb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a494eb5835e05fbbe2acfce958e427bb2">&#9670;&nbsp;</a></span>f_cold_engine_car</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aa8ee7ca2b37965a08c997201b3622e2b">nef2</a>,7) grid_temp_mod::eno2</td>
+          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a72b4fa4edc2e871d0645f489e4d02e74">nhr</a>) grid_temp_mod::f_cold_engine_car</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>NO emission factor cold start. </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00071">71</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
+<p>Fraction of cold engine cars. </p>
 
 </div>
 </div>
@@ -1050,27 +1029,135 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Correction factor for start mode. </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00072">72</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
+<p>Correction factor for start engine mode. </p>
 
 </div>
 </div>
-<a id="ad6a1046f5597788d01e8cd2c76b95af3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad6a1046f5597788d01e8cd2c76b95af3">&#9670;&nbsp;</a></span>grid_id</h2>
+<a id="aa91213edccfedcf219564e53dbe55ab1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa91213edccfedcf219564e53dbe55ab1">&#9670;&nbsp;</a></span>geo_type_int</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#af3811c7b385527a18842e363878a34a3">nic</a>) grid_temp_mod::grid_id</td>
+          <td class="memname">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#aaeba93359f7343eef758e03917ad01fc">nint</a>) grid_temp_mod::geo_type_int</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>GRID ID from the used mesh. </p>
+<p>Geometry source type from intersection 2nd viality or area. </p>
 
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00049">49</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
+</div>
+</div>
+<a id="acc329b0f78f686e4147ff93087452fa9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc329b0f78f686e4147ff93087452fa9">&#9670;&nbsp;</a></span>geometry_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#aaeba93359f7343eef758e03917ad01fc">nint</a>) grid_temp_mod::geometry_type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Geometry source type (1 line 2 Area) from intersection. </p>
+
+</div>
+</div>
+<a id="aa2a8e641ef4671e2ead43204607d8d51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2a8e641ef4671e2ead43204607d8d51">&#9670;&nbsp;</a></span>geometry_type2</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#a5472ad8a7fe057fbf1e6470e603cae4e">natt</a>) grid_temp_mod::geometry_type2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Geometry source type (1 Line 2 Area) from file src_attr.txt. </p>
+
+</div>
+</div>
+<a id="a3fbda85fbc5ac3ccb3372379fcd6967c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fbda85fbc5ac3ccb3372379fcd6967c">&#9670;&nbsp;</a></span>id_grid</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#af3811c7b385527a18842e363878a34a3">nic</a>) grid_temp_mod::id_grid</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>GRID ID for each cell in the emissions mesh. </p>
+
+</div>
+</div>
+<a id="a27685ac7d9fc233a27b3b37c73224dba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27685ac7d9fc233a27b3b37c73224dba">&#9670;&nbsp;</a></span>id_grid_int</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#aaeba93359f7343eef758e03917ad01fc">nint</a>) grid_temp_mod::id_grid_int</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Grid ID from the used mesh from intersection. </p>
+
+</div>
+</div>
+<a id="abbf5cdcc881315d117baee9d1d596110"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abbf5cdcc881315d117baee9d1d596110">&#9670;&nbsp;</a></span>id_source_att</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#a5472ad8a7fe057fbf1e6470e603cae4e">natt</a>) grid_temp_mod::id_source_att</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Source identification from file src_attr.txt. </p>
+
+</div>
+</div>
+<a id="ac75a19ff0dbc05bab2f8a7ef412bddc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac75a19ff0dbc05bab2f8a7ef412bddc0">&#9670;&nbsp;</a></span>id_source_int</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#aaeba93359f7343eef758e03917ad01fc">nint</a>) grid_temp_mod::id_source_int</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Viality segment ID from intersection. </p>
+
+</div>
+</div>
+<a id="a5b1ec1959eeea5978a7ca85068591c14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b1ec1959eeea5978a7ca85068591c14">&#9670;&nbsp;</a></span>id_source_td</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#a2a33fe55ba7cd2babcda4e0b9271a11f">ntd</a>) grid_temp_mod::id_source_td</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Viality segment ID from src_td. </p>
 
 </div>
 </div>
@@ -1086,171 +1173,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>ID of period time. </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00050">50</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
-</div>
-</div>
-<a id="a85aacfe4ef40a8a631570fb07b84ce56"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a85aacfe4ef40a8a631570fb07b84ce56">&#9670;&nbsp;</a></span>idcell</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#aaeba93359f7343eef758e03917ad01fc">nint</a>) grid_temp_mod::idcell</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>cell ID from the used mesh from intersection </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00045">45</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
-</div>
-</div>
-<a id="aa6ae270eb1c509902f7f7a3356d0b46d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa6ae270eb1c509902f7f7a3356d0b46d">&#9670;&nbsp;</a></span>idsrc</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#aaeba93359f7343eef758e03917ad01fc">nint</a>) grid_temp_mod::idsrc</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>ID for viality segment from intersection. </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00047">47</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
-</div>
-</div>
-<a id="a230cf9fd2205247b8a531b107430479b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a230cf9fd2205247b8a531b107430479b">&#9670;&nbsp;</a></span>idsrc2</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#a5472ad8a7fe057fbf1e6470e603cae4e">natt</a>) grid_temp_mod::idsrc2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Source identification from file src_attr.txt. </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00053">53</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
-</div>
-</div>
-<a id="a9763488a29bfbd0b4320f774d1ac2212"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9763488a29bfbd0b4320f774d1ac2212">&#9670;&nbsp;</a></span>igeo</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#aaeba93359f7343eef758e03917ad01fc">nint</a>) grid_temp_mod::igeo</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Source Type (1 line 2 Area) from intersection. </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00046">46</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
-</div>
-</div>
-<a id="a473d7917fa2fb4c2b86e8f642e50c0f4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a473d7917fa2fb4c2b86e8f642e50c0f4">&#9670;&nbsp;</a></span>igeo2</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#a5472ad8a7fe057fbf1e6470e603cae4e">natt</a>) grid_temp_mod::igeo2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Type of source (1 Line 2 Area) from file src_attr.txt. </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00054">54</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
-</div>
-</div>
-<a id="a943bc4fe2e98fe5c1f416475133daa24"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a943bc4fe2e98fe5c1f416475133daa24">&#9670;&nbsp;</a></span>isource</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#a2a33fe55ba7cd2babcda4e0b9271a11f">ntd</a>) grid_temp_mod::isource</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Viality ID from src_td. </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00052">52</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
-</div>
-</div>
-<a id="a938354ffb8ddf9cf2836f8ddf01aeac9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a938354ffb8ddf9cf2836f8ddf01aeac9">&#9670;&nbsp;</a></span>isrc</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#aaeba93359f7343eef758e03917ad01fc">nint</a>) grid_temp_mod::isrc</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>GEOmetry ID for viality from intersection. </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00048">48</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
-</div>
-</div>
-<a id="a6e2b92292dd8572f8d15e14eaf386638"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6e2b92292dd8572f8d15e14eaf386638">&#9670;&nbsp;</a></span>itype</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#a2a33fe55ba7cd2babcda4e0b9271a11f">ntd</a>) grid_temp_mod::itype</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Source type. </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00051">51</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
-</div>
-</div>
-<a id="a0069e18fa673a230f1d7c34c4cc9ec01"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0069e18fa673a230f1d7c34c4cc9ec01">&#9670;&nbsp;</a></span>kstype</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#a5472ad8a7fe057fbf1e6470e603cae4e">natt</a>) grid_temp_mod::kstype</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Source classification. </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00055">55</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
+<p>Period time ID 1-weekday 2-saturday 3-Sunday. </p>
 
 </div>
 </div>
@@ -1268,8 +1191,6 @@ Variables</h2></td></tr>
 
 <p>latitude coordinate for the mesh </p>
 
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00059">59</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
 </div>
 </div>
 <a id="af2d67aa450740f735eb567e1827a022d"></a>
@@ -1285,8 +1206,6 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>total number of vehicles per hour in each grid </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00058">58</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
 
 </div>
 </div>
@@ -1304,8 +1223,6 @@ Variables</h2></td></tr>
 
 <p>Number of viality lengths. </p>
 
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00044">44</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
 </div>
 </div>
 <a id="aef97b9f0866d6f2abd635557268b7de3"></a>
@@ -1321,8 +1238,6 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>number species in emission factors from EPA </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00035">35</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
 
 </div>
 </div>
@@ -1340,8 +1255,6 @@ Variables</h2></td></tr>
 
 <p>number species in emission factors cold start from EPA </p>
 
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00036">36</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
 </div>
 </div>
 <a id="ac30a4777172a9784497b0fafd1571978"></a>
@@ -1357,8 +1270,6 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>number of speeds per EF specie </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00040">40</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
 
 </div>
 </div>
@@ -1376,8 +1287,6 @@ Variables</h2></td></tr>
 
 <p>number of hours per day </p>
 
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00038">38</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
 </div>
 </div>
 <a id="af3811c7b385527a18842e363878a34a3"></a>
@@ -1393,8 +1302,6 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Number of grids in the mesh. </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00041">41</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
 
 </div>
 </div>
@@ -1412,8 +1319,6 @@ Variables</h2></td></tr>
 
 <p>Number of viality segments. </p>
 
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00043">43</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
 </div>
 </div>
 <a id="a2c5cb6bbffe4f9b8caeb69d21b3c9255"></a>
@@ -1429,8 +1334,6 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>number species in emission file </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00039">39</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
 
 </div>
 </div>
@@ -1448,8 +1351,6 @@ Variables</h2></td></tr>
 
 <p>Number of rows in results data 952. </p>
 
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00042">42</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
 </div>
 </div>
 <a id="aec38730b4bc8f92020be426557e22d49"></a>
@@ -1466,115 +1367,85 @@ Variables</h2></td></tr>
 
 <p>number of period 1= wee, 2=saturday 30sunday </p>
 
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00037">37</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
 </div>
 </div>
-<a id="a41fc85ee0a467ca55ca62f3e53b1dafa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a41fc85ee0a467ca55ca62f3e53b1dafa">&#9670;&nbsp;</a></span>scar</h2>
+<a id="a6ce62cbbd7fbec96f79c9c10207b77db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ce62cbbd7fbec96f79c9c10207b77db">&#9670;&nbsp;</a></span>number_cars</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#af3811c7b385527a18842e363878a34a3">nic</a>,8,1:2) grid_temp_mod::scar</td>
+          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a72b4fa4edc2e871d0645f489e4d02e74">nhr</a>,<a class="el" href="namespacegrid__temp__mod.html#a2a33fe55ba7cd2babcda4e0b9271a11f">ntd</a>) grid_temp_mod::number_cars</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>number of vehicles </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00063">63</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
+<p>Number of cars in a specific viality and hour. </p>
 
 </div>
 </div>
-<a id="a99c96e01ffe66239cd9fec95118e9024"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99c96e01ffe66239cd9fec95118e9024">&#9670;&nbsp;</a></span>slen</h2>
+<a id="a48ecc9fe33621877b24dbf1642e4c7d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48ecc9fe33621877b24dbf1642e4c7d4">&#9670;&nbsp;</a></span>r_weight</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a5472ad8a7fe057fbf1e6470e603cae4e">natt</a>,2) grid_temp_mod::slen</td>
+          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aaeba93359f7343eef758e03917ad01fc">nint</a>) grid_temp_mod::r_weight</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Linear source lenght km. </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00062">62</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
+<p>Relative weight of the viality in the grid. </p>
 
 </div>
 </div>
-<a id="a5523188ebc28299274ba575fe0b9333c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5523188ebc28299274ba575fe0b9333c">&#9670;&nbsp;</a></span>start</h2>
+<a id="a05486039350a5bd35bc5fb8465b1fd2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05486039350a5bd35bc5fb8465b1fd2d">&#9670;&nbsp;</a></span>source_size</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a72b4fa4edc2e871d0645f489e4d02e74">nhr</a>) grid_temp_mod::start</td>
+          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a5472ad8a7fe057fbf1e6470e603cae4e">natt</a>,2) grid_temp_mod::source_size</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Fraction of cars that starts cold. </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00073">73</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
+<p>Linear source lenght km or surface area km2 size. </p>
 
 </div>
 </div>
-<a id="ac5adb1f1a0e76fa062dfc34793977895"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac5adb1f1a0e76fa062dfc34793977895">&#9670;&nbsp;</a></span>vel</h2>
+<a id="ac88a06bc0f09f0cdacf1b790b39118a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac88a06bc0f09f0cdacf1b790b39118a6">&#9670;&nbsp;</a></span>source_type</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#a72b4fa4edc2e871d0645f489e4d02e74">nhr</a>,<a class="el" href="namespacegrid__temp__mod.html#a2a33fe55ba7cd2babcda4e0b9271a11f">ntd</a>) grid_temp_mod::vel</td>
+          <td class="memname">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#a5472ad8a7fe057fbf1e6470e603cae4e">natt</a>) grid_temp_mod::source_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Street velocity from src_td. </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00076">76</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
+<p>Source classification ID viality 1,5,6. </p>
 
 </div>
 </div>
-<a id="a5624b7f3b9b25e48f59b423197fbd373"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5624b7f3b9b25e48f59b423197fbd373">&#9670;&nbsp;</a></span>vele</h2>
+<a id="a09b90a7a147b6fa7183875c896a83cad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09b90a7a147b6fa7183875c896a83cad">&#9670;&nbsp;</a></span>veh_type</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aef97b9f0866d6f2abd635557268b7de3">nef</a>,<a class="el" href="namespacegrid__temp__mod.html#ac30a4777172a9784497b0fafd1571978">nfe</a>) grid_temp_mod::vele</td>
+          <td class="memname">integer, dimension(<a class="el" href="namespacegrid__temp__mod.html#a2a33fe55ba7cd2babcda4e0b9271a11f">ntd</a>) grid_temp_mod::veh_type</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>velocity in emissions factos </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00064">64</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
-
-</div>
-</div>
-<a id="a7153684d66880a13fcffd6711d1c818f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7153684d66880a13fcffd6711d1c818f">&#9670;&nbsp;</a></span>vele2</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">real, dimension(<a class="el" href="namespacegrid__temp__mod.html#aa8ee7ca2b37965a08c997201b3622e2b">nef2</a>,7) grid_temp_mod::vele2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>velocity in emissions factos cold start </p>
-
-<p class="definition">Definition at line <a class="el" href="movile__time__grid_8_f90_source.html#l00068">68</a> of file <a class="el" href="movile__time__grid_8_f90_source.html">movile_time_grid.F90</a>.</p>
+<p>Vehicular source type ID= 11 to 18. </p>
 
 </div>
 </div>

@@ -18,7 +18,7 @@
 !>  | 5   | Otros buses   |
 !>  | 6  |  Medianos   |
 !>
-!>   |  itype  | Description    | itype | Description |
+!>   |  veh_type  | Description    | veh_type | Description |
 !>   |:---:    |:---            |:---: |:---          |
 !>   | 11     | Automoviles     |  15  | Otros buses  |
 !>   | 12     | Ligeros         |  16  | Medianos    |
@@ -38,54 +38,53 @@ integer,parameter :: ntypd= 3 ;!> number of hours per day
 integer,parameter :: nhr=24  ; !> number species in emission file
 integer,parameter :: nspc = 5 ; !> number of speeds per EF specie
 integer,parameter :: nfe = 7  ; !> Number of grids in the mesh
-integer,parameter :: nic=28*34;!> Number of rows in results data 952 
+integer,parameter :: nic=28*34;!> Number of rows in results data 952
 integer,parameter :: ntd=75889; !> Number of viality segments
 integer,parameter :: nint=11848; !> Number of viality lengths
-integer,parameter :: natt=5554 ; !> cell ID from the used mesh from intersection
-integer :: idcell(nint) ;!> Source Type (1 line 2 Area) from intersection
-integer :: igeo(nint)   ;!> ID for viality segment from intersection
-integer :: idsrc(nint)  ;!> GEOmetry ID for viality from intersection
-integer :: isrc(nint)   ;!> GRID ID from the used mesh
-integer :: grid_id(nic) ;!> ID of period time
-integer :: ID_time_period(ntd);!> Source type
-integer :: itype(ntd)   ;!> Viality  ID from src_td
-integer :: isource(ntd) ;!> Source identification from file src_attr.txt
-integer :: idsrc2(natt) ;!> Type of source (1 Line  2 Area) from file src_attr.txt
-integer :: igeo2(natt)  ;!> Source classification
-integer :: kstype(natt)
-!>  Number of cars in a specifil viality and hour
-real,dimension(nhr,ntd) :: autn;!> total number of vehicles per hour in each grid
-real :: long(nic)    ;!> latitude coordinate for the mesh
-real :: lat(nic); !> Cut-leng or cut-area of source segment
-real :: cutla(nint) ;!> Relative weight of the viality in the grid
-real :: cw(nint)   ;!> Linear source lenght km
-real :: slen(natt,2) ;!> number of vehicles
-real :: scar(nic,8,1:2) ;!> velocity in emissions factos
-real :: vele(nef,nfe)  ;!> VOC emission factor
-real :: ehc(nef,nfe)  ;!> CO emission factor
-real :: eco(nef,nfe)  ;!> NO emission factor
-real :: eno(nef,nfe)  ;!> velocity in emissions factos cold start
-real :: vele2(nef2,7) ;!> VOC emission factor cold start
-real :: ehc2(nef2,7)  ;!> CO emission factor cold start
-real :: eco2(nef2,7)  ;!> NO emission factor cold start
-real :: eno2(nef2,7)  ;!> Correction factor for start mode
-real :: fcor(nhr)     ;!> Fraction of cars that starts cold
-real :: start(nhr)    ;!>Emission factor at speed vel
-real :: efact(nspc)   ;!>Emission factor cold start at speed vel
-real :: efac2(nspc)   ;!> Street velocity from src_td
-real :: vel(nhr,ntd)  ;!> Total emission per day
+integer,parameter :: natt=5554 ; !> Grid ID from the used mesh from intersection
+integer :: id_grid_INT(nint) ;!> Geometry source type (1 line 2 Area) from intersection
+integer :: geometry_type(nint)   ;!> Viality segment ID from intersection
+integer :: id_source_INT(nint)  ;!> Geometry source type from intersection 2nd viality or area
+integer :: geo_type_INT(nint)   ;!> GRID ID for each cell in the emissions mesh
+integer :: id_grid(nic) ;!> Period time ID 1-weekday 2-saturday 3-Sunday
+integer :: ID_time_period(ntd);!> Vehicular source type ID= 11 to 18
+integer :: veh_type(ntd)   ;!> Viality segment ID from src_td
+integer :: id_source_TD(ntd) ;!> Source identification from file src_attr.txt
+integer :: id_source_ATT(natt) ;!> Geometry source type (1 Line  2 Area) from file src_attr.txt
+integer :: geometry_type2(natt)  ;!> Source classification ID viality 1,5,6
+integer :: source_type(natt)
+!>  Number of cars in a specific viality and hour
+real,dimension(nhr,ntd) :: number_cars;!> total number of vehicles per hour in each grid
+real :: long(nic)     ;!> latitude coordinate for the mesh
+real :: lat(nic)      ; !> Cut-lenght or cut-area of source segment
+real :: cutla(nint)   ;!> Relative weight of the viality in the grid
+real :: r_weight(nint) ;!> Linear source lenght km or surface area km2 size
+real :: source_size(natt,2)  ;!> speed in emissions factos
+real :: ef_speed(nef,nfe) ;!> VOC emission factor
+real :: ef_hc(nef,nfe)  ;!> CO emission factor
+real :: ef_co(nef,nfe)  ;!> NO emission factor
+real :: ef_no(nef,nfe)  ;!> speed in emissions factos cold start engine
+real :: ef_speed_cold(nef2,7) ;!> VOC emission factor cold start engine
+real :: ef_hc_cold(nef2,7)  ;!> CO emission factor cold start engine
+real :: ef_co_cold(nef2,7)  ;!> NO emission factor cold start engine
+real :: ef_no_cold(nef2,7)  ;!> Correction factor for start engine mode
+real :: fcor(nhr)     ;!> Fraction of cold engine cars
+real :: f_cold_engine_car(nhr) ;!> Emission factor for specific specie
+real :: emiss_factor(nspc)   ;!> Emission factor cold start for specific specie
+real :: emis_fact_cold(nspc)   ;!> cars speed in each viality from src_td
+real :: cars_speed(nhr,ntd)  ;!> Total emission per day
 real :: eday(nic,nspc,ntypd,8,1:2); !> Movil emision per cell,hour,specie,day type
 real :: emision(nic,nhr,nspc,ntypd)
 
-common /intersec/ cutla,cw,idcell,idsrc,igeo,isrc
-common /cellattr/ grid_id,long,lat
-common /srctd/    autn, isource, ID_time_period,itype
-common /facttuv/  vele,ehc,eco,eno!,eso
-common /factsec/  vele2,ehc2,eco2,eno2
-common /miscell/  scar,fcor,start,emision!,vv,et,fcorr,ffr
-common /srcattr/  slen,kstype,igeo2,idsrc2
-common /computs/ efact,efact2,eday
- 
+common /intersec/ cutla,r_weight,id_grid_INT,id_source_INT,geometry_type,geo_type_INT
+common /cellattr/ id_grid,long,lat
+common /srctd/    number_cars, id_source_TD, ID_time_period,veh_type
+common /facttuv/  ef_speed,ef_hc,ef_co,ef_no!,eso
+common /factsec/  ef_speed_cold,ef_hc_cold,ef_co_cold,ef_no_cold
+common /miscell/  fcor,f_cold_engine_car,emision!,vv,et,fcorr,ffr
+common /srcattr/  source_size,source_type,geometry_type2,id_source_ATT
+common /computs/ emiss_factor,emis_fact_cold,eday
+
 contains
 !        _                 ____      _ _
 !  _   _| |_ _ __ ___     |___ \    | | |
@@ -105,8 +104,8 @@ contains
 !> @param  long Coordinate longitude in decimal degrees
   subroutine  utm_2_ll(utmx,utmy,utmz,lat,long)
   implicit none
-  integer,intent (IN):: utmZ
-  real,intent (IN):: utmx,utmy
+  integer,intent(IN):: utmZ
+  real,intent (IN)  :: utmx,utmy
   real,intent (OUT) ::lat,long
   real:: utmym,dlong,dlongp,dlongx
   real::  DEGRAD,latx
@@ -152,21 +151,21 @@ subroutine lee_atributos
 
   open(newunit=iunit,file="data/src_attr.csv",ACTION="READ")
   do  j=1,natt
-    read(iunit,*)idum,igeo2(j),idsrc2(j),idum,idum,idum,idum&
-    ,kstype(j),slen(j,1),dum,slen(j,2)
+    read(iunit,*)idum,geometry_type2(j),id_source_ATT(j),idum,idum,idum,idum&
+    ,source_type(j),source_size(j,1),dum,source_size(j,2)
   end do
   close(iunit)
   write(6,140)
   open(newunit=iunit,file="data/cell_attr.csv",ACTION="READ")
   do i=1,nic
-   read (iunit,*)idum,grid_id(i),utmx,utmy
+   read (iunit,*)idum,id_grid(i),utmx,utmy
     call utm_2_ll(utmx,utmy,14,lat(i),long(i))
   end do
   close(iunit)
   i=1
-  !write(6,*) grid_id(i),lat(i),long(i)
+  !write(6,*) id_grid(i),lat(i),long(i)
   i=nic
-  !write(6,*) grid_id(i),lat(i),long(i)
+  !write(6,*) id_grid(i),lat(i),long(i)
   write(6,150)
 140 format(9X,'******  END READING src_attr.txt',9X,'******')
 150 format(9X,'******  END READING cell_attr.txt',8X,'******')
@@ -193,16 +192,16 @@ subroutine lee_actividades
   integer :: idum,i,j
   open(newunit=iunit,file="data/src_td.csv",ACTION="READ")
   do j=1,ntd
-  read (iunit,*)idum,idum,idum,isource(j),&
-        ID_time_period(j),itype(j), &
-        idum,idum,(autn(i,j),i=1,nhr),(vel(i,j),i=1,nhr)
+  read (iunit,*)idum,idum,idum,id_source_TD(j),&
+        ID_time_period(j),veh_type(j), &
+        idum,idum,(number_cars(i,j),i=1,nhr),(cars_speed(i,j),i=1,nhr)
   end do
   close(iunit)
   write(6,160)
   open(newunit=iunit,file="data/intersection.csv",ACTION="READ")
   do  j=1,nint
-   read(iunit,*)idum,idcell(j),isrc(j),igeo(j),idsrc(j), &
-             cutla(j),cw(j)
+   read(iunit,*)idum,id_grid_INT(j),geo_type_INT(j),geometry_type(j),id_source_INT(j), &
+             cutla(j),r_weight(j)
   end do
   write(6,150)
   close(iunit)
@@ -220,7 +219,7 @@ end subroutine lee_actividades
 !|  _| (_| | (__| || (_) | |  |  __/ | | | | | \__ \ | (_) | | | |
 !|_|  \__,_|\___|\__\___/|_|___\___|_| |_| |_|_|___/_|\___/|_| |_|
 !                         |_____|
-!>  @brief Reads emissions factor from EPA, and for cool start
+!>  @brief Reads emissions factor from EPA, and for cold engine car start
 !>  @author Jose Agustin Garcia Reynoso
 !>  @date 07/20/2020
 !>  @version  1.0
@@ -241,7 +240,7 @@ open(newunit=iunit,file="data/factepa.txt",ACTION="READ")
     read(iunit,'(a2)')header
     read(iunit,'(a2)')header
     do  i =1,nfe
-      read(iunit,*)vele(j,i),ehc(j,i),eco(j,i),eno(j,i) !,eso(j,i)
+      read(iunit,*)ef_speed(j,i),ef_hc(j,i),ef_co(j,i),ef_no(j,i) !,eso(j,i)
     end do
   end do
   close (iunit)
@@ -257,7 +256,7 @@ open(newunit=iunit,file="data/factsec.txt",ACTION="READ")
     read(iunit,'(a2)')header
     read(iunit,'(a2)')header
     do  i =1,7
-      read(iunit,*)vele2(j,i),ehc2(j,i),eco2(j,i),eno2(j,i)
+      read(iunit,*)ef_speed_cold(j,i),ef_hc_cold(j,i),ef_co_cold(j,i),ef_no_cold(j,i)
     end do
   end do
   close (iunit)
@@ -277,7 +276,7 @@ open(newunit=iunit,file="data/factvar.dat",ACTION="READ")
 open(newunit=iunit,file="data/fraarran.dat",ACTION="READ")
   read(iunit,'(a25)') header
   do  i=1,nhr
-    read(iunit,*) start(i)
+    read(iunit,*) f_cold_engine_car(i)
   end do
   close (iunit)
   write(6,160)
@@ -307,47 +306,47 @@ subroutine genera_malla
   real :: temp
   do n = ntd ,1,-1                   !Main LOOP initialization
     do m = 1,nint
-      if(isource(n).eq.idsrc(m).and.isrc(m).lt.2 .and.igeo(m).lt.2) then
-      indx = idcell(m)
+      if(id_source_TD(n).eq.id_source_INT(m).and.geo_type_INT(m).lt.2 .and.geometry_type(m).lt.2) then
+      indx = id_grid_INT(m)
       do l=1,nhr
       ! for EPA
-      efact(1)= emisfac2(itype(n),vel(l,n),vele ,ehc )
-      efact(2)= emisfac2(itype(n),vel(l,n),vele ,eco )
-      efact(3)= emisfac2(itype(n),vel(l,n),vele ,eno )
+      emiss_factor(1)= emisfac2(veh_type(n),cars_speed(l,n),ef_speed ,ef_hc )
+      emiss_factor(2)= emisfac2(veh_type(n),cars_speed(l,n),ef_speed ,ef_co )
+      emiss_factor(3)= emisfac2(veh_type(n),cars_speed(l,n),ef_speed ,ef_no )
       ! Emissions factor for cold start
-      efac2(1)= emisfac2(itype(n),vel(l,n),vele2,ehc2)
-      efac2(2)= emisfac2(itype(n),vel(l,n),vele2,eco2)
-      efac2(3)= emisfac2(itype(n),vel(l,n),vele2,eno2)
-      if (itype(n).ge. 14 ) then
-        efact(4) =efact(1)
-        efac2(4) =efac2(1)
-        efact(1) = 0.0
-        efac2(1) = 0.0
+      emis_fact_cold(1)= emisfac2(veh_type(n),cars_speed(l,n),ef_speed_cold,ef_hc_cold)
+      emis_fact_cold(2)= emisfac2(veh_type(n),cars_speed(l,n),ef_speed_cold,ef_co_cold)
+      emis_fact_cold(3)= emisfac2(veh_type(n),cars_speed(l,n),ef_speed_cold,ef_no_cold)
+      if (veh_type(n).ge. 14 ) then
+        emiss_factor(4) =emiss_factor(1)
+        emis_fact_cold(4) =emis_fact_cold(1)
+        emiss_factor(1) = 0.0
+        emis_fact_cold(1) = 0.0
       else
-        efact(4) = 0.0
-        efac2(4) = 0.0
+        emiss_factor(4) = 0.0
+        emis_fact_cold(4) = 0.0
       end if
 !..
 !     ----------   Localization of the viality lenght     ----------
 !..
-       call viality(igeo(m),idsrc(m),igeo2,idsrc2,kstype,slen &
-                ,fcor,start,l,fcorr,ffr,sl)
-       sl = sl*cw(m)
+       call viality(geometry_type(m),id_source_INT(m),geometry_type2,id_source_ATT,source_type,source_size &
+                ,fcor,f_cold_engine_car,l,fcorr,ffr,sl)
+       sl = sl*r_weight(m)
 !     ----------   Computation of the emissions for each specie
         do i = 1,nspc ! 1 HC(gasoline), 2 CO, 3 NOx, 4 HC(Diesel),5 SO2
 !..
-          temp =(autn(l,n)*sl*efact(i)*(1.0-ffr)+ &
-                     autn(l,n)*sl*efac2(i)*ffr)*fcorr
+          temp =(number_cars(l,n)*sl*emiss_factor(i)*(1.0-ffr)+ &
+                 number_cars(l,n)*sl*emis_fact_cold(i)*ffr)*fcorr
 !..        Xing  is 7.5% of the emission of segment viality
-         if (isrc(m).eq.2) temp=temp*0.075
+         if (geo_type_INT(m).eq.2) temp=temp*0.075
 !..
             emision(indx,l,i,ID_time_period(n))= temp/3600.0 &
                               + emision(indx,l,i,ID_time_period(n))
 !..
 !    ----------  Computation of dayly emissions  EDAY     ----------
 !
-            eday(indx,i,ID_time_period(n),itype(n)-10,2)= temp/1000 &
-                      + eday(indx,i,ID_time_period(n),itype(n)-10,2)
+            eday(indx,i,ID_time_period(n),veh_type(n)-10,2)= temp/1000 &
+                      + eday(indx,i,ID_time_period(n),veh_type(n)-10,2)
         end do    ! i nspc
       end do      ! m nint
     end if
@@ -407,13 +406,13 @@ integer, parameter :: NDIMS=6,nx=28,ny=34, zlev=1
 integer :: i,j,k,l,iday,ispc,ncid,it
 integer :: iit
 integer :: dimids2(2),dimids3(3),dimids4(4)
-integer :: id_unlimit ;!>latitude ID in netcdf file
-integer ::id_varlat ;!>longitude ID in netcdf file
-integer ::id_varlong ;!>pollutant emission ID in netcdf file
+integer :: id_unlimit ;!> id_varlat latitude ID in netcdf file
+integer ::id_varlat ;!> id_varlong longitude ID in netcdf file
+integer ::id_varlong ;!>id_var pollutant emission ID in netcdf file
 integer :: id_var(nspc)
-integer,dimension(NDIMS):: dim,id_dim ;!> longitude coordinates
-real,dimension(nx,ny)::xlong ;!> latitude coordinates
-real,dimension(nx,ny)::xlat  ;!> emissions values
+integer,dimension(NDIMS):: dim,id_dim ;!>xlong longitude coordinates
+real,dimension(nx,ny)::xlong ;!>xlat latitude coordinates
+real,dimension(nx,ny)::xlat  ;!>emis emissions values
 real,dimension(nx,ny,1,1)::emis
 character (len=19),dimension(NDIMS) ::sdim
 character(len=19) :: current_date
@@ -504,11 +503,11 @@ cname=(/'VOC from gasoline vehicles','Carbon Monoxide emissions ', &
     iit=it+24*(iday-1)
     write(current_date(12:13),'(I2.2)') it-1
     Times(1,1)=current_date(1:19)
-    write(6,'(A,x,I2.2)')'TIEMPO: ', iit
+    !write(6,'(A,x,I2.2)')'TIEMPO: ', iit
     call check( nf90_put_var(ncid, id_unlimit,Times,start=(/1,iit/)) )
     call check( nf90_put_var(ncid, id_varlong,xlong,start=(/1,1,iit/)) )
     call check( nf90_put_var(ncid, id_varlat,xlat,start=(/1,1,iit/)) )
-   
+
     do ispc=1,nspc
       do i=1,nx
         do j=1,ny
@@ -532,7 +531,7 @@ end subroutine guarda_malla_nc
 !   \_/ |_|\__,_|_|_|\__|\__, |
 !                        |___/
 !>  @brief Localization of the viality and depending of his type it
-!>  assings  the value of start or fcorr, and longitud
+!>  assings  the value of cold start fraction (ffr), fcorr, and longitud
 !>  @author Jose Agustin Garcia Reynoso
 !>  @date 07/21/2020
 !>  @version  1.0
@@ -542,18 +541,18 @@ end subroutine guarda_malla_nc
 !>  @param ig2 Source Type (1 line 2 Area) from intersections
 !>  @param isrc viality source identification from intersections
 !>  @param kstype Source classification
-!>  @param slen  Viality length in km
+!>  @param slen  source size in km or km^2, for 1-line, 2-Area
 !>  @param fcor correction factor for start mode
-!>  @param start car fraction staring cool
+!>  @param f_cold_engine_car car fraction staring cool
 !>  @param nh  time hour for set the EF
-!>  @param fcorr  correction factor (out)
-!>  @param ffr  correction factor (out)
+!>  @param fcorr  correction factor of ffr (out)
+!>  @param ffr  car fraction staring factor (out)
 !>  @param sl Viality length in km (out)
   Subroutine viality(ig,id,ig2,isrc,kstype,slen &
-                    ,fcor,start,nh,fcorr,ffr,sl)
+                    ,fcor,f_cold_engine_car,nh,fcorr,ffr,sl)
   integer,intent(in):: ig,id,isrc(:),kstype(:)
   integer,intent(in):: ig2(:),nh
-  real,intent(in) :: fcor(:),start(:)
+  real,intent(in) :: fcor(:),f_cold_engine_car(:)
   real,intent(in) :: slen(:,:)
   real,intent(out):: fcorr,ffr, sl
   integer:: i,flag
@@ -565,15 +564,15 @@ end subroutine guarda_malla_nc
       if(kstype(i).gt.10) then
         flag = 1
         fcorr = fcor(nh)
-        ffr   = start(nh)
+        ffr   = f_cold_engine_car(nh)
         if(kstype(i).gt.20) then
-          ffr= start(nh)
+          ffr= f_cold_engine_car(nh)
           fcorr =1.0
           exit
         end if
         exit
       else
-        flag=1
+        flag  = 1
         fcorr = 1.0
         ffr   = 0.0
         exit
@@ -592,7 +591,7 @@ end subroutine guarda_malla_nc
 !      for area sources is 10% of their cutleng.
   if(ig.eq.2) sl =sl*0.10
  200      format('Invalid Cell',I6)
- 201      format('Invalid Longitud',f4.0,'At igeo ',I3,&
+ 201      format('Invalid Longitud',f4.0,'At geometry_type ',I3,&
                 'len(1)=',f6.4,'Len(2)=',f6.4,I4)
   return
 !*********************************************************************
@@ -611,9 +610,9 @@ end subroutine guarda_malla_nc
 !>  @version  1.0
 !>  @copyright Universidad Nacional Autonoma de Mexico
 !>  @param ncartype Type of vehicle
-!>  @param velocity speed in viality
-!>  @param vem velocity array from emission factors file
-!>  @param comp Emission factor for vel and specie
+!>  @param velocity vehicle speed in viality
+!>  @param vem Velocity array from emission factors file
+!>  @param comp Emission factor for vel and specie from emission factors file
   real function emisfac2(ncartype,velocity,vem,comp)
   integer :: ncartype
   integer :: icar, i
@@ -658,7 +657,7 @@ end subroutine guarda_malla_nc
     emisfac2= comp(icar,i) +(velocity-vem(icar,i)) * &
         (comp(icar,i+1)-comp(icar,i))/(vem(icar,i+1)-vem(icar,i))
 !..
-200  format('Invalid velocity',E10.1)
+200  format('Invalid speed',E10.1)
   return
 !*********************************************************************
 !*********             END OF FUNCTION EMISFAC2              *********
