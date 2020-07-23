@@ -158,10 +158,10 @@ ETAGS = etags
 CTAGS = ctags
 CSCOPE = cscope
 AM_RECURSIVE_TARGETS = cscope
-am__DIST_COMMON = $(srcdir)/Makefile.in \
+am__DIST_COMMON = $(srcdir)/Makefile.in $(top_srcdir)/autoconf/compile \
 	$(top_srcdir)/autoconf/install-sh \
-	$(top_srcdir)/autoconf/missing autoconf/install-sh \
-	autoconf/missing
+	$(top_srcdir)/autoconf/missing autoconf/compile \
+	autoconf/install-sh autoconf/missing
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -186,13 +186,20 @@ AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
+CC = @CC@
+CCDEPMODE = @CCDEPMODE@
+CFLAGS = @CFLAGS@
+CPP = @CPP@
+CPPFLAGS = @CPPFLAGS@
 CYGPATH_W = @CYGPATH_W@
 DEFS = @DEFS@
+DEPDIR = @DEPDIR@
 ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EXEEXT = @EXEEXT@
-FC = @FC@
+# Compiler flags
+FC = $(NC_FC)
 FCFLAGS = @FCFLAGS@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
@@ -205,6 +212,12 @@ LIBS = @LIBS@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MKDIR_P = @MKDIR_P@
+NC_FC = @NC_FC@
+NC_INC = @NC_INC@
+NC_LIB = @NC_LIB@
+NETCDF_CONFIG = @NETCDF_CONFIG@
+NETCDF_INC = @NETCDF_INC@
+NETCDF_ROOT = @NETCDF_ROOT@
 OBJEXT = @OBJEXT@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
@@ -222,8 +235,11 @@ abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
 abs_top_srcdir = @abs_top_srcdir@
+ac_ct_CC = @ac_ct_CC@
 ac_ct_FC = @ac_ct_FC@
+am__include = @am__include@
 am__leading_dot = @am__leading_dot@
+am__quote = @am__quote@
 am__tar = @am__tar@
 am__untar = @am__untar@
 bindir = @bindir@
@@ -261,6 +277,7 @@ top_srcdir = @top_srcdir@
 
 # Additional files to be cleaned with 'make clean'
 CLEANFILES = *.o *.mod 
+AM_FCFLAGS = $(NC_INC) $(NC_LIB)
 movile_time_grid_exe_SOURCES = movile_time_grid.F90
 all: all-am
 

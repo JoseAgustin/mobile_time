@@ -17,13 +17,28 @@ Uses observed data from traffic from 11,850 vialities sector for identifying the
    | 13     | Microbuses      |  17  | Pesados     |
    | 14     | Ruta 100        |  18  | Camiones Municipales |
    
- | kstype | Source classification | kstype |  Source classification |
- |:---:   |:---                     |:---: |:--- |
- |1 | Lateral              |    16  | Estacion pesados             |
- |5 | Calle primaria       |    17  | Estacion de autobuses        |
- |6 | Calle rapida         |    21  | Area residencial municipal   |
- |11 | area residencial    |    22  | Area res. e ind. municipal   |
- |12 | area res. e indus.  |    23  | Area pueblo municipal        |
- |13 | Area res. cerca centro|  24  | Estacion de automoviles      |
- |14 | Area res. centro    |    25  | Area industrial Municipal    |
- |15 | Area pueblo         |
+ |  nef    | Description |
+ |:---:    |:---             |
+ | 1   | Automovil    |
+ | 2   | Ligeros   |
+ | 3  |  Microbuses   |
+ | 4  |  Ruta 100, Pesados & Municipales TUV   |
+ | 5   | Otros buses   |
+ | 6  |  Medianos   |
+     
+  | kstype | Source classification | kstype |  Source classification |
+  |:---:   |:---                     |:---: |:--- |
+  |1 | Lateral              |    16  | Estacion pesados             |
+  |5 | Calle primaria       |    17  | Estacion de autobuses        |
+  |6 | Calle rapida         |    21  | Area residencial municipal   |
+  |11 | area residencial    |    22  | Area res. e ind. municipal   |
+  |12 | area res. e indus.  |    23  | Area pueblo municipal        |
+  |13 | Area res. cerca centro|  24  | Estacion de automoviles      |
+  |14 | Area res. centro    |    25  | Area industrial Municipal    |
+  |15 | Area pueblo         | | |
+
+Emissions obtained from vehicular activity for Mexico City 1990
+
+![CO emissions](/assets/images/COemis.gif "CO emissions")
+
+![NO emissions](/assets/images/NOxemis.gif "NO emissions")
