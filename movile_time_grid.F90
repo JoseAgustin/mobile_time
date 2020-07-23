@@ -9,49 +9,72 @@
 !>   | 11 | Week     |
 !>   | 12 | Year     |
 !>
+!>   |  nef    | Description |
+!>   |:---:    |:---             |
+!>  | 1   | Automovil    |
+!>  | 2   | Ligeros   |
+!>  | 3  |  Microbuses   |
+!>  | 4  |  Ruta 100, Pesados & Municipales TUV   |
+!>  | 5   | Otros buses   |
+!>  | 6  |  Medianos   |
+!>
 !>   |  itype  | Description    | itype | Description |
 !>   |:---:    |:---            |:---: |:---          |
 !>   | 11     | Automoviles     |  15  | Otros buses  |
 !>   | 12     | Ligeros         |  16  | Medianos    |
 !>   | 13     | Microbuses      |  17  | Pesados     |
 !>   | 14     | Ruta 100        |  18  | Camiones Municipales |
+!>
 !>  @author Jose Agustin Garcia Reynoso
 !>  @date 07/20/2020
 !>  @version  1.0
 !>  @copyright Universidad Nacional Autonoma de Mexico
 !>
 module grid_temp_mod
-!> Number of grids in the mesh
-integer,parameter :: nef = 5, nef2 =5,ntypd= 3, nhr=24, nspc = 5
-integer,parameter :: nfe = 7  ! EPA
-integer,parameter :: nic=952 ;!> Number of rows in results data
+!> number species in emission factors from EPA
+integer,parameter :: nef = 5 ;!> number species in emission factors cold start from EPA
+integer,parameter :: nef2 =5 ;!> number of period 1= wee, 2=saturday 30sunday
+integer,parameter :: ntypd= 3 ;!> number of hours per day
+integer,parameter :: nhr=24  ; !> number species in emission file
+integer,parameter :: nspc = 5 ; !> number of speeds per EF specie
+integer,parameter :: nfe = 7  ; !> Number of grids in the mesh
+integer,parameter :: nic=28*34;!> Number of rows in results data 952 
 integer,parameter :: ntd=75889; !> Number of viality segments
 integer,parameter :: nint=11848; !> Number of viality lengths
-integer,parameter :: natt=5554!> GRID ID from the used mesh from intersection
-integer :: idcell(nint) ;!> GEOmetry ID for viality from intersection
-integer :: igeo(nint)   ;!> GEOmetry ID for viality from intersection
+integer,parameter :: natt=5554 ; !> cell ID from the used mesh from intersection
+integer :: idcell(nint) ;!> Source Type (1 line 2 Area) from intersection
+integer :: igeo(nint)   ;!> ID for viality segment from intersection
 integer :: idsrc(nint)  ;!> GEOmetry ID for viality from intersection
 integer :: isrc(nint)   ;!> GRID ID from the used mesh
 integer :: grid_id(nic) ;!> ID of period time
 integer :: ID_time_period(ntd);!> Source type
 integer :: itype(ntd)   ;!> Viality  ID from src_td
-integer :: isource(ntd)
-integer ::idsrc2(natt),igeo2(natt),kstype(natt)
+integer :: isource(ntd) ;!> Source identification from file src_attr.txt
+integer :: idsrc2(natt) ;!> Type of source (1 Line  2 Area) from file src_attr.txt
+integer :: igeo2(natt)  ;!> Source classification
+integer :: kstype(natt)
 !>  Number of cars in a specifil viality and hour
 real,dimension(nhr,ntd) :: autn;!> total number of vehicles per hour in each grid
 real :: long(nic)    ;!> latitude coordinate for the mesh
-real :: lat(nic); !> fraction
-real :: cutla(nint) ;!> fraction
-real :: cw(nint)   ;!> street length
+real :: lat(nic); !> Cut-leng or cut-area of source segment
+real :: cutla(nint) ;!> Relative weight of the viality in the grid
+real :: cw(nint)   ;!> Linear source lenght km
 real :: slen(natt,2) ;!> number of vehicles
-real :: scar(nic,8,1:2)
-real :: vele(nef,nfe),ehc(nef,nfe),eco(nef,nfe),eno(nef,nfe)
-real :: vele2(nef2,7),ehc2(nef2,7),eco2(nef2,7),eno2(nef2,7)
-real :: fcor(nhr),start(nhr); !Emission factor at speed vel
-real :: efact(nspc) ; !Emission factor cold start at speed vel
-real :: efac2(nspc)  ;!> Street velocity from src_td
-real :: vel(nhr,ntd) ;!> Total emission per day
-real :: eday(nic,nspc,ntypd,8,1:2) !> Emissions per cell
+real :: scar(nic,8,1:2) ;!> velocity in emissions factos
+real :: vele(nef,nfe)  ;!> VOC emission factor
+real :: ehc(nef,nfe)  ;!> CO emission factor
+real :: eco(nef,nfe)  ;!> NO emission factor
+real :: eno(nef,nfe)  ;!> velocity in emissions factos cold start
+real :: vele2(nef2,7) ;!> VOC emission factor cold start
+real :: ehc2(nef2,7)  ;!> CO emission factor cold start
+real :: eco2(nef2,7)  ;!> NO emission factor cold start
+real :: eno2(nef2,7)  ;!> Correction factor for start mode
+real :: fcor(nhr)     ;!> Fraction of cars that starts cold
+real :: start(nhr)    ;!>Emission factor at speed vel
+real :: efact(nspc)   ;!>Emission factor cold start at speed vel
+real :: efac2(nspc)   ;!> Street velocity from src_td
+real :: vel(nhr,ntd)  ;!> Total emission per day
+real :: eday(nic,nspc,ntypd,8,1:2); !> Movil emision per cell,hour,specie,day type
 real :: emision(nic,nhr,nspc,ntypd)
 
 common /intersec/ cutla,cw,idcell,idsrc,igeo,isrc
@@ -77,7 +100,7 @@ contains
 !> @date 1990
 !> @param  utmy Coordinate in axis _y_ in km
 !> @param  utmx Coordinate in axis _x_ in km
-!> @param  utmz Zone
+!> @param  utmz Zone for the UTMx and UTMy coordinates
 !> @param  lat Coordinate latitude in decimal degrees
 !> @param  long Coordinate longitude in decimal degrees
   subroutine  utm_2_ll(utmx,utmy,utmz,lat,long)
@@ -514,6 +537,18 @@ end subroutine guarda_malla_nc
 !>  @date 07/21/2020
 !>  @version  1.0
 !>  @copyright Universidad Nacional Autonoma de Mexico
+!>  @param ig Source Type (1 line 2 Area)
+!>  @param id viality source identification
+!>  @param ig2 Source Type (1 line 2 Area) from intersections
+!>  @param isrc viality source identification from intersections
+!>  @param kstype Source classification
+!>  @param slen  Viality length in km
+!>  @param fcor correction factor for start mode
+!>  @param start car fraction staring cool
+!>  @param nh  time hour for set the EF
+!>  @param fcorr  correction factor (out)
+!>  @param ffr  correction factor (out)
+!>  @param sl Viality length in km (out)
   Subroutine viality(ig,id,ig2,isrc,kstype,slen &
                     ,fcor,start,nh,fcorr,ffr,sl)
   integer,intent(in):: ig,id,isrc(:),kstype(:)
@@ -575,6 +610,10 @@ end subroutine guarda_malla_nc
 !>  @date 07/22/2020
 !>  @version  1.0
 !>  @copyright Universidad Nacional Autonoma de Mexico
+!>  @param ncartype Type of vehicle
+!>  @param velocity speed in viality
+!>  @param vem velocity array from emission factors file
+!>  @param comp Emission factor for vel and specie
   real function emisfac2(ncartype,velocity,vem,comp)
   integer :: ncartype
   integer :: icar, i
