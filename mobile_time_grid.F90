@@ -846,18 +846,18 @@ end module grid_temp_mod
 !  / _` | '__| |/ _` |
 ! | (_| | |  | | (_| |
 !  \__, |_|  |_|\__,_|
-!  |___/                _ _    _
-!  _ __ ___   _____   _(_) |  | |_ ___ _ __ ___  _ __
-! | '_ ` _ \ / _ \ \ / / | |  | __/ _ \ '_ ` _ \| '_ \
-! | | | | | | (_) \ V /| | |  | ||  __/ | | | | | |_) |
-! |_| |_| |_|\___/ \_/ |_|_|___\__\___|_| |_| |_| .__/
-!                         |_____|               |_|
+!  |___/           _     _ _    _
+!  _ __ ___   ___ | |__ (_) |  | |_ ___ _ __ ___  _ __
+! | '_ ` _ \ / _ \| '_ \| | |  | __/ _ \ '_ ` _ \| '_ \
+! | | | | | | (_) | |_) | | |  | ||  __/ | | | | | |_) |
+! |_| |_| |_|\___/|_.__/|_|_|___\__\___|_| |_| |_| .__/
+!                          |_____|               |_|
 !>  @brief Program to obtain the temporal distribution over CDMX
 !>  @author Jose Agustin Garcia Reynoso
 !>  @date 07/20/2020
 !>  @version  1.0
 !>  @copyright Universidad Nacional Autonoma de Mexico
-program grid_movil_temp
+program grid_mobil_temp
 use grid_temp_mod
 
   call lee_atributos
@@ -872,4 +872,4 @@ use grid_temp_mod
 
   call guarda_malla_nc
 
-end program
+end program grid_mobil_temp
