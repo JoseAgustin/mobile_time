@@ -1,3 +1,4 @@
+#                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 # To produce files: configure, Makefiles and Scripts
 #    $ automake
@@ -7,7 +8,6 @@
 
 AC_PREREQ([2.69])
 AC_INIT([movil_time_grid], [1.0], [agustin@atmosfera.unam.mx])
-
 # Define our M4 macro directory
 AC_CONFIG_AUX_DIR([autoconf])
 AM_INIT_AUTOMAKE([1.11 foreign])
@@ -27,7 +27,7 @@ AC_PROG_FC
 # Make precious variables for ./configure --help
 AC_ARG_VAR(NETCDF_ROOT,[Root of netCDF installation or] (compile-time))
 AC_ARG_VAR(NETCDF_INC,[  Location of netCDF headers] (compile-time))
-AC_ARG_VAR(NC_LIB,[  Location of netCDF library] (compile-time))
+AC_ARG_VAR(NETCDF_LIB,[  Location of netCDF library] (compile-time))
 
 # Checks for libraries.
 
