@@ -403,7 +403,7 @@ real:: emis(nic)
     do iday=1,ntypd
         do i = 1,nspc
           irec = irec +1
-write(iunit,rec=irec)(0.25*eday(j,i,iday),j=1,nic)
+          write(iunit,rec=irec)(0.010416*eday(j,i,iday),j=1,nic)
         end do   !  i specie
     end do
 
