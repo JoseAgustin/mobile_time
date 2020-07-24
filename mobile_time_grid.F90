@@ -512,7 +512,7 @@ cname=(/'VOC gasoline vehicle      ','Carbon Monoxide           ', &
     call check( nf90_put_att(ncid, NF90_GLOBAL, "POLE_LAT",90.))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "POLE_LON",0.))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "GRIDTYPE","C"))
-    call check( nf90_put_att(ncid, NF90_GLOBAL, "GMT",0.))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "GMT",-6.))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "JULYR",1990))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "JULDAY",5))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "MAP_PROJ",1))
@@ -579,8 +579,7 @@ cname=(/'VOC gasoline vehicle      ','Carbon Monoxide           ', &
     call check( nf90_enddef(ncid) )
 
   tiempo: do it=1,nhr
-    iit=it+18
-    if(iit.gt.24) iit=it-6
+    iit=it
     write(current_date(12:13),'(I2.2)') it-1
     Times(1,1)=current_date(1:19)
     !write(6,'(A,x,I2.2)')'TIEMPO: ', iit
