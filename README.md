@@ -1,4 +1,4 @@
-# movile_time
+# mobile_time
 
 Uses observed data from traffic from 11,850 vialities sector for identifying the temporal distribution of movile emissions. An generates a grided file with houry mobile acivity.
 
