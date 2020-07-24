@@ -11,12 +11,12 @@
 !>
 !>   |  nef    | Description |
 !>   |:---:    |:---             |
-!>  | 1   | Automovil    |
-!>  | 2   | Ligeros   |
-!>  | 3  |  Microbuses   |
-!>  | 4  |  Ruta 100, Pesados & Municipales TUV   |
-!>  | 5   | Otros buses   |
-!>  | 6  |  Medianos   |
+!>   | 1   | Automovil    |
+!>   | 2   | Ligeros   |
+!>   | 3  |  Microbuses   |
+!>   | 4  |  Ruta 100, Pesados & Municipales TUV   |
+!>   | 5   | Otros buses   |
+!>   | 6  |  Medianos   |
 !>
 !>   |  veh_type  | Description    | veh_type | Description |
 !>   |:---:    |:---            |:---: |:---          |
@@ -63,7 +63,8 @@ real :: source_size(natt,2)  ;!> speed in emissions factos
 real :: ef_speed(nef,nfe) ;!> VOC emission factor
 real :: ef_hc(nef,nfe)  ;!> CO emission factor
 real :: ef_co(nef,nfe)  ;!> NO emission factor
-real :: ef_no(nef,nfe)  ;!> speed in emissions factos cold start engine
+real :: ef_no(nef,nfe)  ;!> SO2 emission factor
+real :: ef_so2(nef,nfe);!> speed in emissions factos cold start engine
 real :: ef_speed_cold(nef2,7) ;!> VOC emission factor cold start engine
 real :: ef_hc_cold(nef2,7)  ;!> CO emission factor cold start engine
 real :: ef_co_cold(nef2,7)  ;!> NO emission factor cold start engine
@@ -136,7 +137,7 @@ contains
 !| (_| | |_| |  | | |_) | |_| | || (_) \__ \
 ! \__,_|\__|_|  |_|_.__/ \__,_|\__\___/|___/
 !
-!>  @brief Reads file grid cell attributes IDgrid, utmx, utmy
+!>  @brief Reads file grid cell attributes ID_grid, utmx, utmy
 !>
 !> Converts the UMTx and UTMy to longitude, latitude coordinates.
 !>  @author Jose Agustin Garcia Reynoso
@@ -240,7 +241,7 @@ open(newunit=iunit,file="data/factepa.txt",ACTION="READ")
     read(iunit,'(a2)')header
     read(iunit,'(a2)')header
     do  i =1,nfe
-      read(iunit,*)ef_speed(j,i),ef_hc(j,i),ef_co(j,i),ef_no(j,i) !,eso(j,i)
+      read(iunit,*)ef_speed(j,i),ef_hc(j,i),ef_co(j,i),ef_no(j,i),ef_so2(j,i)
     end do
   end do
   close (iunit)
@@ -287,36 +288,40 @@ open(newunit=iunit,file="data/fraarran.dat",ACTION="READ")
 160 format(9X,'******  END READING factvar.dat',10X,'******')
 
 end subroutine lee_factor_emision
-!                                                     _ _
-!   __ _  ___ _ __   ___ _ __ __ _     _ __ ___   __ _| | | __ _
-!  / _` |/ _ \ '_ \ / _ \ '__/ _` |   | '_ ` _ \ / _` | | |/ _` |
-! | (_| |  __/ | | |  __/ | | (_| |   | | | | | | (_| | | | (_| |
-!  \__, |\___|_| |_|\___|_|  \__,_|___|_| |_| |_|\__,_|_|_|\__,_|
-!  |___/                         |_____|
-!>  @brief Make a single array with emissions
+!            _            _                         _     _
+!   ___ __ _| | ___ _   _| | __ _     ___ _ __ ___ (_)___(_) ___  _ __
+!  / __/ _` | |/ __| | | | |/ _` |   / _ \ '_ ` _ \| / __| |/ _ \| '_ \
+! | (_| (_| | | (__| |_| | | (_| |  |  __/ | | | | | \__ \ | (_) | | | |
+!  \___\__,_|_|\___|\__,_|_|\__,_|___\___|_| |_| |_|_|___/_|\___/|_| |_|
+!                               |_____|
+!>  @brief computes a single array with emissions using information from grid and EF
 !>  @author Jose Agustin Garcia Reynoso
-!>  @date 07/20/2020
+!>  @date 07/23/2020
 !>  @version  1.0
 !>  @copyright Universidad Nacional Autonoma de Mexico
-subroutine genera_malla
+subroutine calcula_emision
   implicit none
-  integer:: l,i,n,m
+  integer:: ntime,isp,n,m
   integer:: indx
   real :: sl,fcorr,ffr
   real :: temp
+  write(6,180)
   do n = ntd ,1,-1                   !Main LOOP initialization
     do m = 1,nint
-      if(id_source_TD(n).eq.id_source_INT(m).and.geo_type_INT(m).lt.2 .and.geometry_type(m).lt.2) then
+      if(id_source_TD(n).eq.id_source_INT(m).and.geo_type_INT(m).lt.2&
+         .and. geometry_type(m) .lt.2 ) then
       indx = id_grid_INT(m)
-      do l=1,nhr
+      do ntime=1,nhr
       ! for EPA
-      emiss_factor(1)= emisfac2(veh_type(n),cars_speed(l,n),ef_speed ,ef_hc )
-      emiss_factor(2)= emisfac2(veh_type(n),cars_speed(l,n),ef_speed ,ef_co )
-      emiss_factor(3)= emisfac2(veh_type(n),cars_speed(l,n),ef_speed ,ef_no )
+      emiss_factor(1)= emisfac2(veh_type(n),cars_speed(ntime,n),ef_speed ,ef_hc )
+      emiss_factor(2)= emisfac2(veh_type(n),cars_speed(ntime,n),ef_speed ,ef_co )
+      emiss_factor(3)= emisfac2(veh_type(n),cars_speed(ntime,n),ef_speed ,ef_no )
+      emiss_factor(5)= emisfac2(veh_type(n),cars_speed(ntime,n),ef_speed ,ef_so2)
       ! Emissions factor for cold start
-      emis_fact_cold(1)= emisfac2(veh_type(n),cars_speed(l,n),ef_speed_cold,ef_hc_cold)
-      emis_fact_cold(2)= emisfac2(veh_type(n),cars_speed(l,n),ef_speed_cold,ef_co_cold)
-      emis_fact_cold(3)= emisfac2(veh_type(n),cars_speed(l,n),ef_speed_cold,ef_no_cold)
+      emis_fact_cold(1)= emisfac2(veh_type(n),cars_speed(ntime,n),ef_speed_cold,ef_hc_cold)
+      emis_fact_cold(2)= emisfac2(veh_type(n),cars_speed(ntime,n),ef_speed_cold,ef_co_cold)
+      emis_fact_cold(3)= emisfac2(veh_type(n),cars_speed(ntime,n),ef_speed_cold,ef_no_cold)
+      emis_fact_cold(5)= emiss_factor(5)
       if (veh_type(n).ge. 14 ) then
         emiss_factor(4) =emiss_factor(1)
         emis_fact_cold(4) =emis_fact_cold(1)
@@ -329,30 +334,32 @@ subroutine genera_malla
 !..
 !     ----------   Localization of the viality lenght     ----------
 !..
-       call viality(geometry_type(m),id_source_INT(m),geometry_type2,id_source_ATT,source_type,source_size &
-                ,fcor,f_cold_engine_car,l,fcorr,ffr,sl)
+       call viality(geometry_type(m),id_source_INT(m),geometry_type2,id_source_ATT,&
+                source_type,source_size,fcor,f_cold_engine_car,ntime,fcorr,ffr,sl)
        sl = sl*r_weight(m)
 !     ----------   Computation of the emissions for each specie
-        do i = 1,nspc ! 1 HC(gasoline), 2 CO, 3 NOx, 4 HC(Diesel),5 SO2
+        do isp = 1,nspc ! 1 HC(gasoline), 2 CO, 3 NOx, 4 HC(Diesel),5 SO2
 !..
-          temp =(number_cars(l,n)*sl*emiss_factor(i)*(1.0-ffr)+ &
-                 number_cars(l,n)*sl*emis_fact_cold(i)*ffr)*fcorr
+          temp =(number_cars(ntime,n)*sl*emiss_factor(isp)*(1.0-ffr)+ &
+                 number_cars(ntime,n)*sl*emis_fact_cold(isp)*ffr)*fcorr
 !..        Xing  is 7.5% of the emission of segment viality
          if (geo_type_INT(m).eq.2) temp=temp*0.075
 !..
-            emision(indx,l,i,ID_time_period(n))= temp/3600.0 &
-                              + emision(indx,l,i,ID_time_period(n))
+            emision(indx,ntime,isp,ID_time_period(n))= temp/3600.0 &
+                              + emision(indx,ntime,isp,ID_time_period(n))
 !..
 !    ----------  Computation of dayly emissions  EDAY     ----------
 !
-            eday(indx,i,ID_time_period(n))= temp/3600.0 &
-                      + eday(indx,i,ID_time_period(n))
+            eday(indx,isp,ID_time_period(n))= temp/3600.0 &
+                      + eday(indx,isp,ID_time_period(n))
         end do    ! i nspc
       end do      ! m nint
     end if
     end do        ! ntd
   end do
-end subroutine genera_malla
+180 format(9X,'++++++  STARTS EMISSIONS COMPUTATIONS',4X,'******')
+
+end subroutine calcula_emision
 !                            _                           _ _
 !   __ _ _   _  __ _ _ __ __| | __ _     _ __ ___   __ _| | | __ _
 !  / _` | | | |/ _` | '__/ _` |/ _` |   | '_ ` _ \ / _` | | |/ _` |
@@ -396,10 +403,11 @@ real:: emis(nic)
     do iday=1,ntypd
         do i = 1,nspc
           irec = irec +1
-          write(iunit,rec=irec)(eday(j,i,iday),j=1,nic)
+write(iunit,rec=irec)(0.25*eday(j,i,iday),j=1,nic)
         end do   !  i specie
     end do
-180 format(7X,'      Wrinting output file for GrADS')
+
+180 format(9X,'xxxxxx  Wrinting output file for GrADS',3X,'xxxxxx')
 end subroutine guarda_malla
 !                            _
 !   __ _ _   _  __ _ _ __ __| | __ _
@@ -423,15 +431,16 @@ implicit none
 integer, parameter :: NDIMS=6,nx=28,ny=34, zlev=1
 integer :: i,j,k,l,iday,ispc,ncid,it
 integer :: iit
-integer :: dimids2(2),dimids3(3),dimids4(4)
+integer :: dimids(2),dimids2(2),dimids3(3),dimids4(4)
 integer :: id_unlimit ;!> id_varlat latitude ID in netcdf file
 integer ::id_varlat ;!> id_varlong longitude ID in netcdf file
 integer ::id_varlong ;!>id_var pollutant emission ID in netcdf file
-integer :: id_var(nspc)
+integer :: id_var(nspc*2)
 integer,dimension(NDIMS):: dim,id_dim ;!>xlong longitude coordinates
 real,dimension(nx,ny)::xlong ;!>xlat latitude coordinates
-real,dimension(nx,ny)::xlat  ;!>emis emissions values
-real,dimension(nx,ny,1,1)::emis
+real,dimension(nx,ny)::xlat  ;!>tprof temporal profiles
+real,dimension(nx,ny,1,1)::tprof ;!>emis_day dayly emissions
+real,dimension(nx,ny):: emis_day
 character (len=19),dimension(NDIMS) ::sdim
 character(len=19) :: current_date
 character(len= 8) :: date
@@ -439,116 +448,134 @@ character(len=10) :: time
 character(len=24) :: hoy, fecha_creado
 character(len=26) :: FILE_NAME
 character(len=19),dimension(1,1)::Times
-character(len=11),dimension(5)::ename ;!> Emissions long name
-character(len=26),dimension(5):: cname
+character(len=11),dimension(2*nspc):: ename ;!> Emissions long name
+character(len=26),dimension(2*nspc):: cname
+character(len=42),dimension(ntypd):: title
+character(len=250)::summary
+data title /"Movile temporal profiles for weekdays V4.0",&
+            "Movile temporal profiles for Saturday V4.0",&
+            "Movile temporal profiles for Sunday V4.0  "/
+
 data sdim /"Time               ","DateStrLen         ","west_east          ",&
 &          "south_north        ","bottom_top         ","emissions_zdim_stag"/
-ename=(/'E_VOC       ','E_CO        ','E_NO        ',&
-        'E_VOC_diesel','E_SO2       '/)
-cname=(/'VOC from gasoline vehicles','Carbon Monoxide emissions ', &
-        'Nitrogen monoxide emission','VOC from Diesel vehicles  ', &
+ename=(/'TP_VOC       ','TP_CO        ','TP_NO        ','TP_VOC_diesel',&
+        'TP_SO2       ','E_VOC        ','E_CO         ','E_NO         ',&
+        'E_VOC_diesel ','E_SO2        '/)
+cname=(/'VOC gasoline vehicle      ','Carbon Monoxide           ', &
+        'Nitrogen Oxide            ','VOC Diesel                ', &
+        'Sulfur Dioxide            ','VOC gasoline vehicle      ', &
+        'Carbon Monoxide           ', &
+        'Nitrogen monoxide         ','VOC Diesel vehicles       ', &
         'Sulfur dioxide emissions  '/)
+ summary="Using information from 11,848 street segments with activity data "//&
+"(type, number, speed, street length, engine cold start fraction) for computing"//&
+" a daily and hourly emission per grid. A ratio is used for calculating a temporal"//&
+" profile per grid"
   write(6,180)
   dim=(/1,19,nx,ny,1,zlev/)
   call date_and_time(date,time)
   fecha_creado=date(1:4)//'-'//date(5:6)//'-'//date(7:8)//'T'//time(1:2)//':'//time(3:4)//':00Z'
   hoy=date(7:8)//'-'//mes(date(5:6))//'-'//date(1:4)//' '//time(1:2)//':'//time(3:4)//':'//time(5:10)
-  print *,"   ",hoy
+  print *,"   HOY: ",hoy
   xlong=reshape(long,(/nx,ny/))
   xlat=reshape(lat,(/nx,ny/))
   do iday=1,ntypd
-  current_date="1990-01-05_00:00:00"
-  write(current_date(09:10),'(I2.2)') iday+4
-  FILE_NAME="emission_"//current_date(1:13)//".nc"
-  write(6,182) iday, FILE_NAME
-  call check( nf90_create(path =FILE_NAME,cmode = NF90_CLASSIC_MODEL,ncid = ncid) )
-  !     Define dimensiones
-  call check( nf90_def_dim(ncid,sdim(1), NF90_UNLIMITED, id_dim(1)) )
-  do i=2,NDIMS
-      call check( nf90_def_dim(ncid, sdim(i), dim(i), id_dim(i)) )
-  end do
-  dimids2 = (/id_dim(2),id_dim(1)/)
-  dimids3 = (/id_dim(3),id_dim(2),id_dim(1) /)
-  dimids4 = (/id_dim(3),id_dim(4),id_dim(6),id_dim(1)/)
-
-  write(6,181)
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "TITLE","V4.0 Emissions from TUV study 1990"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "START_DATE",current_date))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "WEST-EAST_GRID_DIMENSION",nx))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "SOUTH-NORTH_GRID_DIMENSION",ny))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "BOTTOM-TOP_GRID_DIMENSION",1))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "DAY","FRD"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "DX",2*1000))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "DY",2*1000))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "CEN_LAT",xlat(nx/2,ny/2)))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "CEN_LON",xlong(nx/2,ny/2)))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "TRUELAT1",17.5))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "TRUELAT2",29.5))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "MOAD_CEN_LAT",xlat(nx/2,ny/2)))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "STAND_LON",xlong(nx/2,ny/2)))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "POLE_LAT",90.))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "POLE_LON",0.))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "GRIDTYPE","C"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "GMT",-6.))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "JULYR",1990))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "JULDAY",5))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "MAP_PROJ",1))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "standard_parallel","(/17.5,29.5/)"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "grid_mapping_name","lambert_conformal_conic"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "MMINLU","USGS"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "MECHANISM","NONE"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "product_version","1.0"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "CREATION_DATE",hoy))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "date_issued",fecha_creado))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "date_created",fecha_creado))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "date_modified",fecha_creado))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "date_metadata_modified",fecha_creado))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "time_coverage_start","1990-01-05T00:00:00Z"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "time_coverage_end","1990-01-08T00:00:00Z"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "time_coverage_duration","P3D"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "time_coverage_resolution","PT1H"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "creator_institution", &
-  "Centro de Ciencias de la Atmosfera, UNAM"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "creator_type","institution"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "contributor_name",&
-  "Agustin Garcia, agustin@atmosfera.unam.mx"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "contributor_role","Researcher"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "cdm_data_type","Grid"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "id","emis_epa_01"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "acknowledgment","CCA, UNAM"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "publisher_institution","CCA, UNAM"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "publisher_url","www.atmosfera.unam.mx"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "publisher_type","institution"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "geospatial_lon_units","degrees_east"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "geospatial_lat_units","degrees_north"))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "geospatial_lat_max",maxval(xlat)))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "geospatial_lat_min",minval(xlat)))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "geospatial_lon_max",maxval(xlong)))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "geospatial_lon_min",minval(xlong)))
-  call check( nf90_put_att(ncid, NF90_GLOBAL, "geospatial_bounds_crs","EPSG:4979"))
-
+    current_date="1990-01-05_00:00:00"
+    write(current_date(09:10),'(I2.2)') iday+4
+    FILE_NAME="emission_"//current_date(1:13)//".nc"
+    write(6,182) iday, FILE_NAME
+    call check( nf90_create(path =FILE_NAME,cmode = NF90_CLASSIC_MODEL,ncid = ncid) )
+!     Define dimensiones
+    call check( nf90_def_dim(ncid,sdim(1), NF90_UNLIMITED, id_dim(1)) )
+    do i=2,NDIMS
+        call check( nf90_def_dim(ncid, sdim(i), dim(i), id_dim(i)) )
+    end do
+    dimids  = (/id_dim(3),id_dim(4)/)
+    dimids2 = (/id_dim(2),id_dim(1)/)
+    dimids3 = (/id_dim(3),id_dim(4),id_dim(1)/)
+    dimids4 = (/id_dim(3),id_dim(4),id_dim(6),id_dim(1)/)
+    !write(6,181)
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "TITLE",title(iday)))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "START_DATE",current_date))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "WEST-EAST_GRID_DIMENSION",nx))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "SOUTH-NORTH_GRID_DIMENSION",ny))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "BOTTOM-TOP_GRID_DIMENSION",1))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "DAY","FRD"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "DX",2*1000))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "DY",2*1000))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "CEN_LAT",xlat(nx/2,ny/2)))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "CEN_LON",xlong(nx/2,ny/2)))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "TRUELAT1",17.5))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "TRUELAT2",29.5))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "MOAD_CEN_LAT",xlat(nx/2,ny/2)))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "STAND_LON",xlong(nx/2,ny/2)))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "POLE_LAT",90.))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "POLE_LON",0.))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "GRIDTYPE","C"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "GMT",-6.))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "JULYR",1990))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "JULDAY",5))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "MAP_PROJ",1))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "standard_parallel","(/17.5,29.5/)"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "grid_mapping_name","lambert_conformal_conic"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "MMINLU","USGS"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "MECHANISM","NONE"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "product_version","1.0"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "CREATION_DATE",hoy))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "date_issued",fecha_creado))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "date_created",fecha_creado))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "date_modified",fecha_creado))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "date_metadata_modified",fecha_creado))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "time_coverage_start","1990-01-05T00:00:00Z"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "time_coverage_end","1990-01-08T00:00:00Z"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "time_coverage_duration","P3D"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "time_coverage_resolution","PT1H"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "creator_institution", &
+    "Centro de Ciencias de la Atmosfera, UNAM"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "creator_type","institution"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "contributor_name",&
+    "Agustin Garcia, agustin@atmosfera.unam.mx"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "contributor_role","Researcher"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "cdm_data_type","Grid"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "id","temporal_frac_using_EPA_EF_1993"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "acknowledgment","CCA, UNAM"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "publisher_institution","CCA, UNAM"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "publisher_url","www.atmosfera.unam.mx"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "publisher_type","institution"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "geospatial_lon_units","degrees_east"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "geospatial_lat_units","degrees_north"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "geospatial_lat_max",maxval(xlat)))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "geospatial_lat_min",minval(xlat)))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "geospatial_lon_max",maxval(xlong)))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "geospatial_lon_min",minval(xlong)))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "geospatial_bounds_crs","EPSG:4979"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "summary",summary))
 !  Define las variables
-  call check( nf90_def_var(ncid, "Times", NF90_CHAR, dimids2,id_unlimit ) )
-  call check( nf90_def_var(ncid, "XLONG", NF90_REAL,(/id_dim(3),id_dim(4),id_dim(1)/),id_varlong) )
-  call check( nf90_def_var(ncid, "XLAT", NF90_REAL,(/id_dim(3),id_dim(4),id_dim(1)/),id_varlat ) )
+    call check( nf90_def_var(ncid, "Times", NF90_CHAR, dimids2,id_unlimit ) )
+    call check( nf90_def_var(ncid, "XLONG", NF90_REAL, dimids3,id_varlong) )
+    call check( nf90_def_var(ncid, "XLAT" , NF90_REAL, dimids3,id_varlat ) )
 
 ! Assign  attributes
-  call check( nf90_put_att(ncid, id_varlong, "FieldType", 104 ) )
-  call check( nf90_put_att(ncid, id_varlong, "MemoryOrder", "XYZ") )
-  call check( nf90_put_att(ncid, id_varlong, "description", "LONGITUDE, WEST IS NEGATIVE") )
-  call check( nf90_put_att(ncid, id_varlong, "units", "degree_east"))
-  call check( nf90_put_att(ncid, id_varlong, "axis", "X") )
-  call check( nf90_put_att(ncid, id_varlat, "FieldType", 104 ) )
-  call check( nf90_put_att(ncid, id_varlat, "MemoryOrder", "XYZ") )
-  call check( nf90_put_att(ncid, id_varlat, "description", "LATITUDE, SOUTH IS NEGATIVE") )
-  call check( nf90_put_att(ncid, id_varlat, "units", "degree_north"))
-  call check( nf90_put_att(ncid, id_varlat, "axis", "Y") )
-!  Attributos para cada variable
-  do i=1,nspc
-   call crea_attr(ncid,4,dimids4,ename(i),cname(i),"g km^-2 s^-1",id_var(i))
-  end do
+    call check( nf90_put_att(ncid, id_varlong, "FieldType", 104 ) )
+    call check( nf90_put_att(ncid, id_varlong, "MemoryOrder", "XYZ") )
+    call check( nf90_put_att(ncid, id_varlong, "description", "LONGITUDE, WEST IS NEGATIVE") )
+    call check( nf90_put_att(ncid, id_varlong, "units", "degree_east"))
+    call check( nf90_put_att(ncid, id_varlong, "axis", "X") )
+    call check( nf90_put_att(ncid, id_varlat, "FieldType", 104 ) )
+    call check( nf90_put_att(ncid, id_varlat, "MemoryOrder", "XYZ") )
+    call check( nf90_put_att(ncid, id_varlat, "description", "LATITUDE, SOUTH IS NEGATIVE") )
+    call check( nf90_put_att(ncid, id_varlat, "units", "degree_north"))
+    call check( nf90_put_att(ncid, id_varlat, "axis", "Y") )
+!  Attributos para cada perfil temporal
+    do i=1,nspc
+     call crea_attr(ncid,0,dimids4,ename(i),cname(i),"1",id_var(i)) !adimensional=1
+    end do
+!  Attributos para cada emision diaria
+    do i=1+nspc,nspc+nspc
+     call crea_attr(ncid,1,dimids,ename(i),cname(i),"g km^-2 s^-1",id_var(i))
+    end do
 !   Terminan definiciones
-  call check( nf90_enddef(ncid) )
+    call check( nf90_enddef(ncid) )
 
   tiempo: do it=1,nhr
     iit=it!+24*(iday-1)
@@ -558,26 +585,27 @@ cname=(/'VOC from gasoline vehicles','Carbon Monoxide emissions ', &
     call check( nf90_put_var(ncid, id_unlimit,Times,start=(/1,iit/)) )
     call check( nf90_put_var(ncid, id_varlong,xlong,start=(/1,1,iit/)) )
     call check( nf90_put_var(ncid, id_varlat,xlat,start=(/1,1,iit/)) )
-
     do ispc=1,nspc
       do i=1,nx
         do j=1,ny
           k=i+28*(j-1)
           if(eday(k,ispc,iday).gt.0) then
-            emis(i,j,1,1)=emision(k,it,ispc,iday)/eday(k,ispc,iday)
+            tprof(i,j,1,1)=emision(k,it,ispc,iday)/eday(k,ispc,iday)
           else
-            emis(i,j,1,1)=0.0
+            tprof(i,j,1,1)=0.0
           end if
+          if (it.eq. 1) emis_day(i,j)=eday(k,ispc,iday)/4./real(nhr)! grid cell 4 km^2
         end do
       end do
-      call check( nf90_put_var(ncid, id_var(ispc),emis,start=(/1,1,1,iit/)))
+      call check( nf90_put_var(ncid, id_var(ispc),tprof,start=(/1,1,1,iit/)))
+      if (it.eq. 1)call check(nf90_put_var(ncid,id_var(ispc+nspc),emis_day,start=(/1,1/)))
     end do
    end do TIEMPO
    call check( nf90_close(ncid) )
-  end do
-180 format(7X,'      Wrinting in output file for netcdf')
+  end do !   day
+180 format(9X,'xxxxxx  Wrinting output file for netcdf',2X,'xxxxxx')
 181 format(7X,'      Atributos Globales NF90_GLOBAL')
-182 format(7X,'      Guarda variables dia: ',I2.2,x,A26)
+182 format(5X,'      Guarda variables dia: ',I2.2,x,A26)
 end subroutine guarda_malla_nc
 !        _       _ _ _
 ! __   _(_) __ _| (_) |_ _   _
@@ -767,6 +795,7 @@ character(len=3)function mes(num)
     end select
     return
 end function
+!                               _   _
 !   ___ _ __ ___  __ _     __ _| |_| |_ _ __
 !  / __| '__/ _ \/ _` |   / _` | __| __| '__|
 ! | (__| | |  __/ (_| |  | (_| | |_| |_| |
@@ -778,27 +807,30 @@ end function
 !>   @version  2.2
 !>   @copyright Universidad Nacional Autonoma de Mexico 2020
 !>   @param ncid netcdf file ID
-!>   @param idm number of items in dimids array
+!>   @param ifl number of items in dimids array
 !>   @param dimids ID dimensons array
 !>   @param svar variable name
 !>   @param cname description variable name
 !>   @param cunits units of the variable
 !>   @param id_var variable ID
-subroutine crea_attr(ncid,idm,dimids,svar,cname,cunits,id_var)
+subroutine crea_attr(ncid,ifl,dimids,svar,cname,cunits,id_var)
 use netcdf
     implicit none
-    integer , INTENT(IN) ::ncid,idm
+    integer , INTENT(IN) ::ncid,ifl
     integer, INTENT(out) :: id_var
-    integer, INTENT(IN),dimension(idm):: dimids
+    integer, INTENT(IN),dimension(:):: dimids
     character(len=*), INTENT(IN)::svar,cname,cunits
     character(len=50) :: cvar
-    cvar="surface_upward_mass_flux_of_"//trim(cname)
-
+    if (ifl.eq.1) then
+    cvar="Flux "//trim(cname)
+    else
+    cvar="temporal_profile "//trim(cname)
+    end if
     call check( nf90_def_var(ncid, svar, NF90_REAL, dimids,id_var ) )
     ! Assign  attributes
     call check( nf90_put_att(ncid, id_var, "FieldType", 104 ) )
     call check( nf90_put_att(ncid, id_var, "MemoryOrder", "XYZ") )
-    call check( nf90_put_att(ncid, id_var, "standard_name", Cvar) )
+    call check( nf90_put_att(ncid, id_var, "standard_name", cvar) )
     call check( nf90_put_att(ncid, id_var, "units", cunits))
     call check( nf90_put_att(ncid, id_var, "stagger", "Z") )
     call check( nf90_put_att(ncid, id_var, "coordinates", "XLONG XLAT") )
@@ -832,7 +864,7 @@ use grid_temp_mod
 
   call lee_factor_emision
 
-  call genera_malla
+  call calcula_emision
 
   call guarda_malla
 
