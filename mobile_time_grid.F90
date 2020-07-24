@@ -1,4 +1,4 @@
-!     program movile_time_grid.F90
+!     program mobile_time_grid.F90
 !>  @brief Variables for the identification of temporal profiles in a grid
 !>
 !>   |  ID_time_period | Time period |
@@ -512,7 +512,7 @@ cname=(/'VOC gasoline vehicle      ','Carbon Monoxide           ', &
     call check( nf90_put_att(ncid, NF90_GLOBAL, "POLE_LAT",90.))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "POLE_LON",0.))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "GRIDTYPE","C"))
-    call check( nf90_put_att(ncid, NF90_GLOBAL, "GMT",-6.))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "GMT",0.))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "JULYR",1990))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "JULDAY",5))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "MAP_PROJ",1))
@@ -520,6 +520,17 @@ cname=(/'VOC gasoline vehicle      ','Carbon Monoxide           ', &
     call check( nf90_put_att(ncid, NF90_GLOBAL, "grid_mapping_name","lambert_conformal_conic"))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "MMINLU","USGS"))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "MECHANISM","NONE"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "creator_institution", &
+    "Centro de Ciencias de la Atmosfera, UNAM"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "creator_type","institution"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "contributor_name",&
+    "Agustin Garcia, agustin@atmosfera.unam.mx"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "contributor_role","Researcher"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "cdm_data_type","Grid"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "acknowledgment","CCA, UNAM"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "publisher_institution","CCA, UNAM"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "publisher_url","www.atmosfera.unam.mx"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "publisher_type","institution"))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "product_version","1.0"))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "CREATION_DATE",hoy))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "date_issued",fecha_creado))
@@ -530,18 +541,6 @@ cname=(/'VOC gasoline vehicle      ','Carbon Monoxide           ', &
     call check( nf90_put_att(ncid, NF90_GLOBAL, "time_coverage_end","1990-01-08T00:00:00Z"))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "time_coverage_duration","P3D"))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "time_coverage_resolution","PT1H"))
-    call check( nf90_put_att(ncid, NF90_GLOBAL, "creator_institution", &
-    "Centro de Ciencias de la Atmosfera, UNAM"))
-    call check( nf90_put_att(ncid, NF90_GLOBAL, "creator_type","institution"))
-    call check( nf90_put_att(ncid, NF90_GLOBAL, "contributor_name",&
-    "Agustin Garcia, agustin@atmosfera.unam.mx"))
-    call check( nf90_put_att(ncid, NF90_GLOBAL, "contributor_role","Researcher"))
-    call check( nf90_put_att(ncid, NF90_GLOBAL, "cdm_data_type","Grid"))
-    call check( nf90_put_att(ncid, NF90_GLOBAL, "id","temporal_frac_using_EPA_EF_1993"))
-    call check( nf90_put_att(ncid, NF90_GLOBAL, "acknowledgment","CCA, UNAM"))
-    call check( nf90_put_att(ncid, NF90_GLOBAL, "publisher_institution","CCA, UNAM"))
-    call check( nf90_put_att(ncid, NF90_GLOBAL, "publisher_url","www.atmosfera.unam.mx"))
-    call check( nf90_put_att(ncid, NF90_GLOBAL, "publisher_type","institution"))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "geospatial_lon_units","degrees_east"))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "geospatial_lat_units","degrees_north"))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "geospatial_lat_max",maxval(xlat)))
@@ -549,22 +548,24 @@ cname=(/'VOC gasoline vehicle      ','Carbon Monoxide           ', &
     call check( nf90_put_att(ncid, NF90_GLOBAL, "geospatial_lon_max",maxval(xlong)))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "geospatial_lon_min",minval(xlong)))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "geospatial_bounds_crs","EPSG:4979"))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "id","temporal_frac_using_EPA_EF_1993"))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "summary",summary))
 !  Define las variables
     call check( nf90_def_var(ncid, "Times", NF90_CHAR, dimids2,id_unlimit ) )
     call check( nf90_def_var(ncid, "XLONG", NF90_REAL, dimids3,id_varlong) )
     call check( nf90_def_var(ncid, "XLAT" , NF90_REAL, dimids3,id_varlat ) )
-
 ! Assign  attributes
     call check( nf90_put_att(ncid, id_varlong, "FieldType", 104 ) )
     call check( nf90_put_att(ncid, id_varlong, "MemoryOrder", "XYZ") )
     call check( nf90_put_att(ncid, id_varlong, "description", "LONGITUDE, WEST IS NEGATIVE") )
-    call check( nf90_put_att(ncid, id_varlong, "units", "degree_east"))
+    call check( nf90_put_att(ncid, id_varlong, "standard_name", "grid_longitude") )
+    call check( nf90_put_att(ncid, id_varlong, "units", "degree"))
     call check( nf90_put_att(ncid, id_varlong, "axis", "X") )
     call check( nf90_put_att(ncid, id_varlat, "FieldType", 104 ) )
     call check( nf90_put_att(ncid, id_varlat, "MemoryOrder", "XYZ") )
     call check( nf90_put_att(ncid, id_varlat, "description", "LATITUDE, SOUTH IS NEGATIVE") )
-    call check( nf90_put_att(ncid, id_varlat, "units", "degree_north"))
+    call check( nf90_put_att(ncid, id_varlat, "standard_name", "grid_latitude") )
+    call check( nf90_put_att(ncid, id_varlat, "units", "degree"))
     call check( nf90_put_att(ncid, id_varlat, "axis", "Y") )
 !  Attributos para cada perfil temporal
     do i=1,nspc
@@ -578,26 +579,27 @@ cname=(/'VOC gasoline vehicle      ','Carbon Monoxide           ', &
     call check( nf90_enddef(ncid) )
 
   tiempo: do it=1,nhr
-    iit=it!+24*(iday-1)
+    iit=it+18
+    if(iit.gt.24) iit=it-6
     write(current_date(12:13),'(I2.2)') it-1
     Times(1,1)=current_date(1:19)
     !write(6,'(A,x,I2.2)')'TIEMPO: ', iit
-    call check( nf90_put_var(ncid, id_unlimit,Times,start=(/1,iit/)) )
-    call check( nf90_put_var(ncid, id_varlong,xlong,start=(/1,1,iit/)) )
-    call check( nf90_put_var(ncid, id_varlat,xlat,start=(/1,1,iit/)) )
+    call check( nf90_put_var(ncid, id_unlimit,Times,start=(/1,it/)) )
+    call check( nf90_put_var(ncid, id_varlong,xlong,start=(/1,1,it/)) )
+    call check( nf90_put_var(ncid, id_varlat,xlat,start=(/1,1,it/)) )
     do ispc=1,nspc
       do i=1,nx
         do j=1,ny
           k=i+28*(j-1)
           if(eday(k,ispc,iday).gt.0) then
-            tprof(i,j,1,1)=emision(k,it,ispc,iday)/eday(k,ispc,iday)
+            tprof(i,j,1,1)=emision(k,iit,ispc,iday)/eday(k,ispc,iday)
           else
             tprof(i,j,1,1)=0.0
           end if
           if (it.eq. 1) emis_day(i,j)=eday(k,ispc,iday)/4./real(nhr)! grid cell 4 km^2
         end do
       end do
-      call check( nf90_put_var(ncid, id_var(ispc),tprof,start=(/1,1,1,iit/)))
+      call check( nf90_put_var(ncid, id_var(ispc),tprof,start=(/1,1,1,it/)))
       if (it.eq. 1)call check(nf90_put_var(ncid,id_var(ispc+nspc),emis_day,start=(/1,1/)))
     end do
    end do TIEMPO

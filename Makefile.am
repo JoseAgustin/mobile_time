@@ -1,7 +1,7 @@
 #
 # This file is processed by automake (produces file Makefile.in)
 #
-bin_PROGRAMS = movile_time_grid.exe
+bin_PROGRAMS = mobile_time_grid.exe
 
 # Additional files to be cleaned with 'make clean'
 CLEANFILES = *.o *.mod 
@@ -10,4 +10,4 @@ CLEANFILES = *.o *.mod
   AM_FCFLAGS  = $(NC_INC)
   AM_FCFLAGS += $(NC_LIB)
 
-movile_time_grid_exe_SOURCES = movile_time_grid.F90
+mobile_time_grid_exe_SOURCES = mobile_time_grid.F90

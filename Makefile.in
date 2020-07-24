@@ -86,7 +86,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = movile_time_grid.exe$(EXEEXT)
+bin_PROGRAMS = mobile_time_grid.exe$(EXEEXT)
 subdir = .
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -101,9 +101,9 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_movile_time_grid_exe_OBJECTS = movile_time_grid.$(OBJEXT)
-movile_time_grid_exe_OBJECTS = $(am_movile_time_grid_exe_OBJECTS)
-movile_time_grid_exe_LDADD = $(LDADD)
+am_mobile_time_grid_exe_OBJECTS = mobile_time_grid.$(OBJEXT)
+mobile_time_grid_exe_OBJECTS = $(am_mobile_time_grid_exe_OBJECTS)
+mobile_time_grid_exe_LDADD = $(LDADD)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -130,8 +130,8 @@ AM_V_FCLD = $(am__v_FCLD_@AM_V@)
 am__v_FCLD_ = $(am__v_FCLD_@AM_DEFAULT_V@)
 am__v_FCLD_0 = @echo "  FCLD    " $@;
 am__v_FCLD_1 = 
-SOURCES = $(movile_time_grid_exe_SOURCES)
-DIST_SOURCES = $(movile_time_grid_exe_SOURCES)
+SOURCES = $(mobile_time_grid_exe_SOURCES)
+DIST_SOURCES = $(mobile_time_grid_exe_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -278,7 +278,7 @@ top_srcdir = @top_srcdir@
 # Additional files to be cleaned with 'make clean'
 CLEANFILES = *.o *.mod 
 AM_FCFLAGS = $(NC_INC) $(NC_LIB)
-movile_time_grid_exe_SOURCES = movile_time_grid.F90
+mobile_time_grid_exe_SOURCES = mobile_time_grid.F90
 all: all-am
 
 .SUFFIXES:
@@ -359,9 +359,9 @@ uninstall-binPROGRAMS:
 clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
 
-movile_time_grid.exe$(EXEEXT): $(movile_time_grid_exe_OBJECTS) $(movile_time_grid_exe_DEPENDENCIES) $(EXTRA_movile_time_grid_exe_DEPENDENCIES) 
-	@rm -f movile_time_grid.exe$(EXEEXT)
-	$(AM_V_FCLD)$(FCLINK) $(movile_time_grid_exe_OBJECTS) $(movile_time_grid_exe_LDADD) $(LIBS)
+mobile_time_grid.exe$(EXEEXT): $(mobile_time_grid_exe_OBJECTS) $(mobile_time_grid_exe_DEPENDENCIES) $(EXTRA_mobile_time_grid_exe_DEPENDENCIES) 
+	@rm -f mobile_time_grid.exe$(EXEEXT)
+	$(AM_V_FCLD)$(FCLINK) $(mobile_time_grid_exe_OBJECTS) $(mobile_time_grid_exe_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
