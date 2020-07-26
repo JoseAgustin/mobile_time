@@ -18,12 +18,12 @@
 !>   | 5   | Otros buses   |
 !>   | 6  |  Medianos   |
 !>
-!>   |  veh_type  | Description    | veh_type | Description |
+!>   |  veh_type |SCC| Description    | veh_type |SCC| Description |
 !>   |:---:    |:---            |:---: |:---          |
-!>   | 11     | Automoviles     |  15  | Otros buses  |
-!>   | 12     | Ligeros         |  16  | Medianos    |
-!>   | 13     | Microbuses      |  17  | Pesados     |
-!>   | 14     | Ruta 100        |  18  | Camiones Municipales |
+!>   | 11 |2230001330 |Automoviles     |  15  |2230071330|  Otros buses  |
+!>   | 12 |2201001330 !Ligeros         |  16  |2201020330|  Medianos    |
+!>   | 13 |2201040330 !Microbuses      |  17  |2230072330|  Pesados     |
+!>   | 14 |2230075330 !Ruta 100        |  18  |2230073330| Camiones Municipales |
 !>
 !>  @author Jose Agustin Garcia Reynoso
 !>  @date 07/20/2020
@@ -33,11 +33,12 @@
 module grid_temp_mod
 !> number species in emission factors from EPA
 integer,parameter :: nef = 5 ;!> number species in emission factors cold start from EPA
-integer,parameter :: nef2 =5 ;!> number of period 1= wee, 2=saturday 30sunday
+integer,parameter :: nef2 =5 ;!> Type of day 1 week day, 2 Saturday, 3 Sunday
 integer,parameter :: ntypd= 3 ;!> number of hours per day
 integer,parameter :: nhr=24  ; !> number species in emission file
 integer,parameter :: nspc = 5 ; !> number of speeds per EF specie
-integer,parameter :: nfe = 7  ; !> Number of grids in the mesh
+integer,parameter :: nfe = 7  ; ! number of vehicle types 11 to 18
+integer,parameter :: nveht=8; !> Number of grids in the mesh
 integer,parameter :: nic=28*34;!> Number of rows in results data 952
 integer,parameter :: ntd=75889; !> Number of viality segments
 integer,parameter :: nint=11848; !> Number of viality lengths
@@ -54,37 +55,39 @@ integer :: id_source_ATT(natt) ;!> Geometry source type (1 Line  2 Area) from fi
 integer :: geometry_type2(natt)  ;!> Source classification ID viality 1,5,6
 integer :: source_type(natt)
 !>  Number of cars in a specific viality and hour
-real,dimension(nhr,ntd) :: number_cars;!> total number of vehicles per hour in each grid
+real,dimension(nhr,ntd) :: veh_number;!> total number of vehicles per hour in each grid
 real :: long(nic)     ;!> latitude coordinate for the mesh
-real :: lat(nic)      ; !> Cut-lenght or cut-area of source segment
+real :: lat(nic)      ;!> Cut-lenght or cut-area of source segment
 real :: cutla(nint)   ;!> Relative weight of the viality in the grid
-real :: r_weight(nint) ;!> Linear source lenght km or surface area km2 size
+real :: r_weight(nint) ;!> Linear source 1 lenght km or 2 surface area km2 size
 real :: source_size(natt,2)  ;!> speed in emissions factos
 real :: ef_speed(nef,nfe) ;!> VOC emission factor
 real :: ef_hc(nef,nfe)  ;!> CO emission factor
 real :: ef_co(nef,nfe)  ;!> NO emission factor
 real :: ef_no(nef,nfe)  ;!> SO2 emission factor
-real :: ef_so2(nef,nfe);!> speed in emissions factos cold start engine
-real :: ef_speed_cold(nef2,7) ;!> VOC emission factor cold start engine
-real :: ef_hc_cold(nef2,7)  ;!> CO emission factor cold start engine
-real :: ef_co_cold(nef2,7)  ;!> NO emission factor cold start engine
-real :: ef_no_cold(nef2,7)  ;!> Correction factor for start engine mode
-real :: fcor(nhr)     ;!> Fraction of cold engine cars
+real :: ef_so2(nef,nfe) ;!> speed in emissions factos cold start engine
+real :: ef_speed_cold(nef2,nfe) ;!> VOC emission factor cold start engine
+real :: ef_hc_cold(nef2,nfe)  ;!> CO emission factor cold start engine
+real :: ef_co_cold(nef2,nfe)  ;!> NO emission factor cold start engine
+real :: ef_no_cold(nef2,nfe)  ;!> Correction factor for start engine mode
+real :: fcor(nhr)             ;!> Fraction of cold engine cars
 real :: f_cold_engine_car(nhr) ;!> Emission factor for specific specie
-real :: emiss_factor(nspc)   ;!> Emission factor cold start for specific specie
+real :: emiss_factor(nspc)     ;!> Emission factor cold start for specific specie
 real :: emis_fact_cold(nspc)   ;!> cars speed in each viality from src_td
-real :: cars_speed(nhr,ntd)  ;!> Total emission per cell, specie and day
-real :: eday(nic,nspc,ntypd); !> Movil emision per cell,hour,specie,day type
-real :: emision(nic,nhr,nspc,ntypd)
+real :: veh_speed(nhr,ntd)     ;!> Total emission per cell, specie and day
+real :: eday(nic,nspc,ntypd)   ;!> Total emission per cell, specie, day and vehicle type
+real :: edve(nic,nspc,ntypd,nveht);  !> Mobile source emision per cell,hour,specie,day type
+real :: emision(nic,nhr,nspc,ntypd); !> Emision per cell,hour,specie,day and vehicle type
+real :: emi_veh(nic,nhr,nspc,ntypd,nveht)
 
 common /intersec/ cutla,r_weight,id_grid_INT,id_source_INT,geometry_type,geo_type_INT
 common /cellattr/ id_grid,long,lat
-common /srctd/    number_cars, id_source_TD, ID_time_period,veh_type
-common /facttuv/  ef_speed,ef_hc,ef_co,ef_no!,eso
-common /factsec/  ef_speed_cold,ef_hc_cold,ef_co_cold,ef_no_cold
-common /miscell/  fcor,f_cold_engine_car,emision!,vv,et,fcorr,ffr
-common /srcattr/  source_size,source_type,geometry_type2,id_source_ATT
-common /computs/ emiss_factor,emis_fact_cold,eday
+common /srctd/ veh_number, id_source_TD, ID_time_period,veh_type,veh_speed
+common /factemision/ ef_speed,ef_hc,ef_co,ef_no!,eso
+common /factsec/ ef_speed_cold,ef_hc_cold,ef_co_cold,ef_no_cold
+common /miscell/ fcor,f_cold_engine_car!,vv,et,fcorr,ffr
+common /srcattr/ source_size,source_type,geometry_type2,id_source_ATT
+common /computs/ emiss_factor,emis_fact_cold,eday,edve,emision,emi_veh
 
 contains
 !        _                 ____      _ _
@@ -195,7 +198,7 @@ subroutine lee_actividades
   do j=1,ntd
   read (iunit,*)idum,idum,idum,id_source_TD(j),&
         ID_time_period(j),veh_type(j), &
-        idum,idum,(number_cars(i,j),i=1,nhr),(cars_speed(i,j),i=1,nhr)
+        idum,idum,(veh_number(i,j),i=1,nhr),(veh_speed(i,j),i=1,nhr)
   end do
   close(iunit)
   write(6,160)
@@ -306,57 +309,62 @@ subroutine calcula_emision
   real :: sl,fcorr,ffr
   real :: temp
   write(6,180)
-  do n = ntd ,1,-1                   !Main LOOP initialization
+do n = ntd ,1,-1                   !Main LOOP initialization
     do m = 1,nint
-      if(id_source_TD(n).eq.id_source_INT(m).and.geo_type_INT(m).lt.2&
-         .and. geometry_type(m) .lt.2 ) then
-      indx = id_grid_INT(m)
-      do ntime=1,nhr
-      ! for EPA
-      emiss_factor(1)= emisfac2(veh_type(n),cars_speed(ntime,n),ef_speed ,ef_hc )
-      emiss_factor(2)= emisfac2(veh_type(n),cars_speed(ntime,n),ef_speed ,ef_co )
-      emiss_factor(3)= emisfac2(veh_type(n),cars_speed(ntime,n),ef_speed ,ef_no )
-      emiss_factor(5)= emisfac2(veh_type(n),cars_speed(ntime,n),ef_speed ,ef_so2)
-      ! Emissions factor for cold start
-      emis_fact_cold(1)= emisfac2(veh_type(n),cars_speed(ntime,n),ef_speed_cold,ef_hc_cold)
-      emis_fact_cold(2)= emisfac2(veh_type(n),cars_speed(ntime,n),ef_speed_cold,ef_co_cold)
-      emis_fact_cold(3)= emisfac2(veh_type(n),cars_speed(ntime,n),ef_speed_cold,ef_no_cold)
-      emis_fact_cold(5)= emiss_factor(5)
-      if (veh_type(n).ge. 14 ) then
-        emiss_factor(4) =emiss_factor(1)
-        emis_fact_cold(4) =emis_fact_cold(1)
-        emiss_factor(1) = 0.0
-        emis_fact_cold(1) = 0.0
-      else
-        emiss_factor(4) = 0.0
-        emis_fact_cold(4) = 0.0
-      end if
+        if(id_source_TD(n).eq.id_source_INT(m).and.geo_type_INT(m).lt.2&
+        .and. geometry_type(m) .lt.2 ) then
+            indx = id_grid_INT(m)
+            do ntime=1,nhr
+            ! for EPA
+            emiss_factor(1)= emisfac2(veh_type(n),veh_speed(ntime,n),ef_speed ,ef_hc )
+            emiss_factor(2)= emisfac2(veh_type(n),veh_speed(ntime,n),ef_speed ,ef_co )
+            emiss_factor(3)= emisfac2(veh_type(n),veh_speed(ntime,n),ef_speed ,ef_no )
+            emiss_factor(5)= emisfac2(veh_type(n),veh_speed(ntime,n),ef_speed ,ef_so2)
+            ! Emissions factor for cold start
+            emis_fact_cold(1)= emisfac2(veh_type(n),veh_speed(ntime,n),ef_speed_cold,ef_hc_cold)
+            emis_fact_cold(2)= emisfac2(veh_type(n),veh_speed(ntime,n),ef_speed_cold,ef_co_cold)
+            emis_fact_cold(3)= emisfac2(veh_type(n),veh_speed(ntime,n),ef_speed_cold,ef_no_cold)
+            emis_fact_cold(5)= emiss_factor(5)
+            if (veh_type(n).ge. 14 ) then
+                emiss_factor(4)   = emiss_factor(1)
+                emis_fact_cold(4) = emis_fact_cold(1)
+                emiss_factor(1)   = 0.0
+                emis_fact_cold(1) = 0.0
+            else
+                emiss_factor(4)   = 0.0
+                emis_fact_cold(4) = 0.0
+            end if
 !..
 !     ----------   Localization of the viality lenght     ----------
 !..
-       call viality(geometry_type(m),id_source_INT(m),geometry_type2,id_source_ATT,&
-                source_type,source_size,fcor,f_cold_engine_car,ntime,fcorr,ffr,sl)
-       sl = sl*r_weight(m)
+                call viality(geometry_type(m),id_source_INT(m),geometry_type2,&
+                     id_source_ATT,source_type,source_size,fcor,f_cold_engine_car,&
+                     ntime,fcorr,ffr,sl)
+                sl = sl*r_weight(m)
 !     ----------   Computation of the emissions for each specie
-        do isp = 1,nspc ! 1 HC(gasoline), 2 CO, 3 NOx, 4 HC(Diesel),5 SO2
+                do isp = 1,nspc ! 1 HC(gasoline), 2 CO, 3 NOx, 4 HC(Diesel), 5 SO2
 !..
-          temp =(number_cars(ntime,n)*sl*emiss_factor(isp)*(1.0-ffr)+ &
-                 number_cars(ntime,n)*sl*emis_fact_cold(isp)*ffr)*fcorr
+                  temp =(veh_number(ntime,n)*sl*emiss_factor(isp)*(1.0-ffr)+ &
+                         veh_number(ntime,n)*sl*emis_fact_cold(isp)*ffr)*fcorr
 !..        Xing  is 7.5% of the emission of segment viality
-         if (geo_type_INT(m).eq.2) temp=temp*0.075
+                 if (geo_type_INT(m).eq.2) temp=temp*0.075
 !..
-            emision(indx,ntime,isp,ID_time_period(n))= temp/3600.0 &
-                              + emision(indx,ntime,isp,ID_time_period(n))
+                    emision(indx,ntime,isp,ID_time_period(n))= temp/3600.0 &
+                            + emision(indx,ntime,isp,ID_time_period(n))
+                    emi_veh(indx,ntime,isp,ID_time_period(n),veh_type(n)-10)= temp/3600.0 &
+                            + emi_veh(indx,ntime,isp,ID_time_period(n),veh_type(n)-10)
 !..
 !    ----------  Computation of dayly emissions  EDAY     ----------
 !
-            eday(indx,isp,ID_time_period(n))= temp/3600.0 &
-                      + eday(indx,isp,ID_time_period(n))
-        end do    ! i nspc
-      end do      ! m nint
-    end if
-    end do        ! ntd
-  end do
+                    eday(indx,isp,ID_time_period(n))= temp/3600.0 &
+                            + eday(indx,isp,ID_time_period(n))
+                    edve(indx,isp,ID_time_period(n),veh_type(n)-10)= temp/3600.0 &
+                            + edve(indx,isp,ID_time_period(n),veh_type(n)-10)
+                end do    ! i nspc
+            end do  ! ntime
+        end if
+    end do  ! m nint
+end do ! ntd
 180 format(9X,'++++++  STARTS EMISSIONS COMPUTATIONS',4X,'******')
 
 end subroutine calcula_emision
@@ -428,10 +436,10 @@ end subroutine guarda_malla
 subroutine guarda_malla_nc
 use netcdf
 implicit none
-integer, parameter :: NDIMS=6,nx=28,ny=34, zlev=1
-integer :: i,j,k,l,iday,ispc,ncid,it
+integer, parameter :: NDIMS=6,nx=28,ny=34, zlev=9
+integer :: i,j,k,l,m,iday,ispc,ncid,it
 integer :: iit
-integer :: dimids(2),dimids2(2),dimids3(3),dimids4(4)
+integer :: dimids(3),dimids2(2),dimids3(3),dimids4(4)
 integer :: id_unlimit ;!> id_varlat latitude ID in netcdf file
 integer ::id_varlat ;!> id_varlong longitude ID in netcdf file
 integer ::id_varlong ;!>id_var pollutant emission ID in netcdf file
@@ -439,8 +447,8 @@ integer :: id_var(nspc*2)
 integer,dimension(NDIMS):: dim,id_dim ;!>xlong longitude coordinates
 real,dimension(nx,ny)::xlong ;!>xlat latitude coordinates
 real,dimension(nx,ny)::xlat  ;!>tprof temporal profiles
-real,dimension(nx,ny,1,1)::tprof ;!>emis_day dayly emissions
-real,dimension(nx,ny):: emis_day
+real,dimension(nx,ny,zlev,1)::tprof ;!>emis_day dayly emissions
+real,dimension(nx,ny,zlev):: emis_day
 character (len=19),dimension(NDIMS) ::sdim
 character(len=19) :: current_date
 character(len= 8) :: date
@@ -457,7 +465,7 @@ data title /"Movile temporal profiles for weekdays V4.0",&
             "Movile temporal profiles for Sunday V4.0  "/
 
 data sdim /"Time               ","DateStrLen         ","west_east          ",&
-&          "south_north        ","bottom_top         ","emissions_zdim_stag"/
+&          "south_north        ","emissions_zdim_stag","vehicle_type       "/
 ename=(/'TP_VOC       ','TP_CO        ','TP_NO        ','TP_VOC_diesel',&
         'TP_SO2       ','E_VOC        ','E_CO         ','E_NO         ',&
         'E_VOC_diesel ','E_SO2        '/)
@@ -490,7 +498,7 @@ cname=(/'VOC gasoline vehicle      ','Carbon Monoxide           ', &
     do i=2,NDIMS
         call check( nf90_def_dim(ncid, sdim(i), dim(i), id_dim(i)) )
     end do
-    dimids  = (/id_dim(3),id_dim(4)/)
+    dimids  = (/id_dim(3),id_dim(4),id_dim(6)/)
     dimids2 = (/id_dim(2),id_dim(1)/)
     dimids3 = (/id_dim(3),id_dim(4),id_dim(1)/)
     dimids4 = (/id_dim(3),id_dim(4),id_dim(6),id_dim(1)/)
@@ -501,8 +509,8 @@ cname=(/'VOC gasoline vehicle      ','Carbon Monoxide           ', &
     call check( nf90_put_att(ncid, NF90_GLOBAL, "SOUTH-NORTH_GRID_DIMENSION",ny))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "BOTTOM-TOP_GRID_DIMENSION",1))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "DAY","FRD"))
-    call check( nf90_put_att(ncid, NF90_GLOBAL, "DX",2*1000))
-    call check( nf90_put_att(ncid, NF90_GLOBAL, "DY",2*1000))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "DX",2000))
+    call check( nf90_put_att(ncid, NF90_GLOBAL, "DY",2000))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "CEN_LAT",xlat(nx/2,ny/2)))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "CEN_LON",xlong(nx/2,ny/2)))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "TRUELAT1",17.5))
@@ -590,16 +598,28 @@ cname=(/'VOC gasoline vehicle      ','Carbon Monoxide           ', &
       do i=1,nx
         do j=1,ny
           k=i+28*(j-1)
-          if(eday(k,ispc,iday).gt.0) then
-            tprof(i,j,1,1)=emision(k,iit,ispc,iday)/eday(k,ispc,iday)
-          else
-            tprof(i,j,1,1)=0.0
+            if(eday(k,ispc,iday).gt.0) then
+                tprof(i,j,1,1)=emision(k,iit,ispc,iday)/eday(k,ispc,iday)
+            else
+                tprof(i,j,1,1)=0.0
+            end if
+            do m=1,nveht
+                if(edve(k,ispc,iday,m).gt.0) then
+                 tprof(i,j,m+1,1)=emi_veh(k,iit,ispc,iday,m)/edve(k,ispc,iday,m)
+                else
+                 tprof(i,j,m+1,1)=0
+                end if
+            end do
+          if (it.eq. 1) then
+            emis_day(i,j,1)=eday(k,ispc,iday)/4./real(nhr)! grid cell 4 km^2
+            do m=1,nveht
+            emis_day(i,j,m+1)=edve(k,ispc,iday,m)/4./real(nhr)! grid cell 4 km^2
+            end do
           end if
-          if (it.eq. 1) emis_day(i,j)=eday(k,ispc,iday)/4./real(nhr)! grid cell 4 km^2
         end do
       end do
       call check( nf90_put_var(ncid, id_var(ispc),tprof,start=(/1,1,1,it/)))
-      if (it.eq. 1)call check(nf90_put_var(ncid,id_var(ispc+nspc),emis_day,start=(/1,1/)))
+      if (it.eq. 1)call check(nf90_put_var(ncid,id_var(ispc+nspc),emis_day,start=(/1,1,1/)))
     end do
    end do TIEMPO
    call check( nf90_close(ncid) )
@@ -696,7 +716,7 @@ end subroutine guarda_malla_nc
 !>  @param ncartype Type of vehicle
 !>  @param velocity vehicle speed in viality
 !>  @param vem Velocity array from emission factors file
-!>  @param comp Emission factor for vel and specie from emission factors file
+!>  @param comp Emission factor per speed and specie from emission factors file
   real function emisfac2(ncartype,velocity,vem,comp)
   integer :: ncartype
   integer :: icar, i
@@ -737,7 +757,7 @@ end subroutine guarda_malla_nc
     write(6,200)velocity
     stop
   end if
-!..
+!.. linear interpolation using vehicular speed
     emisfac2= comp(icar,i) +(velocity-vem(icar,i)) * &
         (comp(icar,i+1)-comp(icar,i))/(vem(icar,i+1)-vem(icar,i))
 !..
