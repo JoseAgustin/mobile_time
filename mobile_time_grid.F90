@@ -218,11 +218,11 @@ end subroutine lee_actividades
 ! | |  __/  __/
 ! |_|\___|\___|
 !  __            _                            _     _
-! / _| __ _  ___| |_ ___  _ __  ___ _ __ ___ (_)___(_) ___  _ __
-!| |_ / _` |/ __| __/ _ \| '__|/ _ \ '_ ` _ \| / __| |/ _ \| '_ \
-!|  _| (_| | (__| || (_) | |  |  __/ | | | | | \__ \ | (_) | | | |
-!|_|  \__,_|\___|\__\___/|_|___\___|_| |_| |_|_|___/_|\___/|_| |_|
-!                         |_____|
+! / _| __ _  ___| |_ ___  _ __   ___ _ __ ___ (_)___(_) ___  _ __
+!| |_ / _` |/ __| __/ _ \| '__| / _ \ '_ ` _ \| / __| |/ _ \| '_ \
+!|  _| (_| | (__| || (_) | |   |  __/ | | | | | \__ \ | (_) | | | |
+!|_|  \__,_|\___|\__\___/|_|____\___|_| |_| |_|_|___/_|\___/|_| |_|
+!                          |_____|
 !>  @brief Reads emissions factor from EPA, and for cold engine car start
 !>  @author Jose Agustin Garcia Reynoso
 !>  @date 07/20/2020
@@ -436,19 +436,21 @@ end subroutine guarda_malla
 subroutine guarda_malla_nc
 use netcdf
 implicit none
-integer, parameter :: NDIMS=6,nx=28,ny=34, zlev=9
+integer, parameter :: NDIMS=6,nx=28,ny=34, vtype=9
 integer :: i,j,k,l,m,iday,ispc,ncid,it
 integer :: iit
-integer :: dimids(3),dimids2(2),dimids3(3),dimids4(4)
+integer :: dimids(3),dimids2(2),dimids3(3),dimids4(4),dimidsc(2)
 integer :: id_unlimit ;!> id_varlat latitude ID in netcdf file
-integer ::id_varlat ;!> id_varlong longitude ID in netcdf file
-integer ::id_varlong ;!>id_var pollutant emission ID in netcdf file
-integer :: id_var(nspc*2)
-integer,dimension(NDIMS):: dim,id_dim ;!>xlong longitude coordinates
+integer :: id_varlat  ;!> id_varlong longitude ID in netcdf file
+integer :: id_varlong ;!> id_vardescr Vehicular types description
+integer :: id_vardesc ;!> id_var pollutant emission ID in netcdf file
+integer :: id_var(nspc*2) ;!> dimensions values
+integer,dimension(NDIMS):: dim;!> dimensions ID
+integer,dimension(NDIMS):: id_dim ;!>xlong longitude coordinates
 real,dimension(nx,ny)::xlong ;!>xlat latitude coordinates
 real,dimension(nx,ny)::xlat  ;!>tprof temporal profiles
-real,dimension(nx,ny,zlev,1)::tprof ;!>emis_day dayly emissions
-real,dimension(nx,ny,zlev):: emis_day
+real,dimension(nx,ny,vtype,1)::tprof ;!>emis_day dayly emissions
+real,dimension(nx,ny,vtype):: emis_day
 character (len=19),dimension(NDIMS) ::sdim
 character(len=19) :: current_date
 character(len= 8) :: date
@@ -456,6 +458,7 @@ character(len=10) :: time
 character(len=24) :: hoy, fecha_creado
 character(len=26) :: FILE_NAME
 character(len=19),dimension(1,1)::Times
+character(len=19),dimension(vtype,1)::cveh_type
 character(len=11),dimension(2*nspc):: ename ;!> Emissions long name
 character(len=26),dimension(2*nspc):: cname
 character(len=42),dimension(ntypd):: title
@@ -463,7 +466,6 @@ character(len=250)::summary
 data title /"Movile temporal profiles for weekdays V4.0",&
             "Movile temporal profiles for Saturday V4.0",&
             "Movile temporal profiles for Sunday V4.0  "/
-
 data sdim /"Time               ","DateStrLen         ","west_east          ",&
 &          "south_north        ","emissions_zdim_stag","vehicle_type       "/
 ename=(/'TP_VOC       ','TP_CO        ','TP_NO        ','TP_VOC_diesel',&
@@ -479,8 +481,14 @@ cname=(/'VOC gasoline vehicle      ','Carbon Monoxide           ', &
 "(type, number, speed, street length, engine cold start fraction) for computing"//&
 " a daily and hourly emission per grid. A ratio is used for calculating a temporal"//&
 " profile per grid"
+cveh_type(1,1)="All_Types_vehicles ";cveh_type(2,1)="Automoviles     ,11"
+cveh_type(3,1)="Ligeros         ,12";cveh_type(4,1)="Microbuses      ,13"
+cveh_type(5,1)="Ruta_100        ,14";cveh_type(6,1)="Otros buses     ,15"
+cveh_type(7,1)="Medianos        ,16";cveh_type(8,1)="Pesados         ,17"
+cveh_type(9,1)="Camion_Municipal,18"
+
   write(6,180)
-  dim=(/1,19,nx,ny,1,zlev/)
+  dim=(/1,19,nx,ny,1,vtype/)
   call date_and_time(date,time)
   fecha_creado=date(1:4)//'-'//date(5:6)//'-'//date(7:8)//'T'//time(1:2)//':'//time(3:4)//':00Z'
   hoy=date(7:8)//'-'//mes(date(5:6))//'-'//date(1:4)//' '//time(1:2)//':'//time(3:4)//':'//time(5:10)
@@ -499,6 +507,7 @@ cname=(/'VOC gasoline vehicle      ','Carbon Monoxide           ', &
         call check( nf90_def_dim(ncid, sdim(i), dim(i), id_dim(i)) )
     end do
     dimids  = (/id_dim(3),id_dim(4),id_dim(6)/)
+    dimidsc = (/id_dim(2),id_dim(6)/)
     dimids2 = (/id_dim(2),id_dim(1)/)
     dimids3 = (/id_dim(3),id_dim(4),id_dim(1)/)
     dimids4 = (/id_dim(3),id_dim(4),id_dim(6),id_dim(1)/)
@@ -560,6 +569,7 @@ cname=(/'VOC gasoline vehicle      ','Carbon Monoxide           ', &
     call check( nf90_put_att(ncid, NF90_GLOBAL, "summary",summary))
 !  Define las variables
     call check( nf90_def_var(ncid, "Times", NF90_CHAR, dimids2,id_unlimit ) )
+    call check( nf90_def_var(ncid, "Type",  NF90_CHAR, dimidsc,id_vardesc ) )
     call check( nf90_def_var(ncid, "XLONG", NF90_REAL, dimids3,id_varlong) )
     call check( nf90_def_var(ncid, "XLAT" , NF90_REAL, dimids3,id_varlat ) )
 ! Assign  attributes
@@ -575,6 +585,8 @@ cname=(/'VOC gasoline vehicle      ','Carbon Monoxide           ', &
     call check( nf90_put_att(ncid, id_varlat, "standard_name", "grid_latitude") )
     call check( nf90_put_att(ncid, id_varlat, "units", "degree"))
     call check( nf90_put_att(ncid, id_varlat, "axis", "Y") )
+    call check( nf90_put_att(ncid, id_vardesc, "description", "Vehicular types from 1 to 9") )
+
 !  Attributos para cada perfil temporal
     do i=1,nspc
      call crea_attr(ncid,0,dimids4,ename(i),cname(i),"1",id_var(i)) !adimensional=1
@@ -585,7 +597,8 @@ cname=(/'VOC gasoline vehicle      ','Carbon Monoxide           ', &
     end do
 !   Terminan definiciones
     call check( nf90_enddef(ncid) )
-
+   
+  call check( nf90_put_var(ncid, id_vardesc,cveh_type,start=(/1,1/)) )
   tiempo: do it=1,nhr
     iit=it
     write(current_date(12:13),'(I2.2)') it-1

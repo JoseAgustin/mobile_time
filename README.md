@@ -1,6 +1,13 @@
 # mobile_time
 
-Uses observed data from traffic from 11,850 vialities sector for identifying the temporal distribution of movile emissions. An generates a grided file with houry mobile acivity.
+System to provide a temporal profiles for a gridded area by using  traffic activity data from 11,848 viality  sectors, 11 vehicular types, 
+
+## Information used
+The following figure shows the data used for acomplish this task
+
+![Input Informatio](/assets/images/diagrama.jpg "Input information")
+
+The following tables describes the main information used in the code for compute the emissions and temporal profiles
 
    |  ID_time_period | Time period |
    |:---:|:---   |
@@ -37,7 +44,11 @@ Uses observed data from traffic from 11,850 vialities sector for identifying the
   |14 | Area res. centro    |    25  | Area industrial Municipal    |
   |15 | Area pueblo         | | |
 
-Emissions obtained from vehicular activity for Mexico City 1990
+## Results
+
+As a resutl one product is the emissions  from vehicular activity for Mexico City 1993
+
+by doing the ration of emis per hour over the total emission per day a temporal description of pollutant emissions can be obtained.
 
 ![CO emissions](/assets/images/COemis.gif "CO emissions")
 
