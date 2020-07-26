@@ -590,9 +590,10 @@ am__EXEEXT_TRUE
 LTLIBOBJS
 LIBOBJS
 NC_FC
+NC_LIB
 NC_INC
 NETCDF_CONFIG
-NC_LIB
+NETCDF_LIB
 NETCDF_INC
 NETCDF_ROOT
 ac_ct_FC
@@ -700,7 +701,7 @@ FC
 FCFLAGS
 NETCDF_ROOT
 NETCDF_INC
-NC_LIB'
+NETCDF_LIB'
 
 
 # Initialize some variables set by options.
@@ -1335,7 +1336,7 @@ Some influential environment variables:
   FCFLAGS     Fortran compiler flags
   NETCDF_ROOT Root of netCDF installation or (compile-time)
   NETCDF_INC  Location of netCDF headers (compile-time)
-  NC_LIB      Location of netCDF library (compile-time)
+  NETCDF_LIB  Location of netCDF library (compile-time)
 
 Use these variables to override the choices made by `configure' or to help
 it to find libraries and programs with nonstandard names/locations.
@@ -1879,7 +1880,6 @@ ac_cpp='$CPP $CPPFLAGS'
 ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
-
 
 
 # Define our M4 macro directory
