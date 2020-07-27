@@ -20,10 +20,10 @@
 !>
 !>   |  veh_type |SCC| Description    | veh_type |SCC| Description |
 !>   |:---:    |:---            |:---: |:---          |
-!>   | 11 |2230001330 |Automoviles     |  15  |2230071330|  Otros buses  |
-!>   | 12 |2201001330 !Ligeros         |  16  |2201020330|  Medianos    |
-!>   | 13 |2201040330 !Microbuses      |  17  |2230072330|  Pesados     |
-!>   | 14 |2230075330 !Ruta 100        |  18  |2230073330| Camiones Municipales |
+!>   | 11 |2201001330 |Automoviles     |  15  |2230075330|  Otros buses  |
+!>   | 12 |2201040330 !Ligeros         |  16  |2201040330|  Medianos    |
+!>   | 13 |2230070270 !Microbuses      |  17  |2230074330|  Pesados     |
+!>   | 14 |2230001000 !Ruta 100        |  18  |2230001000| Camiones Municipales |
 !>
 !>  @author Jose Agustin Garcia Reynoso
 !>  @date 07/20/2020
@@ -439,10 +439,11 @@ implicit none
 integer, parameter :: NDIMS=6,nx=28,ny=34, vtype=9
 integer :: i,j,k,l,m,iday,ispc,ncid,it
 integer :: iit
-integer :: dimids(3),dimids2(2),dimids3(3),dimids4(4),dimidsc(2)
+integer :: dimids(3),dimids2(2),dimids3(3),dimids4(4),dimidsc(2),dimiscc(2)
 integer :: id_unlimit ;!> id_varlat latitude ID in netcdf file
 integer :: id_varlat  ;!> id_varlong longitude ID in netcdf file
-integer :: id_varlong ;!> id_vardescr Vehicular types description
+integer :: id_varlong ;!> id_scc ID of the SCC for each vehicle type
+integer :: id_varscc  ;!> id_vardescr Vehicular types description
 integer :: id_vardesc ;!> id_var pollutant emission ID in netcdf file
 integer :: id_var(nspc*2) ;!> dimensions values
 integer,dimension(NDIMS):: dim;!> dimensions ID
@@ -459,6 +460,7 @@ character(len=24) :: hoy, fecha_creado
 character(len=26) :: FILE_NAME
 character(len=19),dimension(1,1)::Times
 character(len=19),dimension(vtype,1)::cveh_type
+character(len=10),dimension(vtype,1)::scc
 character(len=11),dimension(2*nspc):: ename ;!> Emissions long name
 character(len=26),dimension(2*nspc):: cname
 character(len=42),dimension(ntypd):: title
@@ -486,9 +488,16 @@ cveh_type(3,1)="Ligeros         ,12";cveh_type(4,1)="Microbuses      ,13"
 cveh_type(5,1)="Ruta_100        ,14";cveh_type(6,1)="Otros buses     ,15"
 cveh_type(7,1)="Medianos        ,16";cveh_type(8,1)="Pesados         ,17"
 cveh_type(9,1)="Camion_Municipal,18"
+!   | 11 |2201001330 |Automoviles     |  15  |2230075330|  Otros buses  |
+!   | 12 |2201040330 !Ligeros         |  16  |2230060330|  Medianos    |
+!   | 13 |2230070270 !Microbuses      |  17  |2230074330|  Pesados     |
+!>  | 14 |2230001000 !Ruta 100        |  18  |2230001000| Camiones Municipales |
+scc(1,1)="2201001330";scc(2,1)="2201001330";scc(3,1)="2201040330";scc(4,1)="2230070270"
+scc(5,1)="2230001000";scc(6,1)="2230075330";scc(7,1)="2230060330";scc(8,1)="2230074330"
+scc(9,1)="2230001000"
 
   write(6,180)
-  dim=(/1,19,nx,ny,1,vtype/)
+  dim=(/1,19,nx,ny,10,vtype/)
   call date_and_time(date,time)
   fecha_creado=date(1:4)//'-'//date(5:6)//'-'//date(7:8)//'T'//time(1:2)//':'//time(3:4)//':00Z'
   hoy=date(7:8)//'-'//mes(date(5:6))//'-'//date(1:4)//' '//time(1:2)//':'//time(3:4)//':'//time(5:10)
@@ -508,6 +517,7 @@ cveh_type(9,1)="Camion_Municipal,18"
     end do
     dimids  = (/id_dim(3),id_dim(4),id_dim(6)/)
     dimidsc = (/id_dim(2),id_dim(6)/)
+    dimiscc = (/id_dim(5),id_dim(6)/)
     dimids2 = (/id_dim(2),id_dim(1)/)
     dimids3 = (/id_dim(3),id_dim(4),id_dim(1)/)
     dimids4 = (/id_dim(3),id_dim(4),id_dim(6),id_dim(1)/)
@@ -570,6 +580,7 @@ cveh_type(9,1)="Camion_Municipal,18"
 !  Define las variables
     call check( nf90_def_var(ncid, "Times", NF90_CHAR, dimids2,id_unlimit ) )
     call check( nf90_def_var(ncid, "Type",  NF90_CHAR, dimidsc,id_vardesc ) )
+    call check( nf90_def_var(ncid, "SCC" ,  NF90_CHAR, dimiscc,id_varscc  ) )
     call check( nf90_def_var(ncid, "XLONG", NF90_REAL, dimids3,id_varlong) )
     call check( nf90_def_var(ncid, "XLAT" , NF90_REAL, dimids3,id_varlat ) )
 ! Assign  attributes
@@ -586,6 +597,7 @@ cveh_type(9,1)="Camion_Municipal,18"
     call check( nf90_put_att(ncid, id_varlat, "units", "degree"))
     call check( nf90_put_att(ncid, id_varlat, "axis", "Y") )
     call check( nf90_put_att(ncid, id_vardesc, "description", "Vehicular types from 1 to 9") )
+    call check( nf90_put_att(ncid, id_varscc,"description","Source Clasification Code for each vehicle type") )
 
 !  Attributos para cada perfil temporal
     do i=1,nspc
@@ -599,6 +611,7 @@ cveh_type(9,1)="Camion_Municipal,18"
     call check( nf90_enddef(ncid) )
    
   call check( nf90_put_var(ncid, id_vardesc,cveh_type,start=(/1,1/)) )
+  call check( nf90_put_var(ncid, id_varscc,scc,start=(/1,1/)) )
   tiempo: do it=1,nhr
     iit=it
     write(current_date(12:13),'(I2.2)') it-1
