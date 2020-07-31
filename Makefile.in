@@ -276,10 +276,16 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 
+#
+# This file is processed by automake (produces file Makefile.in)
+#
+ACLOCAL_AMFLAGS = -I m4
+
 # Additional files to be cleaned with 'make clean'
 CLEANFILES = *.o *.mod 
 AM_FCFLAGS = $(NC_INC) $(NC_LIB)
 mobile_time_grid_exe_SOURCES = mobile_time_grid.F90
+EXTRA_DIST = _config.yml Doc/Makefile Doc/doxygen_mobile_time.conf
 all: all-am
 
 .SUFFIXES:
@@ -736,6 +742,9 @@ uninstall-am: uninstall-binPROGRAMS
 
 .PRECIOUS: Makefile
 
+
+.PHONY: $(EXTRA_DIST)
+$(EXTRA_DIST):
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

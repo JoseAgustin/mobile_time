@@ -2,28 +2,28 @@
 !>  @brief Variables for the identification of temporal profiles in a grid
 !>
 !>   |  ID_time_period | Time period |
-!>   |:---:|:---   |
-!>   |  1 | Working Day |
+!>   |:---:            |:---   |
+!>   |  1 | Working Day|
 !>   |  2 | Saturday |
 !>   |  3 | Sunday   |
 !>   | 11 | Week     |
 !>   | 12 | Year     |
 !>
 !>   |  nef    | Description |
-!>   |:---:    |:---             |
-!>   | 1   | Automovil    |
-!>   | 2   | Ligeros   |
-!>   | 3  |  Microbuses   |
-!>   | 4  |  Ruta 100, Pesados & Municipales TUV   |
-!>   | 5   | Otros buses   |
-!>   | 6  |  Medianos   |
+!>   |:---:    |:---         |
+!>   | 1   | Automovil       |
+!>   | 2   | Ligeros         |
+!>   | 3   | Microbuses      |
+!>   | 4   | Ruta 100, Pesados & Municipales TUV   |
+!>   | 5   | Otros buses     |
+!>   | 6   | Medianos        |
 !>
-!>   |  veh_type |SCC| Description    | veh_type |SCC| Description |
-!>   |:---:    |:---            |:---: |:---          |
-!>   | 11 |2201001330 |Automoviles     |  15  |2230075330|  Otros buses  |
-!>   | 12 |2201040330 !Ligeros         |  16  |2201040330|  Medianos    |
-!>   | 13 |2230070270 !Microbuses      |  17  |2230074330|  Pesados     |
-!>   | 14 |2230001000 !Ruta 100        |  18  |2230001000| Camiones Municipales |
+!>   |  veh_type |SCC  |Description | veh_type|SCC| Description |
+!>   |:---:|:---       |:---        |:---: |:---  | :---        |
+!>   | 11  |2201001330 |Automoviles |  15  |2230075330| Otros buses |
+!>   | 12  |2201040330 |Ligeros     |  16  |2201040330| Medianos    |
+!>   | 13  |2230070270 |Microbuses  |  17  |2230074330| Pesados     |
+!>   | 14  |2230001000 |Ruta 100    |  18  |2230001000| Camiones Municipales |
 !>
 !>  @author Jose Agustin Garcia Reynoso
 !>  @date 07/20/2020
@@ -32,27 +32,31 @@
 !>
 module grid_temp_mod
 !> number species in emission factors from EPA
-integer,parameter :: nef = 5 ;!> number species in emission factors cold start from EPA
-integer,parameter :: nef2 =5 ;!> Type of day 1 week day, 2 Saturday, 3 Sunday
-integer,parameter :: ntypd= 3 ;!> number of hours per day
-integer,parameter :: nhr=24  ; !> number species in emission file
-integer,parameter :: nspc = 5 ; !> number of speeds per EF specie
-integer,parameter :: nfe = 7  ; ! number of vehicle types 11 to 18
+integer,parameter :: nef   =5
+!> number species in emission factors cold start from EPA
+integer,parameter :: nef2  =5 ;!> Type of day 1 week day, 2 Saturday, 3 Sunday
+integer,parameter :: ntypd =3 ;!> number of hours per day
+integer,parameter :: nhr   =24;!> number species in emission file
+integer,parameter :: nspc  = 5;!> number of speeds per EF specie
+integer,parameter :: nfe   = 7;! number of vehicle types 11 to 18
 integer,parameter :: nveht=8; !> Number of grids in the mesh
 integer,parameter :: nic=28*34;!> Number of rows in results data 952
-integer,parameter :: ntd=75889; !> Number of viality segments
-integer,parameter :: nint=11848; !> Number of viality lengths
-integer,parameter :: natt=5554 ; !> Grid ID from the used mesh from intersection
-integer :: id_grid_INT(nint) ;!> Geometry source type (1 line 2 Area) from intersection
-integer :: geometry_type(nint)   ;!> Viality segment ID from intersection
-integer :: id_source_INT(nint)  ;!> Geometry source type from intersection 2nd viality or area
-integer :: geo_type_INT(nint)   ;!> GRID ID for each cell in the emissions mesh
+integer,parameter :: ntd=75889;!> Number of viality segments
+integer,parameter :: nint=11848;!> Number of viality lengths
+integer,parameter :: natt=5554 ;!> Grid ID from the used mesh from intersection
+integer :: id_grid_INT(nint)
+!> Source type geometry (1 line 2 Area) from intersection
+integer :: geometry_type(nint) ;!> Viality segment ID from intersection
+integer :: id_source_INT(nint)
+!> Geometry source type from intersection 2nd viality or area
+integer :: geo_type_INT(nint)  ;!> GRID ID for each cell in the emissions mesh
 integer :: id_grid(nic) ;!> Period time ID 1-weekday 2-saturday 3-Sunday
 integer :: ID_time_period(ntd);!> Vehicular source type ID= 11 to 18
 integer :: veh_type(ntd)   ;!> Viality segment ID from src_td
 integer :: id_source_TD(ntd) ;!> Source identification from file src_attr.txt
-integer :: id_source_ATT(natt) ;!> Geometry source type (1 Line  2 Area) from file src_attr.txt
-integer :: geometry_type2(natt)  ;!> Source classification ID viality 1,5,6
+integer :: id_source_ATT(natt)
+!> Geometry source type (1 Line  2 Area) from file src_attr.txt
+integer :: geometry_type2(natt);!> Source classification ID viality 1,5,6
 integer :: source_type(natt)
 !>  Number of cars in a specific viality and hour
 real,dimension(nhr,ntd) :: veh_number;!> total number of vehicles per hour in each grid
@@ -75,17 +79,20 @@ real :: f_cold_engine_car(nhr) ;!> Emission factor for specific specie
 real :: emiss_factor(nspc)     ;!> Emission factor cold start for specific specie
 real :: emis_fact_cold(nspc)   ;!> cars speed in each viality from src_td
 real :: veh_speed(nhr,ntd)     ;!> Total emission per cell, specie and day
-real :: eday(nic,nspc,ntypd)   ;!> Total emission per cell, specie, day and vehicle type
-real :: edve(nic,nspc,ntypd,nveht);  !> Mobile source emision per cell,hour,specie,day type
-real :: emision(nic,nhr,nspc,ntypd); !> Emision per cell,hour,specie,day and vehicle type
+real :: eday(nic,nspc,ntypd)
+!> Total emission per cell, specie, day and vehicle type
+real :: edve(nic,nspc,ntypd,nveht)
+!> Mobile source emision per cell,hour,specie,day type
+real :: emision(nic,nhr,nspc,ntypd)
+ !> Emision per cell,hour,specie,day and vehicle type
 real :: emi_veh(nic,nhr,nspc,ntypd,nveht)
 
 common /intersec/ cutla,r_weight,id_grid_INT,id_source_INT,geometry_type,geo_type_INT
 common /cellattr/ id_grid,long,lat
 common /srctd/ veh_number, id_source_TD, ID_time_period,veh_type,veh_speed
-common /factemision/ ef_speed,ef_hc,ef_co,ef_no!,eso
+common /factemision/ ef_speed,ef_hc,ef_co,ef_no
 common /factsec/ ef_speed_cold,ef_hc_cold,ef_co_cold,ef_no_cold
-common /miscell/ fcor,f_cold_engine_car!,vv,et,fcorr,ffr
+common /miscell/ fcor,f_cold_engine_car
 common /srcattr/ source_size,source_type,geometry_type2,id_source_ATT
 common /computs/ emiss_factor,emis_fact_cold,eday,edve,emision,emi_veh
 
@@ -100,7 +107,7 @@ contains
 !>
 !>https://www.epa.gov/scram/air-quality-dispersion-modeling-related-model-support-programs#concor
 !> @author SCRAM EPA
-!> @date 1990
+!> @date 90239
 !> @param  utmy Coordinate in axis _y_ in km
 !> @param  utmx Coordinate in axis _x_ in km
 !> @param  utmz Zone for the UTMx and UTMy coordinates
@@ -609,7 +616,7 @@ scc(9,1)="2230001000"
     end do
 !   Terminan definiciones
     call check( nf90_enddef(ncid) )
-   
+
   call check( nf90_put_var(ncid, id_vardesc,cveh_type,start=(/1,1/)) )
   call check( nf90_put_var(ncid, id_varscc,scc,start=(/1,1/)) )
   tiempo: do it=1,nhr
@@ -800,6 +807,33 @@ end subroutine guarda_malla_nc
 !  \___|_| |_|\___|\___|_|\_\
 !>  @brief Verifies no error in netcdf function call
 !>  @param status NetCDF functions return a non-zero status codes on error.
+!Copyright 1993-2020 University Corporation for Atmospheric Research/Unidata
+!
+!Portions of this software were developed by the Unidata Program at the
+!University Corporation for Atmospheric Research.
+!
+!Redistribution and use in source and binary forms, with or without
+!modification, are permitted provided that the following conditions are met:
+!
+!1. Redistributions of source code must retain the above copyright notice,
+!this list of conditions and the following disclaimer.
+!2. Redistributions in binary form must reproduce the above copyright notice,
+! this list of conditions and the following disclaimer in the documentation
+!and/or other materials provided with the distribution.
+!3. Neither the name of the copyright holder nor the names of its contributors
+! may be used to endorse or promote products derived from this software without
+! specific prior written permission.
+! THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+! AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+! THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+! PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+! CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+! EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+! PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+! OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+! WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+! OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+! OF THE POSSIBILITY OF SUCH DAMAGE.
 subroutine check(status)
 use netcdf
     integer, intent ( in) :: status
