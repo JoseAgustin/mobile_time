@@ -21,6 +21,7 @@ AC_PREFIX_DEFAULT(`pwd`)
 AC_PROG_MAKE_SET
 AC_PROG_CPP
 
+
 # Set language for configuration checks
 AC_LANG(Fortran)
 AC_PROG_FC
@@ -53,6 +54,7 @@ if test -z "${NETCDF_ROOT}"; then
         NC_LIB="`${NETCDF_CONFIG} --flibs` "
         NC_INC="-I`${NETCDF_CONFIG} --includedir` ";
     fi
+
 
 AC_MSG_NOTICE([setting netcdf root directory NETCDF_ROOT=$NETCDF_ROOT])
 AC_MSG_CHECKING([for the existence of the netcdf root directory])
