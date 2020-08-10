@@ -1,4 +1,4 @@
-!     program mobile_time_grid.F90
+!     module mod_mobile_time_grid.F90
 !>  @brief Variables for the identification of temporal profiles in a grid
 !>
 !>   |  ID_time_period | Time period |
@@ -30,7 +30,7 @@
 !>  @version  1.0
 !>  @copyright Universidad Nacional Autonoma de Mexico
 !>
-module grid_temp_mod
+module grid_temp_mobile
 !> number species in emission factors from EPA
 integer,parameter :: nef   =5
 !> number species in emission factors cold start from EPA
@@ -169,7 +169,7 @@ subroutine lee_atributos
         ,source_type(j),source_size(j,1),dum,source_size(j,2)
     end do
     close(iunit)
-    write(6,140)
+    call logs("END READING src_attr.txt")
     open(newunit=iunit,file="data/cell_attr.csv",ACTION="READ")
     nic=cuenta(iunit)
     allocate(id_grid(nic),lat(nic),long(nic))
@@ -182,10 +182,7 @@ subroutine lee_atributos
     !write(6,*) id_grid(i),lat(i),long(i)
     i=nic
     !write(6,*) id_grid(i),lat(i),long(i)
-    write(6,150)
-140 format(9X,'******  END READING src_attr.txt',9X,'******')
-150 format(9X,'******  END READING cell_attr.txt',8X,'******')
-
+    call logs("END READING cell_attr.txt")
 end subroutine lee_atributos
 !  _
 ! | | ___  ___
@@ -213,16 +210,14 @@ subroutine lee_actividades
         idum,idum,(veh_number(i,j),i=1,nhr),(veh_speed(i,j),i=1,nhr)
   end do
   close(iunit)
-  write(6,160)
+  call logs("END READING intersection.txt")
   open(newunit=iunit,file="data/intersection.csv",ACTION="READ")
   do  j=1,nint
    read(iunit,*)idum,id_grid_INT(j),geo_type_INT(j),geometry_type(j),id_source_INT(j), &
              cutla(j),r_weight(j)
   end do
-  write(6,150)
+    call logs("END READING src_td.csv")
   close(iunit)
-150 format(9X,'******  END READING intersection.txt',5X,'******')
-160 format(9X,'******  END READING src_td.csv',11X,'******')
 end subroutine lee_actividades
 !  _
 ! | | ___  ___
@@ -260,7 +255,7 @@ open(newunit=iunit,file="data/factepa.txt",ACTION="READ")
     end do
   end do
   close (iunit)
-  write(6,130)
+  call logs('END READING factepa.txt')
 !..
 !    -----------  Reading    factsec.txt     cold start    ----------
 !..
@@ -276,7 +271,7 @@ open(newunit=iunit,file="data/factsec.txt",ACTION="READ")
     end do
   end do
   close (iunit)
-  write(6,140)
+  call logs('END READING factsec.txt')
 !    -----------  Reading    factvar.dat        unit  19  ----------
 !..
 open(newunit=iunit,file="data/factvar.dat",ACTION="READ")
@@ -286,7 +281,7 @@ open(newunit=iunit,file="data/factvar.dat",ACTION="READ")
     read(iunit,*)fcor(i)
   end do
   close (iunit)
-  write(6,150)
+  call logs('END READING fraarran.dat')
 !    -----------  Reading    fraarran.dat      unit  18   ----------
 !..
 open(newunit=iunit,file="data/fraarran.dat",ACTION="READ")
@@ -295,13 +290,8 @@ open(newunit=iunit,file="data/fraarran.dat",ACTION="READ")
     read(iunit,*) f_cold_engine_car(i)
   end do
   close (iunit)
-  write(6,160)
+  call logs('END READING factvar.dat')
 !..
-130 format(9X,'******  END READING factepa.txt',10X,'******')
-140 format(9X,'******  END READING factsec.txt',10X,'******')
-150 format(9X,'******  END READING fraarran.dat',9X,'******')
-160 format(9X,'******  END READING factvar.dat',10X,'******')
-
 end subroutine lee_factor_emision
 !            _            _                         _     _
 !   ___ __ _| | ___ _   _| | __ _     ___ _ __ ___ (_)___(_) ___  _ __
@@ -320,12 +310,19 @@ subroutine calcula_emision
   integer:: indx
   real :: sl,fcorr,ffr
   real :: temp
-  write(6,180)
-do n = ntd ,1,-1                   !Main LOOP initialization
+  call logs("STARTS EMISSIONS COMPUTATIONS")
+ do n = ntd ,1,-1                   !Main LOOP initialization
     do m = 1,nint
         if(id_source_TD(n).eq.id_source_INT(m).and.geo_type_INT(m).lt.2&
         .and. geometry_type(m) .lt.2 ) then
             indx = id_grid_INT(m)
+!..
+!     ----------   Localization of the viality lenght     ----------
+!..
+                call viality(geometry_type(m),id_source_INT(m),geometry_type2,&
+                     id_source_ATT,source_type,source_size,fcor,f_cold_engine_car,&
+                     ntime,fcorr,ffr,sl)
+                sl = sl*r_weight(m)
             do ntime=1,nhr
             ! for EPA
             emiss_factor(1)= emisfac2(veh_type(n),veh_speed(ntime,n),ef_speed ,ef_hc )
@@ -346,13 +343,7 @@ do n = ntd ,1,-1                   !Main LOOP initialization
                 emiss_factor(4)   = 0.0
                 emis_fact_cold(4) = 0.0
             end if
-!..
-!     ----------   Localization of the viality lenght     ----------
-!..
-                call viality(geometry_type(m),id_source_INT(m),geometry_type2,&
-                     id_source_ATT,source_type,source_size,fcor,f_cold_engine_car,&
-                     ntime,fcorr,ffr,sl)
-                sl = sl*r_weight(m)
+
 !     ----------   Computation of the emissions for each specie
                 do isp = 1,nspc ! 1 HC(gasoline), 2 CO, 3 NOx, 4 HC(Diesel), 5 SO2
 !..
@@ -377,8 +368,6 @@ do n = ntd ,1,-1                   !Main LOOP initialization
         end if
     end do  ! m nint
 end do ! ntd
-180 format(9X,'++++++  STARTS EMISSIONS COMPUTATIONS',4X,'******')
-
 end subroutine calcula_emision
 !                            _                           _ _
 !   __ _ _   _  __ _ _ __ __| | __ _     _ __ ___   __ _| | | __ _
@@ -396,7 +385,7 @@ implicit none
 integer :: i,j,l,iday,irec
 integer :: iunit
 real:: emis(nic)
-  write(6,180)
+  call logs("Wrinting output file for GrADS")
     open (newunit=iunit,file='data/movil.dat', &
     status='unknown',access='direct',form='unformatted' &
     ,recl=nic*4)
@@ -426,8 +415,6 @@ real:: emis(nic)
           write(iunit,rec=irec)(0.010416*eday(j,i,iday),j=1,nic)
         end do   !  i specie
     end do
-
-180 format(9X,'xxxxxx  Wrinting output file for GrADS',3X,'xxxxxx')
 end subroutine guarda_malla
 !                            _
 !   __ _ _   _  __ _ _ __ __| | __ _
@@ -500,20 +487,22 @@ cveh_type(3,1)="Ligeros         ,12";cveh_type(4,1)="Microbuses      ,13"
 cveh_type(5,1)="Ruta_100        ,14";cveh_type(6,1)="Otros buses     ,15"
 cveh_type(7,1)="Medianos        ,16";cveh_type(8,1)="Pesados         ,17"
 cveh_type(9,1)="Camion_Municipal,18"
-!   | 11 |2201001330 |Automoviles     |  15  |2230075330|  Otros buses  |
-!   | 12 |2201040330 !Ligeros         |  16  |2230060330|  Medianos    |
-!   | 13 |2230070270 !Microbuses      |  17  |2230074330|  Pesados     |
-!>  | 14 |2230001000 !Ruta 100        |  18  |2230001000| Camiones Municipales |
+!>   |Type |   SCC    |Description      |Type |  SCC     |Description |
+!>   | --- | ---| ---| --- | ---| ---|
+!>   | 11 |2201001330 |Automoviles     |  15  |2230075330|  Otros buses |
+!>   | 12 |2201040330 |Ligeros         |  16  |2230060330|  Medianos    |
+!>   | 13 |2230070270 |Microbuses      |  17  |2230074330|  Pesados     |
+!>   | 14 |2230001000 |Ruta 100        |  18  |2230001000| Camiones Municipales |
 scc(1,1)="2201001330";scc(2,1)="2201001330";scc(3,1)="2201040330";scc(4,1)="2230070270"
 scc(5,1)="2230001000";scc(6,1)="2230075330";scc(7,1)="2230060330";scc(8,1)="2230074330"
 scc(9,1)="2230001000"
 
-  write(6,180)
+  call logs("Wrinting output file for netcdf")
   dim=(/1,19,nx,ny,10,vtype/)
   call date_and_time(date,time)
   fecha_creado=date(1:4)//'-'//date(5:6)//'-'//date(7:8)//'T'//time(1:2)//':'//time(3:4)//':00Z'
   hoy=date(7:8)//'-'//mes(date(5:6))//'-'//date(1:4)//' '//time(1:2)//':'//time(3:4)//':'//time(5:10)
-  print *,"   HOY: ",hoy
+  call logs("   HOY: "//hoy)
   xlong=reshape(long,(/nx,ny/))
   xlat=reshape(lat,(/nx,ny/))
   do iday=1,ntypd
@@ -533,7 +522,7 @@ scc(9,1)="2230001000"
     dimids2 = (/id_dim(2),id_dim(1)/)
     dimids3 = (/id_dim(3),id_dim(4),id_dim(1)/)
     dimids4 = (/id_dim(3),id_dim(4),id_dim(6),id_dim(1)/)
-    !write(6,181)
+    !call logs("Atributos Globales NF90_GLOBAL")
     call check( nf90_put_att(ncid, NF90_GLOBAL, "TITLE",title(iday)))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "START_DATE",current_date))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "WEST-EAST_GRID_DIMENSION",nx))
@@ -662,8 +651,6 @@ scc(9,1)="2230001000"
    end do TIEMPO
    call check( nf90_close(ncid) )
   end do !   day
-180 format(9X,'xxxxxx  Wrinting output file for netcdf',2X,'xxxxxx')
-181 format(7X,'      Atributos Globales NF90_GLOBAL')
 182 format(5X,'      Guarda variables dia: ',I2.2,x,A26)
 end subroutine guarda_malla_nc
 !        _       _ _ _
@@ -732,8 +719,8 @@ end subroutine guarda_malla_nc
   end if
 !      for area sources is 10% of their cutleng.
   if(ig.eq.2) sl =sl*0.10
- 200      format('Invalid Cell',I6)
- 201      format('Invalid Longitud',f4.0,'At geometry_type ',I3,&
+ 200      format('xxx ERROR: Invalid Cell',I6)
+ 201      format('XXX ERROR: Invalid Longitud',f4.0,'At geometry_type ',I3,&
                 'len(1)=',f6.4,'Len(2)=',f6.4,I4)
   return
 !*********************************************************************
@@ -759,16 +746,17 @@ end subroutine guarda_malla_nc
   integer :: ncartype
   integer :: icar, i
   real:: velocity,vem(:,:),comp(:,:)
-!    ncartype  Type of vehicle   icar    Type of vehicle
-!      11       Automoviles       1      Vehiculos ligeros a Gas
-!      12       Ligeros           2      Camionetas ligeras a Gaso
-!      13       Microbuses        2      Camionetas ligeras a Gaso
-!      13       Microbuses        5      Camiones Pesados a Gasoli
-!      14       Ruta 100          3      Camiones ligeros a diesel
-!      15       Otros camiones    3      Camiones ligeros a diesel
-!      16       Medianos          3      Camiones ligeros a diesel
-!      17       Pesados           4      Vehiculos pesados a diesel
-!      18       Camiones mpales.  3      Camiones ligeros a diesel
+!> | ncartype |Type of vehicle | icar  |   Type of vehicle |
+!> |   ---    |---             | ---   |--- |
+!> |    11    |   Automoviles  |  1 |  Vehiculos ligeros a Gasolina  |
+!> |    12    |   Ligeros      |  2 |  Camionetas ligeras a Gasolina |
+!> |    13    |   Microbuses   |  2 |  Camionetas ligeras a Gasolina |
+!> |    13    |   Microbuses   |  5 |  Camiones Pesados a Gasolina |
+!> |    14    |   Ruta 100     |  3 |  Camiones ligeros a Diesel   |
+!> |    15    |  Otros camiones|  3 |  Camiones ligeros a Diesel   |
+!> |    16    |   Medianos     |  3 |  Camiones ligeros a Diesel   |
+!> |    17    |   Pesados      |  4 |  Vehiculos pesados a Diesel  |
+!> |    18    |  Camiones municipales| 3| Camiones ligeros a Diesel|
 !
   icar = 0
   if( ncartype .eq. 11) icar =1
@@ -780,7 +768,7 @@ end subroutine guarda_malla_nc
   if( ncartype .eq. 17) icar =4
   if( ncartype .eq. 18) icar =3
   if (icar .eq. 0) then
-    write(6,*)'Invalid car type',ncartype
+    write(6,190) ncartype
     stop
   end if
   !..
@@ -799,7 +787,9 @@ end subroutine guarda_malla_nc
     emisfac2= comp(icar,i) +(velocity-vem(icar,i)) * &
         (comp(icar,i+1)-comp(icar,i))/(vem(icar,i+1)-vem(icar,i))
 !..
-200  format('Invalid speed',E10.1)
+190  format('XXXX ERROR: Invalid car type:',x,I3)
+200  format('XXXX ERROR: Invalid speed',E10.1)
+
   return
 !*********************************************************************
 !*********             END OF FUNCTION EMISFAC2              *********
@@ -821,12 +811,12 @@ end subroutine guarda_malla_nc
 !Redistribution and use in source and binary forms, with or without
 !modification, are permitted provided that the following conditions are met:
 !
-!1. Redistributions of source code must retain the above copyright notice,
-!this list of conditions and the following disclaimer.
-!2. Redistributions in binary form must reproduce the above copyright notice,
+! 1. Redistributions of source code must retain the above copyright notice,
+! this list of conditions and the following disclaimer.
+! 2. Redistributions in binary form must reproduce the above copyright notice,
 ! this list of conditions and the following disclaimer in the documentation
-!and/or other materials provided with the distribution.
-!3. Neither the name of the copyright holder nor the names of its contributors
+! and/or other materials provided with the distribution.
+! 3. Neither the name of the copyright holder nor the names of its contributors
 ! may be used to endorse or promote products derived from this software without
 ! specific prior written permission.
 ! THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
@@ -945,4 +935,15 @@ use netcdf
     ! print *,"Entro a Attributos de variable",dimids,id,jd
     return
 end subroutine crea_attr
-end module grid_temp_mod
+!>  @brief display log during different program stages
+!>   @author  Jose Agustin Garcia Reynoso
+!>   @date  08/08/2020
+!>   @version  2.2
+!>   @copyright Universidad Nacional Autonoma de Mexico 2020
+!>   @param texto text to be displayed
+subroutine logs(texto)
+    implicit none
+    character(len=*),intent(in):: texto
+    write(6,'(3x,6("*"),x,A35,x,"******")') texto
+end subroutine
+end module grid_temp_mobile

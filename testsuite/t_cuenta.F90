@@ -1,5 +1,5 @@
 program test1
-use grid_temp_mod, only: cuenta
+use grid_temp_mobile, only: cuenta
 implicit none
 	integer :: iunit
 	open(newunit=iunit,file="f_test.csv",status="old",action="read")

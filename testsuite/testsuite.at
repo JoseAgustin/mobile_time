@@ -3,5 +3,32 @@
 AT_INIT([Mobile])
 AT_BANNER(["Testing Subroutines and functions"])
 AT_SETUP([Function cuenta])
-AT_TESTED(test1)
+AT_TESTED([test1 ])
 AT_CLEANUP
+AT_SETUP([Function mes])
+AT_TESTED([test2 ])
+AT_CLEANUP
+AT_SETUP([Subroutine utm_2_ll])
+AT_TESTED([test3 ])
+AT_CLEANUP
+AT_SETUP([Subroutine logs])
+AT_TESTED([test4 ])
+AT_CLEANUP
+AT_SETUP([Subroutine lee actividades])
+AT_TESTED([test5 ])
+AT_CLEANUP
+AT_SETUP([Subroutine lee atributos])
+AT_TESTED([test6 ])
+AT_CLEANUP
+AT_SETUP([Subroutine lee factores de emision EPA])
+AT_TESTED([test7 ])
+AT_CLEANUP
+AT_SETUP([Subroutine vialidad ])
+AT_TESTED([test8 ])
+AT_CLEANUP
+AT_SETUP([Fuction emisfac2])
+AT_TESTED([test9 ])
+AT_CLEANUP
+
+AT_COPYRIGHT(
+[Copyright (C) Universidad Nacional Autonoma de Mexico])

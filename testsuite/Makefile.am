@@ -1,13 +1,24 @@
+#
+# This file is processed by automake (produces file Makefile.in)
+#
 # Compiler flags -I$(top_srcdir)
 FC =$(NC_FC)
 AM_FCFLAGS  = $(NC_INC) -I$(top_srcdir)
 AM_FCFLAGS += $(NC_LIB)
 
 FCFLAGS = $(AM_FCFLAGS)
-TESTS = test1
-check_PROGRAMS= test1
+
+TESTS = test1 test2 test3 test4 test5 test6 test7 test8 test9
+check_PROGRAMS= test1 test2 test3 test4 test5 test6 test7 test8 test9
 test1_SOURCES= $(top_builddir)/mod_mobile_time_grid.F90 t_cuenta.F90
-#test1_FCFLAGS = $(AM_FCFLAGS)
+test2_SOURCES= $(top_builddir)/mod_mobile_time_grid.F90 t_mes.F90
+test3_SOURCES= $(top_builddir)/mod_mobile_time_grid.F90 t_utm2ll.F90
+test4_SOURCES= $(top_builddir)/mod_mobile_time_grid.F90 t_logs.F90
+test5_SOURCES= $(top_builddir)/mod_mobile_time_grid.F90 t_activ.F90
+test6_SOURCES= $(top_builddir)/mod_mobile_time_grid.F90 t_attr.F90
+test7_SOURCES= $(top_builddir)/mod_mobile_time_grid.F90 t_femis.F90
+test8_SOURCES= $(top_builddir)/mod_mobile_time_grid.F90 t_vial.F90
+test9_SOURCES= $(top_builddir)/mod_mobile_time_grid.F90 t_efact2.F90
 
 # Additional files to be cleaned with 'make clean'
 CLEANFILES = *.o *.mod package.m4 testsuite
@@ -36,6 +47,9 @@ TESTSUITE = $(srcdir)/testsuite
      
 check-local: atconfig atlocal $(TESTSUITE)
 	$(SHELL) '$(TESTSUITE)' $(TESTSUITEFLAGS)
+
+maintainer-clean-local:
+	rm -rf aclocal.m4 configure Makefile.in autotools m4
      
 installcheck-local: atconfig atlocal $(TESTSUITE)
 	$(SHELL) '$(TESTSUITE)' AUTOTEST_PATH='$(bindir)' \
@@ -52,5 +66,4 @@ $(TESTSUITE): $(srcdir)/testsuite.at $(srcdir)/package.m4
 	mv $@.tmp $@
 
 .PHONY: $(EXTRA_DIST)
-
 $(EXTRA_DIST):
