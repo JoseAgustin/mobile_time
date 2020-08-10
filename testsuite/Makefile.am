@@ -3,11 +3,11 @@ FC =$(NC_FC)
 AM_FCFLAGS  = $(NC_INC) -I$(top_srcdir)
 AM_FCFLAGS += $(NC_LIB)
 
-
+FCFLAGS = $(AM_FCFLAGS)
 TESTS = test1
 check_PROGRAMS= test1
 test1_SOURCES= $(top_builddir)/mod_mobile_time_grid.F90 t_cuenta.F90
-test1_FCFLAGS = $(AM_FCFLAGS)
+#test1_FCFLAGS = $(AM_FCFLAGS)
 
 # Additional files to be cleaned with 'make clean'
 CLEANFILES = *.o *.mod package.m4 testsuite
