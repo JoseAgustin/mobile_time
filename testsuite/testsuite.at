@@ -2,6 +2,6 @@
 #
 AT_INIT([Mobile])
 AT_BANNER(["Testing Subroutines and functions"])
-AT_SETUP([test1])
+AT_SETUP([Function cuenta])
 AT_TESTED(test1)
 AT_CLEANUP

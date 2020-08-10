@@ -96,9 +96,14 @@ DIST_COMMON = $(srcdir)/Makefile.am $(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am_test1_OBJECTS = cuenta.$(OBJEXT) t_cuenta.$(OBJEXT)
+am__dirstamp = $(am__leading_dot)dirstamp
+am_test1_OBJECTS =  \
+	$(top_builddir)/test1-mod_mobile_time_grid.$(OBJEXT) \
+	test1-t_cuenta.$(OBJEXT)
 test1_OBJECTS = $(am_test1_OBJECTS)
 test1_LDADD = $(LDADD)
+test1_LINK = $(FCLD) $(test1_FCFLAGS) $(FCFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -112,6 +117,10 @@ am__v_at_ = $(am__v_at_@AM_DEFAULT_V@)
 am__v_at_0 = @
 am__v_at_1 = 
 DEFAULT_INCLUDES = -I.@am__isrc@
+AM_V_lt = $(am__v_lt_@AM_V@)
+am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
+am__v_lt_0 = --silent
+am__v_lt_1 = 
 PPFCCOMPILE = $(FC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_FCFLAGS) $(FCFLAGS)
 AM_V_PPFC = $(am__v_PPFC_@AM_V@)
@@ -378,7 +387,9 @@ ECHO_C = @ECHO_C@
 ECHO_N = @ECHO_N@
 ECHO_T = @ECHO_T@
 EXEEXT = @EXEEXT@
-FC = @FC@
+
+# Compiler flags -I$(top_srcdir)
+FC = $(NC_FC)
 FCFLAGS = @FCFLAGS@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
@@ -454,12 +465,12 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-test1_SOURCES = cuenta.F90 t_cuenta.F90
-#test1_FCFLAGS = @CHECK_FCFLAGS@
-#test1_LADD = @CHECK_LIBS@
+AM_FCFLAGS = $(NC_INC) -I$(top_srcdir) $(NC_LIB)
+test1_SOURCES = $(top_builddir)/mod_mobile_time_grid.F90 t_cuenta.F90
+test1_FCFLAGS = $(AM_FCFLAGS)
 
 # Additional files to be cleaned with 'make clean'
-CLEANFILES = *.o *.mod 
+CLEANFILES = *.o *.mod package.m4 testsuite
 EXTRA_DIST = testsuite.at $(srcdir)/package.m4 $(TESTSUITE) atlocal.in
 TESTSUITE = $(srcdir)/testsuite
 AUTOTEST = $(AUTOM4TE) --language=autotest
@@ -499,13 +510,23 @@ $(am__aclocal_m4_deps):
 
 clean-checkPROGRAMS:
 	-test -z "$(check_PROGRAMS)" || rm -f $(check_PROGRAMS)
+$(top_builddir)/$(am__dirstamp):
+	@$(MKDIR_P) $(top_builddir)
+	@: > $(top_builddir)/$(am__dirstamp)
+$(top_builddir)/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) $(top_builddir)/$(DEPDIR)
+	@: > $(top_builddir)/$(DEPDIR)/$(am__dirstamp)
+$(top_builddir)/test1-mod_mobile_time_grid.$(OBJEXT):  \
+	$(top_builddir)/$(am__dirstamp) \
+	$(top_builddir)/$(DEPDIR)/$(am__dirstamp)
 
 test1$(EXEEXT): $(test1_OBJECTS) $(test1_DEPENDENCIES) $(EXTRA_test1_DEPENDENCIES) 
 	@rm -f test1$(EXEEXT)
-	$(AM_V_FCLD)$(FCLINK) $(test1_OBJECTS) $(test1_LDADD) $(LIBS)
+	$(AM_V_FCLD)$(test1_LINK) $(test1_OBJECTS) $(test1_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
+	-rm -f $(top_builddir)/*.$(OBJEXT)
 
 distclean-compile:
 	-rm -f *.tab.c
@@ -515,6 +536,18 @@ distclean-compile:
 
 .F90.obj:
 	$(AM_V_PPFC)$(PPFCCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+$(top_builddir)/test1-mod_mobile_time_grid.o: $(top_builddir)/mod_mobile_time_grid.F90
+	$(AM_V_PPFC)$(FC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test1_FCFLAGS) $(FCFLAGS) -c -o $(top_builddir)/test1-mod_mobile_time_grid.o `test -f '$(top_builddir)/mod_mobile_time_grid.F90' || echo '$(srcdir)/'`$(top_builddir)/mod_mobile_time_grid.F90
+
+$(top_builddir)/test1-mod_mobile_time_grid.obj: $(top_builddir)/mod_mobile_time_grid.F90
+	$(AM_V_PPFC)$(FC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test1_FCFLAGS) $(FCFLAGS) -c -o $(top_builddir)/test1-mod_mobile_time_grid.obj `if test -f '$(top_builddir)/mod_mobile_time_grid.F90'; then $(CYGPATH_W) '$(top_builddir)/mod_mobile_time_grid.F90'; else $(CYGPATH_W) '$(srcdir)/$(top_builddir)/mod_mobile_time_grid.F90'; fi`
+
+test1-t_cuenta.o: t_cuenta.F90
+	$(AM_V_PPFC)$(FC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test1_FCFLAGS) $(FCFLAGS) -c -o test1-t_cuenta.o `test -f 't_cuenta.F90' || echo '$(srcdir)/'`t_cuenta.F90
+
+test1-t_cuenta.obj: t_cuenta.F90
+	$(AM_V_PPFC)$(FC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(test1_FCFLAGS) $(FCFLAGS) -c -o test1-t_cuenta.obj `if test -f 't_cuenta.F90'; then $(CYGPATH_W) 't_cuenta.F90'; else $(CYGPATH_W) '$(srcdir)/t_cuenta.F90'; fi`
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -800,6 +833,8 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+	-test -z "$(top_builddir)/$(DEPDIR)/$(am__dirstamp)" || rm -f $(top_builddir)/$(DEPDIR)/$(am__dirstamp)
+	-test -z "$(top_builddir)/$(am__dirstamp)" || rm -f $(top_builddir)/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"

@@ -10,7 +10,7 @@ AC_PREREQ([2.69])
 AC_INIT([mobil_time_grid], [1.0], [agustin@atmosfera.unam.mx],[mobil_time],[https://github.com/JoseAgustin/mobile_time])
 # Define our M4 macro directory
 AC_CONFIG_AUX_DIR([autoconf])
-AM_INIT_AUTOMAKE([1.11 foreign])
+AM_INIT_AUTOMAKE([1.11 foreign subdir-objects])
 # Initialize the test suite.
 AC_CONFIG_TESTDIR([testsuite])
 AM_MISSING_PROG([AUTOM4TE], [autom4te])

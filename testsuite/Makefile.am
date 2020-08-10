@@ -1,11 +1,16 @@
+# Compiler flags -I$(top_srcdir)
+FC =$(NC_FC)
+AM_FCFLAGS  = $(NC_INC) -I$(top_srcdir)
+AM_FCFLAGS += $(NC_LIB)
+
+
 TESTS = test1
 check_PROGRAMS= test1
-test1_SOURCES= cuenta.F90 t_cuenta.F90
-#test1_FCFLAGS = @CHECK_FCFLAGS@
-#test1_LADD = @CHECK_LIBS@
+test1_SOURCES= $(top_builddir)/mod_mobile_time_grid.F90 t_cuenta.F90
+test1_FCFLAGS = $(AM_FCFLAGS)
 
 # Additional files to be cleaned with 'make clean'
-CLEANFILES = *.o *.mod 
+CLEANFILES = *.o *.mod package.m4 testsuite
 
 # The `:;' works around a Bash 3.2 bug when the output is not writeable.
 $(srcdir)/package.m4: $(top_srcdir)/configure.ac
