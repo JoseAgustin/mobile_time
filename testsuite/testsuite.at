@@ -1,0 +1,7 @@
+#
+#
+AT_INIT([Mobile])
+AT_BANNER(["Testing Subroutines and functions"])
+AT_SETUP([test1])
+AT_TESTED(test1)
+AT_CLEANUP

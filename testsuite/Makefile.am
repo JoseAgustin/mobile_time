@@ -1,19 +1,14 @@
-#
-# This file is processed by automake (produces file Makefile.in)
-#
-ACLOCAL_AMFLAGS = -I autoconf
-
-bin_PROGRAMS = mobile_time_grid.exe
+TESTS = test1
+check_PROGRAMS= test1
+test1_SOURCES= cuenta.F90 t_cuenta.F90
+#test1_FCFLAGS = @CHECK_FCFLAGS@
+#test1_LADD = @CHECK_LIBS@
 
 # Additional files to be cleaned with 'make clean'
 CLEANFILES = *.o *.mod 
-# Compiler flags
-  FC =$(NC_FC)
-  AM_FCFLAGS  = $(NC_INC)
-  AM_FCFLAGS += $(NC_LIB)
 
 # The `:;' works around a Bash 3.2 bug when the output is not writeable.
-$(srcdir)/testsuite/package.m4: $(top_srcdir)/configure.ac
+$(srcdir)/package.m4: $(top_srcdir)/configure.ac
 	:;{ \
 	echo '# Signature of the current package.' && \
  	echo 'm4_define([AT_PACKAGE_NAME],' && \
@@ -31,15 +26,26 @@ $(srcdir)/testsuite/package.m4: $(top_srcdir)/configure.ac
 	}>'$(srcdir)/package.m4'
 
      
+EXTRA_DIST = testsuite.at $(srcdir)/package.m4 $(TESTSUITE) atlocal.in
 TESTSUITE = $(srcdir)/testsuite
      
-
-mobile_time_grid_exe_SOURCES = mod_mobile_time_grid.F90 mobile_time_grid.F90
-
-SUBDIRS = . testsuite
-
-EXTRA_DIST = README.md assets _config.yml Doc/Makefile Doc/doxygen_mobile_time.conf 
-EXTRA_DIST += $(TESTSUITE) 
+check-local: atconfig atlocal $(TESTSUITE)
+	$(SHELL) '$(TESTSUITE)' $(TESTSUITEFLAGS)
+     
+installcheck-local: atconfig atlocal $(TESTSUITE)
+	$(SHELL) '$(TESTSUITE)' AUTOTEST_PATH='$(bindir)' \
+	$(TESTSUITEFLAGS)
+     
+clean-local:
+	test ! -f '$(TESTSUITE)' || \
+	$(SHELL) '$(TESTSUITE)' --clean
+     
+AUTOM4TE = $(SHELL) $(srcdir)/build-aux/missing --run autom4te
+AUTOTEST = $(AUTOM4TE) --language=autotest
+$(TESTSUITE): $(srcdir)/testsuite.at $(srcdir)/package.m4
+	$(AUTOTEST) -I '$(srcdir)' -o $@.tmp $@.at
+	mv $@.tmp $@
 
 .PHONY: $(EXTRA_DIST)
+
 $(EXTRA_DIST):
