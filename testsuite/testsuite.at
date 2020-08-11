@@ -1,33 +1,26 @@
 #
 #
 AT_INIT([Mobile])
-AT_BANNER(["Testing Subroutines and functions"])
-AT_SETUP([Function cuenta])
-AT_TESTED([test1 ])
+AT_BANNER(["Testing functions"])
+
+AT_SETUP([Functions cuenta mes emisfact])
+AT_TESTED([test1 test2 test9])
 AT_CLEANUP
-AT_SETUP([Function mes])
-AT_TESTED([test2 ])
+
+AT_BANNER(["Testing Subroutines"])
+AT_SETUP([Subroutines utm_2_ll logs check vialidad])
+AT_TESTED([test3 test4 test8 test10])
 AT_CLEANUP
-AT_SETUP([Subroutine utm_2_ll])
-AT_TESTED([test3 ])
+
+AT_SETUP([Subroutines lee actividades atributos EF EPA])
+AT_TESTED([test5 test6 test7])
 AT_CLEANUP
-AT_SETUP([Subroutine logs])
-AT_TESTED([test4 ])
+
+AT_SETUP([Subroutines crea_attr calculos])
+AT_TESTED(test11 test12)
 AT_CLEANUP
-AT_SETUP([Subroutine lee actividades])
-AT_TESTED([test5 ])
-AT_CLEANUP
-AT_SETUP([Subroutine lee atributos])
-AT_TESTED([test6 ])
-AT_CLEANUP
-AT_SETUP([Subroutine lee factores de emision EPA])
-AT_TESTED([test7 ])
-AT_CLEANUP
-AT_SETUP([Subroutine vialidad ])
-AT_TESTED([test8 ])
-AT_CLEANUP
-AT_SETUP([Fuction emisfac2])
-AT_TESTED([test9 ])
+AT_SETUP([Subroutines guarda guarda_nc])
+AT_TESTED([ test13 test14 ])
 AT_CLEANUP
 
 AT_COPYRIGHT(

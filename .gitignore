@@ -4,6 +4,10 @@
 *.log
 testsuite/package.m4
 testsuite/Makefile
+testsuite/atconfig
 Makefile
 autom4te.cache
 config.status
+.DS_Store
+.deps/
+.dirstamp

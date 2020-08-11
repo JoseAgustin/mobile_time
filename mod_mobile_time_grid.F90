@@ -522,7 +522,7 @@ scc(9,1)="2230001000"
     dimids2 = (/id_dim(2),id_dim(1)/)
     dimids3 = (/id_dim(3),id_dim(4),id_dim(1)/)
     dimids4 = (/id_dim(3),id_dim(4),id_dim(6),id_dim(1)/)
-    !call logs("Atributos Globales NF90_GLOBAL")
+    if (iday.eq.1) call logs("Atributos Globales NF90_GLOBAL")
     call check( nf90_put_att(ncid, NF90_GLOBAL, "TITLE",title(iday)))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "START_DATE",current_date))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "WEST-EAST_GRID_DIMENSION",nx))
@@ -803,7 +803,7 @@ end subroutine guarda_malla_nc
 !>  @brief Verifies no error in netcdf function call
 !> @param status NetCDF functions return a non-zero status codes on error.
 !> @copyright 1993-2020 University Corporation for Atmospheric Research/Unidata
-!Copyright 1993-2020 University Corporation for Atmospheric Research/Unidata
+! Copyright 1993-2020 University Corporation for Atmospheric Research/Unidata
 !
 !Portions of this software were developed by the Unidata Program at the
 !University Corporation for Atmospheric Research.
