@@ -96,6 +96,8 @@ common /factsec/ ef_speed_cold,ef_hc_cold,ef_co_cold,ef_no_cold
 common /miscell/ fcor,f_cold_engine_car
 common /computs/ emiss_factor,emis_fact_cold,eday,edve,emision,emi_veh
 
+public :: logs,lee_atributos,lee_actividades,lee_factor_emision,calcula_emision, &
+         guarda_malla,guarda_malla_nc
 contains
 !        _                 ____      _ _
 !  _   _| |_ _ __ ___     |___ \    | | |
@@ -870,7 +872,7 @@ end
 !>   @copyright Universidad Nacional Autonoma de Mexico 2020
 !>   @param  num number of the month
 character(len=3)function mes(num)
-    character*2 :: num
+    character*2,intent(IN):: num
     select case (num)
     case('01');mes='Jan'
     case('02');mes='Feb'
