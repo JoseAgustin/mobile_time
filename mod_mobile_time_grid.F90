@@ -38,9 +38,10 @@ integer,parameter :: nef2  =5 ;!> Type of day 1 week day, 2 Saturday, 3 Sunday
 integer,parameter :: ntypd =3 ;!> number of hours per day
 integer,parameter :: nhr   =24;!> number species in emission file
 integer,parameter :: nspc  = 5;!> number of speeds per EF specie
-integer,parameter :: nfe   = 7;! number of vehicle types 11 to 18
-integer,parameter :: nveht=8; !> Number of grids in the mesh
-integer :: nic !=28*34;!> Number of rows in results data 952
+integer,parameter :: nfe   = 7;!> number of vehicle types 11 to 18
+integer,parameter :: nveht=8  ;!> Number of grids in the mesh 952
+integer :: nic !=28*34
+!> Number of rows in results data
 integer,parameter :: ntd=75889;!> Number of viality segments
 integer,parameter :: nint=11848;!> Number of viality lengths
 integer :: natt=5554 ;!> Grid ID from the used mesh from intersection
