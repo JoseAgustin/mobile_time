@@ -39,7 +39,7 @@ integer,parameter :: ntypd =3 ;!> number of hours per day
 integer,parameter :: nhr   =24;!> number species in emission file
 integer,parameter :: nspc  = 5;!> number of speeds per EF specie
 integer,parameter :: nfe   = 7;!> number of vehicle types 11 to 18
-integer,parameter :: nveht=8  ;!> Number of grids in the mesh 952
+integer,parameter :: nveht = 8  ;!> Number of grids in the mesh 952
 integer :: nic !=28*34
 !> Number of rows in results data
 integer,parameter :: ntd=75889;!> Number of viality segments
@@ -87,7 +87,8 @@ real :: edve(28*34,nspc,ntypd,nveht)
 real :: emision(28*34,nhr,nspc,ntypd)
  !> Emision per cell,hour,specie,day and vehicle type
 real :: emi_veh(28*34,nhr,nspc,ntypd,nveht)
-
+!> Number of vehicles per grid, hour and type
+real :: no_veh(28*34,nhr,nveht+1,ntypd)
 common /intersec/ cutla,r_weight,id_grid_INT,id_source_INT,geometry_type,geo_type_INT
 common /srcattr/ natt
 common /cellattr/ nic
@@ -95,7 +96,7 @@ common /srctd/ veh_number, id_source_TD, ID_time_period,veh_type,veh_speed
 common /factemision/ ef_speed,ef_hc,ef_co,ef_no
 common /factsec/ ef_speed_cold,ef_hc_cold,ef_co_cold,ef_no_cold
 common /miscell/ fcor,f_cold_engine_car
-common /computs/ emiss_factor,emis_fact_cold,eday,edve,emision,emi_veh
+common /computs/ emiss_factor,emis_fact_cold,eday,edve,emision,emi_veh,no_veh
 
 public :: logs,lee_atributos,lee_actividades,lee_factor_emision,calcula_emision, &
          guarda_malla,guarda_malla_nc
@@ -314,6 +315,7 @@ subroutine calcula_emision
   real :: sl,fcorr,ffr
   real :: temp
   call logs("STARTS EMISSIONS COMPUTATIONS")
+  no_veh=0. ! number of vehicles per grid hour
  do n = ntd ,1,-1                   !Main LOOP initialization
     do m = 1,nint
         if(id_source_TD(n).eq.id_source_INT(m).and.geo_type_INT(m).lt.2&
@@ -346,7 +348,11 @@ subroutine calcula_emision
                 emiss_factor(4)   = 0.0
                 emis_fact_cold(4) = 0.0
             end if
-
+!    Number of vehicles all for index 1 and from 2 to 9 for the others
+            no_veh(indx,ntime,1,ID_time_period(n))=veh_number(ntime,n)&
+                   + no_veh(indx,ntime,veh_type(n)-10,ID_time_period(n))
+            no_veh(indx,ntime,veh_type(n)-9,ID_time_period(n))=veh_number(ntime,n) &
+                        + no_veh(indx,ntime,veh_type(n)-10,ID_time_period(n))
 !     ----------   Computation of the emissions for each specie
                 do isp = 1,nspc ! 1 HC(gasoline), 2 CO, 3 NOx, 4 HC(Diesel), 5 SO2
 !..
@@ -439,23 +445,26 @@ subroutine guarda_malla_nc
 use netcdf
 implicit none
 integer, parameter :: NDIMS=6,nx=28,ny=34, vtype=9
-integer :: i,j,k,l,m,iday,ispc,ncid,it
+integer :: i,j,k,l,m,iday,ispc,ncid,it,ivt
 integer :: iit
 integer :: dimids(3),dimids2(2),dimids3(3),dimids4(4),dimidsc(2),dimiscc(2)
 integer :: id_unlimit ;!> id_varlat latitude ID in netcdf file
 integer :: id_varlat  ;!> id_varlong longitude ID in netcdf file
 integer :: id_varlong ;!> id_scc ID of the SCC for each vehicle type
-integer :: id_varscc  ;!> id_vardescr Vehicular types description
-integer :: id_vardesc ;!> id_var pollutant emission ID in netcdf file
-integer :: id_var(nspc*2) ;!> dimensions values
+integer :: id_varscc  ;!> id_vardesc Vehicular types description
+integer :: id_vardesc ;!> pollutant TP and Total emission ID in netcdf file
+integer :: id_var(nspc*2) ;!> vehicules type id in netcdf file
+integer :: id_nveh     ;!> dimensions values
 integer,dimension(NDIMS):: dim;!> dimensions ID
 integer,dimension(NDIMS):: id_dim ;!>xlong longitude coordinates
 real,dimension(nx,ny)::xlong ;!>xlat latitude coordinates
 real,dimension(nx,ny)::xlat  ;!>tprof temporal profiles
 real,dimension(nx,ny,vtype,1)::tprof ;!>emis_day dayly emissions
-real,dimension(nx,ny,vtype):: emis_day
+real,dimension(nx,ny,vtype):: emis_day;!> num cars per grid, hour and type
+real,dimension(nx,ny,vtype,1):: numero_veh
 character (len=19),dimension(NDIMS) ::sdim
 character(len=19) :: current_date
+character(len=16) :: vehiclename
 character(len= 8) :: date
 character(len=10) :: time
 character(len=24) :: hoy, fecha_creado
@@ -487,7 +496,7 @@ cname=(/'VOC gasoline vehicle      ','Carbon Monoxide           ', &
 " profile per grid"
 cveh_type(1,1)="All_Types_vehicles ";cveh_type(2,1)="Automoviles     ,11"
 cveh_type(3,1)="Ligeros         ,12";cveh_type(4,1)="Microbuses      ,13"
-cveh_type(5,1)="Ruta_100        ,14";cveh_type(6,1)="Otros buses     ,15"
+cveh_type(5,1)="Ruta_100        ,14";cveh_type(6,1)="Otros_buses     ,15"
 cveh_type(7,1)="Medianos        ,16";cveh_type(8,1)="Pesados         ,17"
 cveh_type(9,1)="Camion_Municipal,18"
 !>   |Type |   SCC    |Description      |Type |  SCC     |Description |
@@ -519,12 +528,12 @@ scc(9,1)="2230001000"
     do i=2,NDIMS
         call check( nf90_def_dim(ncid, sdim(i), dim(i), id_dim(i)) )
     end do
-    dimids  = (/id_dim(3),id_dim(4),id_dim(6)/)
-    dimidsc = (/id_dim(2),id_dim(6)/)
-    dimiscc = (/id_dim(5),id_dim(6)/)
-    dimids2 = (/id_dim(2),id_dim(1)/)
-    dimids3 = (/id_dim(3),id_dim(4),id_dim(1)/)
-    dimids4 = (/id_dim(3),id_dim(4),id_dim(6),id_dim(1)/)
+    dimids  = (/id_dim(3),id_dim(4),id_dim(6)/) ! nx,ny,vtype
+    dimidsc = (/id_dim(2),id_dim(6)/)           ! Str(19),vtype
+    dimiscc = (/id_dim(5),id_dim(6)/)           ! Str(10),time
+    dimids2 = (/id_dim(2),id_dim(1)/)           ! Str(19), time
+    dimids3 = (/id_dim(3),id_dim(4),id_dim(1)/) ! nx,ny, time
+    dimids4 = (/id_dim(3),id_dim(4),id_dim(6),id_dim(1)/)! nx,ny,vtype,time
     if (iday.eq.1) call logs("Atributos Globales NF90_GLOBAL")
     call check( nf90_put_att(ncid, NF90_GLOBAL, "TITLE",title(iday)))
     call check( nf90_put_att(ncid, NF90_GLOBAL, "START_DATE",current_date))
@@ -592,13 +601,13 @@ scc(9,1)="2230001000"
     call check( nf90_put_att(ncid, id_varlong, "MemoryOrder", "XYZ") )
     call check( nf90_put_att(ncid, id_varlong, "description", "LONGITUDE, WEST IS NEGATIVE") )
     call check( nf90_put_att(ncid, id_varlong, "standard_name", "grid_longitude") )
-    call check( nf90_put_att(ncid, id_varlong, "units", "degree"))
+    call check( nf90_put_att(ncid, id_varlong, "units", "degrees_east"))
     call check( nf90_put_att(ncid, id_varlong, "axis", "X") )
     call check( nf90_put_att(ncid, id_varlat, "FieldType", 104 ) )
     call check( nf90_put_att(ncid, id_varlat, "MemoryOrder", "XYZ") )
     call check( nf90_put_att(ncid, id_varlat, "description", "LATITUDE, SOUTH IS NEGATIVE") )
     call check( nf90_put_att(ncid, id_varlat, "standard_name", "grid_latitude") )
-    call check( nf90_put_att(ncid, id_varlat, "units", "degree"))
+    call check( nf90_put_att(ncid, id_varlat, "units", "degrees_north"))
     call check( nf90_put_att(ncid, id_varlat, "axis", "Y") )
     call check( nf90_put_att(ncid, id_vardesc, "description", "Vehicular types from 1 to 9") )
     call check( nf90_put_att(ncid, id_varscc,"description","Source Clasification Code for each vehicle type") )
@@ -611,6 +620,9 @@ scc(9,1)="2230001000"
     do i=1+nspc,nspc+nspc
      call crea_attr(ncid,1,dimids,ename(i),cname(i),"g km^-2 s^-1",id_var(i))
     end do
+!  Attributos para numero de vehiculos
+      vehiclename="traffic"
+      call crea_attr(ncid,2,dimids4,vehiclename,vehiclename,"number",id_nveh)
 !   Terminan definiciones
     call check( nf90_enddef(ncid) )
 
@@ -624,6 +636,15 @@ scc(9,1)="2230001000"
     call check( nf90_put_var(ncid, id_unlimit,Times,start=(/1,it/)) )
     call check( nf90_put_var(ncid, id_varlong,xlong,start=(/1,1,it/)) )
     call check( nf90_put_var(ncid, id_varlat,xlat,start=(/1,1,it/)) )
+    do ivt=1,vtype
+        do i=1,nx
+            do j=1,ny
+              k=i+28*(j-1)
+            numero_veh(i,j,ivt,1)=no_veh(k,iit,ivt,iday)
+            end do
+        end do
+    end do
+    call check(nf90_put_var(ncid,id_nveh,numero_veh,start=(/1,1,1,it/)))
     do ispc=1,nspc
       do i=1,nx
         do j=1,ny
@@ -909,7 +930,7 @@ end function
 !>   @param ncid netcdf file ID
 !>   @param ifl number of items in dimids array
 !>   @param dimids ID dimensons array
-!>   @param svar variable name
+!>   @param svar short variable name
 !>   @param cname description variable name
 !>   @param cunits units of the variable
 !>   @param id_var variable ID
@@ -921,11 +942,9 @@ use netcdf
     integer, INTENT(IN),dimension(:):: dimids
     character(len=*), INTENT(IN)::svar,cname,cunits
     character(len=50) :: cvar
-    if (ifl.eq.1) then
-    cvar="Flux "//trim(cname)
-    else
-    cvar="temporal_profile "//trim(cname)
-    end if
+    if (ifl.eq.0)cvar="temporal_profile "//trim(cname)
+    if (ifl.eq.1) cvar="Flux "//trim(cname)
+    if (ifl.eq.2) cvar="Number vehicles type "//trim(cname)
     call check( nf90_def_var(ncid, svar, NF90_REAL, dimids,id_var ) )
     ! Assign  attributes
     call check( nf90_put_att(ncid, id_var, "FieldType", 104 ) )
