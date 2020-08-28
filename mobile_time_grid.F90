@@ -16,7 +16,7 @@
 program grid_mobil_temp
 use grid_temp_mobile
 
-  call logs("STARTS RUNNING     ")
+  call logs("STARTS RUNNING")
 
   call lee_atributos
 

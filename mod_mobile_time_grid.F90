@@ -950,6 +950,7 @@ use netcdf
     call check( nf90_put_att(ncid, id_var, "FieldType", 104 ) )
     call check( nf90_put_att(ncid, id_var, "MemoryOrder", "XYZ") )
     call check( nf90_put_att(ncid, id_var, "standard_name", cvar) )
+    call check( nf90_put_att(ncid, id_var, "description", cvar) )
     call check( nf90_put_att(ncid, id_var, "units", cunits))
     call check( nf90_put_att(ncid, id_var, "stagger", "Z") )
     call check( nf90_put_att(ncid, id_var, "coordinates", "XLONG XLAT") )
