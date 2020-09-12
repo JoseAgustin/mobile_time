@@ -46,9 +46,9 @@ The following tables describes the main information used in the code for compute
 
 ## Results
 
-As a resutl one product is the emissions  from vehicular activity for Mexico City 1993
+As a resutl the following products in a grid are generated:   dayly emission  for NO, CO, SO2 and HC, houry traffic teporal profile for the total fleet and for each vehicle type  and for each compond  for Mexico City for the 1990's.
 
-by doing the ration of emis per hour over the total emission per day a temporal description of pollutant emissions can be obtained.
+Themporal profiles were obtaines by computing  the ration between the hourly emission over the total emission per day per vehicular type and per chemical specie.
 
 ![CO emissions](/assets/images/COemis.gif "CO emissions")
 

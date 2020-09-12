@@ -198,7 +198,7 @@ end subroutine lee_atributos
 !  / _` |/ __| __| \ \ / / |/ _` |/ _` |/ _` |/ _ \/ __|
 ! | (_| | (__| |_| |\ V /| | (_| | (_| | (_| |  __/\__ \
 !  \__,_|\___|\__|_| \_/ |_|\__,_|\__,_|\__,_|\___||___/
-!>  @brief Reads for each grid the numbero fo vehicles per category by hour
+!>  @brief Reads for each grid the numbero of vehicles per category by hour
 !>  @author Jose Agustin Garcia Reynoso
 !>  @date 07/20/2020
 !>  @version  1.0
@@ -214,14 +214,14 @@ subroutine lee_actividades
         idum,idum,(veh_number(i,j),i=1,nhr),(veh_speed(i,j),i=1,nhr)
   end do
   close(iunit)
-  call logs("END READING intersection.txt")
+  call logs("END READING src_td.csv")
   open(newunit=iunit,file="data/intersection.csv",ACTION="READ")
   do  j=1,nint
    read(iunit,*)idum,id_grid_INT(j),geo_type_INT(j),geometry_type(j),id_source_INT(j), &
              cutla(j),r_weight(j)
   end do
-    call logs("END READING src_td.csv")
   close(iunit)
+  call logs("END READING intersection.txt")
 end subroutine lee_actividades
 !  _
 ! | | ___  ___
@@ -862,6 +862,11 @@ use netcdf
         stop 2
     end if
 end subroutine check
+!                        _
+!   ___ _   _  ___ _ __ | |_ __ _
+!  / __| | | |/ _ \ '_ \| __/ _` |
+! | (__| |_| |  __/ | | | || (_| |
+!  \___|\__,_|\___|_| |_|\__\__,_|
 !>  @brief count the number of rowns in a file
 !>   @author  Jose Agustin Garcia Reynoso
 !>   @date  07/13/2020
