@@ -324,11 +324,11 @@ subroutine calcula_emision
 !..
 !     ----------   Localization of the viality lenght     ----------
 !..
+            do ntime=1,nhr
                 call viality(geometry_type(m),id_source_INT(m),geometry_type2,&
                      id_source_ATT,source_type,source_size,fcor,f_cold_engine_car,&
                      ntime,fcorr,ffr,sl)
                 sl = sl*r_weight(m)
-            do ntime=1,nhr
             ! for EPA
             emiss_factor(1)= emisfac2(veh_type(n),veh_speed(ntime,n),ef_speed ,ef_hc )
             emiss_factor(2)= emisfac2(veh_type(n),veh_speed(ntime,n),ef_speed ,ef_co )
@@ -711,15 +711,14 @@ end subroutine guarda_malla_nc
   integer:: i,flag
 !..
   flag=0
+  ffr   = f_cold_engine_car(nh)
+  fcorr = fcor(nh)
   do i = size(isrc),1,-1
     if(id .eq.isrc(i) .and. ig.eq.ig2(i)) then
       sl = slen(i,ig)
       if(kstype(i).gt.10) then
         flag = 1
-        fcorr = fcor(nh)
-        ffr   = f_cold_engine_car(nh)
         if(kstype(i).gt.20) then
-          ffr= f_cold_engine_car(nh)
           fcorr =1.0
           exit
         end if
@@ -727,7 +726,7 @@ end subroutine guarda_malla_nc
       else
         flag  = 1
         fcorr = 1.0
-        ffr   = 0.0
+        !ffr   = 0.0
         exit
       end if
     end if
