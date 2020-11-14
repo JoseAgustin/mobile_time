@@ -392,12 +392,15 @@ end subroutine calcula_emision
 subroutine guarda_malla
 implicit none
 integer :: i,j,l,iday,irec
-integer :: iunit
+integer :: iunit,lunit=10,ios
 real:: emis(nic)
+character(len=8),dimension(nspc) :: fname
+fname=(/'TP_VOC  ','TP_CO   ','TP_NO   ','TP_VOC_d','TP_SO2  '/)
   call logs("Wrinting output file for GrADS")
     open (newunit=iunit,file='data/movil.dat', &
     status='unknown',access='direct',form='unformatted' &
     ,recl=nic*4)
+
     irec = 0
     do iday=1,ntypd
       do l = 1,nhr
@@ -414,6 +417,20 @@ real:: emis(nic)
         end do   !  i specie
       end do      !  l
     end do
+    close(iunit, iostat=ios)
+    if ( ios /= 0 ) stop "Error closing file movil.dat "
+    do i = 1,nspc
+      open(newunit=lunit,file='data/'//trim(fname(i))//'.csv')
+      write(lunit,*)fname(i),(l,l=1,nhr)
+         do j=1,nic
+           if(eday(j,i,iday).gt.0)then
+             write(lunit,123)lat(j),long(j),&
+             ((emision(j,l,i,iday)/eday(j,i,iday),l=1,nhr),iday=1,ntypd)
+           end if
+         end do
+      close(lunit, iostat=ios)
+      if ( ios /= 0 ) stop "Error closing file T_emis "
+    end do
     open (newunit=iunit,file='data/movil_day.dat', &
     status='unknown',access='direct',form='unformatted' &
     ,recl=nic*4)
@@ -424,6 +441,9 @@ real:: emis(nic)
           write(iunit,rec=irec)(0.010416*eday(j,i,iday),j=1,nic)
         end do   !  i specie
     end do
+    close(unit=iunit, iostat=ios)
+    if ( ios /= 0 ) stop "Error closing file movil_day.dat "
+123 format(f8.3,",",f8.3,",",71(f7.5,","),f7.5)
 end subroutine guarda_malla
 !                            _
 !   __ _ _   _  __ _ _ __ __| | __ _
