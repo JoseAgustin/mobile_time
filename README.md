@@ -1,6 +1,6 @@
 # mobile_time
 
-System to provide a temporal profiles for a gridded area by using  traffic activity data from 11,848 viality  sectors, 11 vehicular types, 
+System to provide a temporal profiles for a gridded area by using  traffic activity data from 11,848 viality segments, 8 vehicular types,  three diffente days and three road types.
 
 ## Information used
 The following figure shows the data used for acomplish this task
