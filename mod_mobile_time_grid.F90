@@ -348,8 +348,8 @@ subroutine calcula_emision
                 emiss_factor(4)   = 0.0
                 emis_fact_cold(4) = 0.0
             end if
-!    Number of vehicles all for index 1 and from 2 to 9 for the others
-            no_veh(indx,ntime,1,ID_time_period(n))=veh_number(ntime,n)&
+!    Number of vehicles all for index 1 and from 2 to 9 for the others veh_type from 11 to 18
+            no_veh(indx,ntime,1,ID_time_period(n))=veh_number(ntime,n) &
                    + no_veh(indx,ntime,veh_type(n)-10,ID_time_period(n))
             no_veh(indx,ntime,veh_type(n)-9,ID_time_period(n))=veh_number(ntime,n) &
                         + no_veh(indx,ntime,veh_type(n)-10,ID_time_period(n))
@@ -423,7 +423,7 @@ fname=(/'TP_VOC  ','TP_CO   ','TP_NO   ','TP_VOC_d','TP_SO2  '/)
       open(newunit=lunit,file='data/'//trim(fname(i))//'.csv')
       write(lunit,*)fname(i),(l,l=1,nhr)
          do j=1,nic
-           if(eday(j,i,iday).gt.0)then
+           if(eday(j,i,1).gt.0)then
              write(lunit,123)lat(j),long(j),&
              ((emision(j,l,i,iday)/eday(j,i,iday),l=1,nhr),iday=1,ntypd)
            end if
@@ -431,6 +431,12 @@ fname=(/'TP_VOC  ','TP_CO   ','TP_NO   ','TP_VOC_d','TP_SO2  '/)
       close(lunit, iostat=ios)
       if ( ios /= 0 ) stop "Error closing file T_emis "
     end do
+   open(newunit=lunit,file='data/traffic.csv')
+   write(lunit,*)"Traffic",(l,l=1,nhr)
+     do j=1,nic
+       if(eday(j,1,1).gt.0) write(lunit,124)lat(j),long(j),&
+         ((no_veh(j,l,1,iday),l=1,nhr),iday=1,ntypd)
+     end do
     open (newunit=iunit,file='data/movil_day.dat', &
     status='unknown',access='direct',form='unformatted' &
     ,recl=nic*4)
@@ -444,6 +450,7 @@ fname=(/'TP_VOC  ','TP_CO   ','TP_NO   ','TP_VOC_d','TP_SO2  '/)
     close(unit=iunit, iostat=ios)
     if ( ios /= 0 ) stop "Error closing file movil_day.dat "
 123 format(f8.3,",",f8.3,",",71(f7.5,","),f7.5)
+124 format(f8.3,",",f8.3,",",71(f7.1,","),f7.1)
 end subroutine guarda_malla
 !                            _
 !   __ _ _   _  __ _ _ __ __| | __ _
@@ -659,7 +666,7 @@ scc(9,1)="2230001000"
     do ivt=1,vtype
         do i=1,nx
             do j=1,ny
-              k=i+28*(j-1)
+              k=i+nx*(j-1)
             numero_veh(i,j,ivt,1)=no_veh(k,iit,ivt,iday)
             end do
         end do
