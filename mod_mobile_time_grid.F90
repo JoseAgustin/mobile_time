@@ -450,7 +450,7 @@ fname=(/'TP_VOC  ','TP_CO   ','TP_NO   ','TP_VOC_d','TP_SO2  '/)
     close(unit=iunit, iostat=ios)
     if ( ios /= 0 ) stop "Error closing file movil_day.dat "
 123 format(f8.3,",",f8.3,",",71(f7.5,","),f7.5)
-124 format(f8.3,",",f8.3,",",71(f7.1,","),f7.1)
+124 format(f8.3,",",f8.3,",",71(f8.0,","),f8.0)
 end subroutine guarda_malla
 !                            _
 !   __ _ _   _  __ _ _ __ __| | __ _
