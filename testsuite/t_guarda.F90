@@ -5,6 +5,9 @@ implicit none
   emision=100./24.
   eday= 4.
   nic=28*34
+  allocate(long(nic),lat(nic))
+   long=2
+   lat=3
   call system("mkdir -v data")
   call guarda_malla
   call system("rm -rv data")
